@@ -1,0 +1,11 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Originais WhatsApp (arquivos com espaço no nome — as cópias limpas já estão no repo)
+WhatsApp*
+
+# Editor
+.vscode/
+.idea/

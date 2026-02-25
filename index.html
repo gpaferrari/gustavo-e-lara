@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Gustavo & Lara — Convite de Casamento">
+  <meta name="theme-color" content="#FDFAF5">
+
+  <!-- Open Graph (preview bonito no WhatsApp/iMessage quando compartilhar o link) -->
+  <meta property="og:title" content="Gustavo & Lara ♥">
+  <meta property="og:description" content="Vós sois convidados para celebrar o nosso sim.">
+  <meta property="og:image" content="foto-casal.jpg">
+  <meta property="og:type" content="website">
+
+  <title>Gustavo & Lara</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!--
+    ┌─────────────────────────────────────────────┐
+    │  git commit -m "feat: iniciar novo ciclo 💍" │
+    │                                              │
+    │  const nossaHistoria = {                     │
+    │    noivo: "Gustavo",   // dev                │
+    │    noiva: "Lara",      // bioinformata       │
+    │    base: "fé",         // Eclesiastes 4:12   │
+    │    resultado: Infinity // para sempre        │
+    │  }                                           │
+    └─────────────────────────────────────────────┘
+  -->
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+
+    <div class="hero__dna" aria-hidden="true">
+      <svg class="dna" viewBox="0 0 60 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dna__s1" d="M30,0 C48,12 48,38 30,50 C12,62 12,88 30,100 C48,112 48,138 30,150 C12,162 12,188 30,200 C48,212 48,238 30,250 C12,262 12,288 30,300 C48,312 48,338 30,350 C12,362 12,388 30,400 C48,412 48,438 30,420"/>
+        <path class="dna__s2" d="M30,0 C12,12 12,38 30,50 C48,62 48,88 30,100 C12,112 12,138 30,150 C48,162 48,188 30,200 C12,212 12,238 30,250 C48,262 48,288 30,300 C12,312 12,338 30,350 C48,362 48,388 30,400 C12,412 12,438 30,420"/>
+        <line class="dna__r" x1="12" y1="25"  x2="48" y2="25"/>
+        <line class="dna__r" x1="12" y1="75"  x2="48" y2="75"/>
+        <line class="dna__r" x1="12" y1="125" x2="48" y2="125"/>
+        <line class="dna__r" x1="12" y1="175" x2="48" y2="175"/>
+        <line class="dna__r" x1="12" y1="225" x2="48" y2="225"/>
+        <line class="dna__r" x1="12" y1="275" x2="48" y2="275"/>
+        <line class="dna__r" x1="12" y1="325" x2="48" y2="325"/>
+        <line class="dna__r" x1="12" y1="375" x2="48" y2="375"/>
+        <circle class="dna__n" cx="12" cy="25"  r="3"/>
+        <circle class="dna__n" cx="48" cy="25"  r="3"/>
+        <circle class="dna__n" cx="48" cy="75"  r="3"/>
+        <circle class="dna__n" cx="12" cy="75"  r="3"/>
+        <circle class="dna__n" cx="12" cy="125" r="3"/>
+        <circle class="dna__n" cx="48" cy="125" r="3"/>
+        <circle class="dna__n" cx="48" cy="175" r="3"/>
+        <circle class="dna__n" cx="12" cy="175" r="3"/>
+        <circle class="dna__n" cx="12" cy="225" r="3"/>
+        <circle class="dna__n" cx="48" cy="225" r="3"/>
+        <circle class="dna__n" cx="48" cy="275" r="3"/>
+        <circle class="dna__n" cx="12" cy="275" r="3"/>
+        <circle class="dna__n" cx="12" cy="325" r="3"/>
+        <circle class="dna__n" cx="48" cy="325" r="3"/>
+        <circle class="dna__n" cx="48" cy="375" r="3"/>
+        <circle class="dna__n" cx="12" cy="375" r="3"/>
+      </svg>
+    </div>
+
+    <div class="hero__inner">
+      <p class="hero__eyebrow reveal">Vós sois convidados para celebrar</p>
+
+      <div class="hero__names reveal">
+        <h1 class="hero__name">Gustavo</h1>
+        <span class="hero__amp" aria-hidden="true">&</span>
+        <h1 class="hero__name">Lara</h1>
+      </div>
+
+      <div class="hero__photo-wrap reveal">
+        <div class="hero__photo-main">
+          <img
+            src="foto-campo.jpg"
+            alt="Gustavo e Lara caminhando em um campo ao pôr do sol"
+            loading="eager"
+          >
+        </div>
+        <div class="hero__photo-accent">
+          <img
+            src="foto-casal.jpg"
+            alt="Gustavo e Lara juntos"
+            loading="eager"
+          >
+        </div>
+      </div>
+
+      <div class="hero__badge reveal">
+        <span class="hero__badge-day">00</span><!-- TROQUE: dia do casamento -->
+        <span class="hero__badge-dot" aria-hidden="true">·</span>
+        <span class="hero__badge-month">MÊS</span><!-- TROQUE: ex: JUNHO -->
+        <span class="hero__badge-dot" aria-hidden="true">·</span>
+        <span class="hero__badge-year">2026</span>
+      </div>
+
+      <a href="#evento" class="hero__down" aria-label="Ver detalhes">
+        <span class="hero__scroll-line"></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       VERSÍCULO ABERTURA
+  ══════════════════════════════════════════ -->
+  <section class="verse-open">
+    <div class="container">
+      <blockquote class="verse-open__q reveal">
+        <p>"O cordão de três dobras não se rompe com facilidade."</p>
+        <cite>Eclesiastes 4:12</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       NOSSA HISTÓRIA
+  ══════════════════════════════════════════ -->
+  <section class="section story" id="historia">
+    <div class="container">
+      <header class="section__head reveal">
+        <span class="section__tag" aria-hidden="true">// nossa história</span>
+        <h2 class="section__title">Um novo ciclo começa</h2>
+      </header>
+
+      <figure class="story__photo reveal">
+        <img
+          src="foto-casal.jpg"
+          alt="Gustavo e Lara"
+          loading="lazy"
+        >
+      </figure>
+
+      <div class="story__text reveal">
+        <p>
+          Entre linhas de código e sequências de vida, dois mundos se encontraram.
+          Ele constrói pontes digitais; ela decifra a linguagem da vida.
+        </p>
+        <p>
+          Juntos, descobriram que o maior algoritmo do universo é o amor —
+          um código que nenhuma máquina pode replicar.
+        </p>
+        <p>
+          No centro de tudo, uma fé que sustenta e um Deus que escreve
+          histórias mais belas do que qualquer um de nós poderia imaginar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       EVENTO
+  ══════════════════════════════════════════ -->
+  <section class="section event" id="evento">
+    <div class="container">
+      <header class="section__head reveal">
+        <span class="section__tag" aria-hidden="true">// detalhes</span>
+        <h2 class="section__title">O Grande Dia</h2>
+      </header>
+
+      <div class="event__date reveal">
+        <div class="event__date-num">00</div><!-- TROQUE: dia do casamento -->
+        <div class="event__date-meta">
+          <span>JUNHO DE 2026</span><!-- TROQUE: mês e ano -->
+          <span>Cidade — Estado</span><!-- TROQUE: ex: Curitiba — PR -->
+        </div>
+      </div>
+
+      <div class="event__cards">
+        <article class="event__card reveal">
+          <div class="event__card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+              <line x1="16" y1="2" x2="16" y2="22"/>
+              <line x1="8"  y1="2" x2="8"  y2="22"/>
+              <line x1="2"  y1="12" x2="22" y2="12"/>
+            </svg>
+          </div>
+          <h3 class="event__card-title">Cerimônia</h3>
+          <p class="event__card-time"><!-- 00:00 --></p>
+          <p class="event__card-place"><!-- Nome da Igreja --></p>
+          <p class="event__card-addr"><!-- Endereço, Cidade --></p>
+          <a href="#" class="event__card-link" target="_blank" rel="noopener">
+            Ver no mapa →
+          </a>
+        </article>
+
+        <article class="event__card reveal">
+          <div class="event__card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="event__card-title">Recepção</h3>
+          <p class="event__card-time"><!-- 00:00 --></p>
+          <p class="event__card-place"><!-- Nome do Salão --></p>
+          <p class="event__card-addr"><!-- Endereço, Cidade --></p>
+          <a href="#" class="event__card-link" target="_blank" rel="noopener">
+            Ver no mapa →
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       VERSÍCULO CENTRAL
+  ══════════════════════════════════════════ -->
+  <section class="verse-mid">
+    <div class="verse-mid__dna" aria-hidden="true">
+      <svg viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dna__s1" d="M0,25 C12,10 25,10 37,25 C49,40 62,40 75,25 C87,10 100,10 112,25 C124,40 137,40 150,25 C162,10 175,10 187,25 C199,40 212,40 200,25"/>
+        <path class="dna__s2" d="M0,25 C12,40 25,40 37,25 C49,10 62,10 75,25 C87,40 100,40 112,25 C124,10 137,10 150,25 C162,40 175,40 187,25 C199,10 212,10 200,25"/>
+        <circle class="dna__n" cx="37"  cy="25" r="2.5"/>
+        <circle class="dna__n" cx="75"  cy="25" r="2.5"/>
+        <circle class="dna__n" cx="112" cy="25" r="2.5"/>
+        <circle class="dna__n" cx="150" cy="25" r="2.5"/>
+        <circle class="dna__n" cx="187" cy="25" r="2.5"/>
+      </svg>
+    </div>
+    <div class="container">
+      <blockquote class="verse-mid__q reveal">
+        <p>"Porque eu bem sei os planos que tenho para vós, diz o Senhor; planos de bem e não de mal, para vos dar um futuro e uma esperança."</p>
+        <cite>Jeremias 29:11</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PRESENTES
+  ══════════════════════════════════════════ -->
+  <section class="section gifts" id="presentes">
+    <div class="container">
+      <header class="section__head reveal">
+        <span class="section__tag" aria-hidden="true">// lista de presentes</span>
+        <h2 class="section__title">Presentes</h2>
+      </header>
+
+      <p class="gifts__intro reveal">
+        Sua presença já é o maior presente. Se desejar nos presentear, preparamos uma lista com muito carinho.
+      </p>
+
+      <div class="gifts__grid">
+        <!-- TROQUE href pelo link da sua lista na Magalu -->
+        <a href="LINK_LISTA_MAGALU" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
+          <div class="gift-card__info">
+            <span class="gift-card__brand">Magazine Luiza</span>
+            <span class="gift-card__sub">Lista de casamento</span>
+          </div>
+          <span class="gift-card__arrow" aria-hidden="true">→</span>
+        </a>
+
+        <!-- TROQUE href pelo link da sua lista na segunda loja -->
+        <a href="LINK_LISTA_HAVAN" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
+          <div class="gift-card__info">
+            <span class="gift-card__brand">Havan</span>
+            <span class="gift-card__sub">Lista de casamento</span>
+          </div>
+          <span class="gift-card__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="gifts__pix reveal">
+        <p class="gifts__pix-label">Ou presenteie via Pix</p>
+        <div class="gifts__pix-box">
+          <!-- TROQUE pelo seu Pix real (chave email/CPF/telefone) -->
+          <code class="gifts__pix-key" id="pixKey">CHAVE_PIX_AQUI</code>
+          <button class="gifts__pix-btn" onclick="copyPix()" aria-label="Copiar chave Pix">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copiar
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONFIRMAÇÃO
+  ══════════════════════════════════════════ -->
+  <section class="section rsvp" id="confirmacao">
+    <div class="container">
+      <header class="section__head reveal">
+        <span class="section__tag" aria-hidden="true">// confirmação</span>
+        <h2 class="section__title">Confirmar Presença</h2>
+      </header>
+
+      <div class="rsvp__inner reveal">
+        <p class="rsvp__text">
+          Confirme sua presença até <strong>00 de Mês de 2026</strong>.<!-- TROQUE: data limite -->
+          Sua confirmação nos ajuda a preparar tudo com carinho para você.
+        </p>
+        <!-- TROQUE 55XXXXXXXXXXX pelo seu número com DDD (ex: 5511999998888) -->
+        <a
+          href="https://wa.me/55XXXXXXXXXXX?text=Ol%C3%A1!%20Confirmo%20minha%20presen%C3%A7a%20no%20casamento%20de%20Gustavo%20e%20Lara!%20%F0%9F%8C%B8"
+          class="rsvp__btn"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="rsvp__btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Confirmar via WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__helix" aria-hidden="true">
+      <svg viewBox="0 0 60 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dna__s1" d="M30,0 C48,12 48,38 30,50 C12,62 12,88 30,100 C48,112 48,138 30,120"/>
+        <path class="dna__s2" d="M30,0 C12,12 12,38 30,50 C48,62 48,88 30,100 C12,112 12,138 30,120"/>
+        <line class="dna__r" x1="12" y1="25"  x2="48" y2="25"/>
+        <line class="dna__r" x1="12" y1="75"  x2="48" y2="75"/>
+        <circle class="dna__n" cx="12" cy="25" r="2.5"/>
+        <circle class="dna__n" cx="48" cy="25" r="2.5"/>
+        <circle class="dna__n" cx="48" cy="75" r="2.5"/>
+        <circle class="dna__n" cx="12" cy="75" r="2.5"/>
+      </svg>
+    </div>
+    <p class="footer__names">G & L</p>
+    <p class="footer__year">2026</p>
+    <p class="footer__credit" title="feito com amor, fé e muito código">
+      made with <span aria-hidden="true">♥</span> &amp; <code>&lt;/code&gt;</code>
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
