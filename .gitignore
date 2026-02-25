@@ -9,3 +9,5 @@ WhatsApp*
 # Editor
 .vscode/
 .idea/
+
+.vercel
