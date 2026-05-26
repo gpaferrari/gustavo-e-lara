@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin RSVP | Gustavo & Lara</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-page { padding: var(--gap-lg); max-width: 1000px; margin: 0 auto; }
+    .admin-card { background: white; padding: var(--gap-md); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: var(--gap-lg); }
+    .admin-form { display: grid; gap: 15px; grid-template-columns: 1fr 1fr auto; align-items: end; }
+    .admin-form input { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+    .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .admin-table th, .admin-table td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+    .status-confirmed { background: #e8f5e9; color: #2e7d32; }
+    .status-pending { background: #fff3e0; color: #ef6c00; }
+    .copy-link { cursor: pointer; color: var(--sage); text-decoration: underline; font-size: 0.9rem; }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="admin-page">
+    <header class="section__head">
+      <h2 class="section__title">Gerenciar Convites</h2>
+    </header>
+
+    <div class="admin-card">
+      <h3>Novo Convite</h3>
+      <form id="adminForm" class="admin-form">
+        <div>
+          <label>Nome da Família</label><br>
+          <input type="text" id="familyName" placeholder="Ex: Família Silva" required>
+        </div>
+        <div>
+          <label>Membros (separados por vírgula)</label><br>
+          <input type="text" id="members" placeholder="João, Maria, Pedro" required>
+        </div>
+        <button type="submit" class="share-btn">Criar Convite</button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h3>Lista de Convites</h3>
+      <div style="overflow-x: auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Família</th>
+              <th>Membros</th>
+              <th>Status</th>
+              <th>Link / QR Code</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <!-- Data will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Confirmar Presença | Gustavo & Lara</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    .rsvp-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--gap-lg) var(--gap-md);
+      background: var(--bg);
+    }
+    .rsvp-card {
+      background: white;
+      padding: var(--gap-lg);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+    .rsvp-card__title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: var(--gap-sm);
+    }
+    .rsvp-card__subtitle {
+      font-size: 1.1rem;
+      margin-bottom: var(--gap-lg);
+      color: var(--muted);
+    }
+    .rsvp-form {
+      text-align: left;
+    }
+    .member-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--ivory);
+    }
+    .member-item:last-child {
+      border-bottom: none;
+    }
+    .member-name {
+      font-weight: 500;
+      color: var(--text);
+    }
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #eee;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--sage);
+    }
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+    .rsvp-submit {
+      width: 100%;
+      margin-top: var(--gap-lg);
+      padding: 16px;
+      background: var(--sage);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .rsvp-submit:disabled {
+      background: var(--ivory);
+      cursor: not-allowed;
+    }
+    .loading-state, .error-state, .success-state {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="rsvp-page">
+    <div class="rsvp-card">
+      <div id="loading" class="loading-state" style="display: block;">
+        <p>Buscando seu convite...</p>
+      </div>
+
+      <div id="error" class="error-state">
+        <h2 class="rsvp-card__title">Ops!</h2>
+        <p>Não conseguimos encontrar seu convite. Verifique o link ou entre em contato conosco.</p>
+        <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none; margin-top: 20px;">Voltar ao site</a>
+      </div>
+
+      <div id="content" style="display: none;">
+        <h1 class="rsvp-card__title">Olá, <span id="familyName">Família</span></h1>
+        <p class="rsvp-card__subtitle">Confirme quem poderá celebrar conosco:</p>
+        
+        <form id="rsvpForm" class="rsvp-form">
+          <div id="membersList"></div>
+          <button type="submit" class="rsvp-submit" id="submitBtn">Confirmar Presença</button>
+        </form>
+      </div>
+
+      <div id="success" class="success-state">
+        <h2 class="rsvp-card__title">Obrigado!</h2>
+        <p>Sua confirmação foi registrada com sucesso. Esperamos por você!</p>
+        <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none; margin-top: 20px;">Ver site do casamento</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/rsvp.js"></script>
+</body>
+</html>
