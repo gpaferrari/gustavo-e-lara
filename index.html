@@ -256,25 +256,11 @@
       </div>
 
       <div class="gifts__qr-section reveal">
-        <p class="gifts__qr-label">Acesse pelo celular</p>
+        <p class="gifts__qr-label">Compartilhe nosso convite</p>
         <div class="gifts__qr-container">
           <!-- O QR Code será gerado via JS apontando para a URL do site -->
-          <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://seu-site-de-casamento.vercel.app" alt="QR Code da Lista">
-          <p class="gifts__qr-hint">Aponte a câmera para ver a lista completa</p>
-        </div>
-      </div>
-
-      <div class="gifts__pix reveal">
-        <p class="gifts__pix-label">Ou presenteie via Pix</p>
-        <div class="gifts__pix-box">
-          <code class="gifts__pix-key" id="pixKey">gustavoelara@casamento.com.br</code>
-          <button class="gifts__pix-btn" onclick="copyPix()" aria-label="Copiar chave Pix">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            Copiar
-          </button>
+          <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://gustavo-e-lara.vercel.app" alt="QR Code do Convite">
+          <p class="gifts__qr-hint">Aponte a câmera para compartilhar</p>
         </div>
       </div>
     </div>
