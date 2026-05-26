@@ -98,9 +98,9 @@
       </div>
 
       <div class="hero__badge reveal">
-        <span class="hero__badge-day">00</span><!-- TROQUE: dia do casamento -->
+        <span class="hero__badge-day">09</span>
         <span class="hero__badge-dot" aria-hidden="true">·</span>
-        <span class="hero__badge-month">MÊS</span><!-- TROQUE: ex: JUNHO -->
+        <span class="hero__badge-month">JANEIRO</span>
         <span class="hero__badge-dot" aria-hidden="true">·</span>
         <span class="hero__badge-year">2026</span>
       </div>
@@ -169,10 +169,10 @@
       </header>
 
       <div class="event__date reveal">
-        <div class="event__date-num">00</div><!-- TROQUE: dia do casamento -->
+        <div class="event__date-num">09</div>
         <div class="event__date-meta">
-          <span>JUNHO DE 2026</span><!-- TROQUE: mês e ano -->
-          <span>Cidade — Estado</span><!-- TROQUE: ex: Curitiba — PR -->
+          <span>JANEIRO DE 2026</span>
+          <span>Marília — SP</span>
         </div>
       </div>
 
@@ -186,29 +186,11 @@
               <line x1="2"  y1="12" x2="22" y2="12"/>
             </svg>
           </div>
-          <h3 class="event__card-title">Cerimônia</h3>
-          <p class="event__card-time"><!-- 00:00 --></p>
-          <p class="event__card-place"><!-- Nome da Igreja --></p>
-          <p class="event__card-addr"><!-- Endereço, Cidade --></p>
-          <a href="#" class="event__card-link" target="_blank" rel="noopener">
-            Ver no mapa →
-          </a>
-        </article>
-
-        <article class="event__card reveal">
-          <div class="event__card-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <h3 class="event__card-title">Recepção</h3>
-          <p class="event__card-time"><!-- 00:00 --></p>
-          <p class="event__card-place"><!-- Nome do Salão --></p>
-          <p class="event__card-addr"><!-- Endereço, Cidade --></p>
-          <a href="#" class="event__card-link" target="_blank" rel="noopener">
+          <h3 class="event__card-title">Cerimônia e Recepção</h3>
+          <p class="event__card-time">19:30</p>
+          <p class="event__card-place">Churrascaria Kieza</p>
+          <p class="event__card-addr">Av. Tiradentes, 1480 - Fragata, Marília - SP</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Churrascaria+Kieza+Av.+Tiradentes+1480+Marilia" class="event__card-link" target="_blank" rel="noopener">
             Ver no mapa →
           </a>
         </article>
@@ -250,34 +232,42 @@
       </header>
 
       <p class="gifts__intro reveal">
-        Sua presença já é o maior presente. Se desejar nos presentear, preparamos uma lista com muito carinho.
+        Sua presença já é o maior presente. Se desejar nos presentear, preparamos algumas opções que nos ajudarão a montar nosso novo lar.
       </p>
 
       <div class="gifts__grid">
-        <!-- TROQUE href pelo link da sua lista na Magalu -->
-        <a href="LINK_LISTA_MAGALU" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
+        <!-- Magalu -->
+        <a href="https://www.finalfeliz.de/gustavo-ferrari-lara-lis" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
           <div class="gift-card__info">
-            <span class="gift-card__brand">Magazine Luiza</span>
-            <span class="gift-card__sub">Lista de casamento</span>
+            <span class="gift-card__brand">Magalu</span>
+            <span class="gift-card__sub">Lista de presentes Magalu</span>
           </div>
           <span class="gift-card__arrow" aria-hidden="true">→</span>
         </a>
 
-        <!-- TROQUE href pelo link da sua lista na segunda loja -->
-        <a href="LINK_LISTA_HAVAN" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
+        <!-- Havan -->
+        <a href="https://lista.havan.com.br/Convidado/ItensListaPresente/937094" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
           <div class="gift-card__info">
             <span class="gift-card__brand">Havan</span>
-            <span class="gift-card__sub">Lista de casamento</span>
+            <span class="gift-card__sub">Lista de presentes Havan</span>
           </div>
           <span class="gift-card__arrow" aria-hidden="true">→</span>
         </a>
       </div>
 
+      <div class="gifts__qr-section reveal">
+        <p class="gifts__qr-label">Acesse pelo celular</p>
+        <div class="gifts__qr-container">
+          <!-- O QR Code será gerado via JS apontando para a URL do site -->
+          <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://seu-site-de-casamento.vercel.app" alt="QR Code da Lista">
+          <p class="gifts__qr-hint">Aponte a câmera para ver a lista completa</p>
+        </div>
+      </div>
+
       <div class="gifts__pix reveal">
         <p class="gifts__pix-label">Ou presenteie via Pix</p>
         <div class="gifts__pix-box">
-          <!-- TROQUE pelo seu Pix real (chave email/CPF/telefone) -->
-          <code class="gifts__pix-key" id="pixKey">CHAVE_PIX_AQUI</code>
+          <code class="gifts__pix-key" id="pixKey">gustavoelara@casamento.com.br</code>
           <button class="gifts__pix-btn" onclick="copyPix()" aria-label="Copiar chave Pix">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="9" y="9" width="13" height="13" rx="2"/>
@@ -302,12 +292,11 @@
 
       <div class="rsvp__inner reveal">
         <p class="rsvp__text">
-          Confirme sua presença até <strong>00 de Mês de 2026</strong>.<!-- TROQUE: data limite -->
+          Confirme sua presença até <strong>10 de Dezembro de 2025</strong>.
           Sua confirmação nos ajuda a preparar tudo com carinho para você.
         </p>
-        <!-- TROQUE 55XXXXXXXXXXX pelo seu número com DDD (ex: 5511999998888) -->
         <a
-          href="https://wa.me/55XXXXXXXXXXX?text=Ol%C3%A1!%20Confirmo%20minha%20presen%C3%A7a%20no%20casamento%20de%20Gustavo%20e%20Lara!%20%F0%9F%8C%B8"
+          href="https://wa.me/5514999999999?text=Ol%C3%A1!%20Confirmo%20minha%20presen%C3%A7a%20no%20casamento%20de%20Gustavo%20e%20Lara!%20%F0%9F%8C%B8"
           class="rsvp__btn"
           target="_blank"
           rel="noopener"

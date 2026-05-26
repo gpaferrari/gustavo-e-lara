@@ -59,6 +59,18 @@ function legacyCopy(text, cb) {
   cb();
 }
 
+/* ── Dynamic QR Code ────────────────────────────────── */
+function setupQRCode() {
+  const qrImg = document.getElementById('qrCode');
+  if (qrImg) {
+    const currentUrl = window.location.href;
+    // Usa a API do qrserver para gerar o QR code do link atual
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}`;
+  }
+}
+
+window.addEventListener('DOMContentLoaded', setupQRCode);
+
 /* ── Console Easter Egg ─────────────────────────────── */
 /* eslint-disable no-console */
 if (typeof console !== 'undefined' && console.log) {
