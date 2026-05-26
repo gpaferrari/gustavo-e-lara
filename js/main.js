@@ -71,6 +71,30 @@ function setupQRCode() {
 
 window.addEventListener('DOMContentLoaded', setupQRCode);
 
+/* ── Share Site ────────────────────────────────────── */
+function shareSite() {
+  const shareData = {
+    title: 'Gustavo & Lara ♥',
+    text: 'Vós sois convidados para celebrar o nosso sim.',
+    url: 'https://gustavo-e-lara.vercel.app/'
+  };
+
+  const btn = document.querySelector('.share-btn');
+  const original = btn.innerHTML;
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(() => {});
+  } else {
+    // Fallback: Copy link
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareData.url).then(() => {
+        btn.textContent = '✓ Link Copiado!';
+        setTimeout(() => { btn.innerHTML = original; }, 2000);
+      });
+    }
+  }
+}
+
 /* ── Console Easter Egg ─────────────────────────────── */
 /* eslint-disable no-console */
 if (typeof console !== 'undefined' && console.log) {
