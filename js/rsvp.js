@@ -31,12 +31,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       div.className = 'member-item';
       div.innerHTML = `
         <span class="member-name">${member.name}</span>
-        <label class="toggle">
-          <input type="checkbox" name="member-${index}" ${member.confirmed ? 'checked' : ''} data-name="${member.name}">
-          <span class="slider"></span>
-        </label>
+        <div class="member-controls" data-index="${index}">
+          <button type="button" class="status-btn ${member.status === 'confirmed' ? 'active' : ''}" data-status="confirmed">Vou</button>
+          <button type="button" class="status-btn ${member.status === 'declined' ? 'active' : ''}" data-status="declined">Não vou</button>
+          <button type="button" class="status-btn ${member.status === 'pending' || !member.status ? 'active' : ''}" data-status="pending">Pendente</button>
+        </div>
       `;
       membersList.appendChild(div);
+    });
+
+    // Handle button clicks
+    membersList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('status-btn')) {
+        const parent = e.target.parentElement;
+        parent.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+      }
     });
 
     rsvpForm.addEventListener('submit', async (e) => {
@@ -44,10 +54,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando...';
 
-      const updatedMembers = Array.from(membersList.querySelectorAll('input')).map(input => ({
-        name: input.dataset.name,
-        confirmed: input.checked
-      }));
+      const updatedMembers = Array.from(membersList.querySelectorAll('.member-controls')).map(controls => {
+        const name = controls.parentElement.querySelector('.member-name').textContent;
+        const status = controls.querySelector('.status-btn.active').dataset.status;
+        return { name, status };
+      });
 
       try {
         const res = await fetch('/api/rsvp', {

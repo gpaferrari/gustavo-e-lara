@@ -6,77 +6,111 @@
   <title>Admin RSVP | Gustavo & Lara</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .admin-page { padding: var(--gap-lg); max-width: 1000px; margin: 0 auto; }
+    .admin-page { padding: var(--gap-lg); max-width: 1200px; margin: 0 auto; }
     .admin-card { background: white; padding: var(--gap-md); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: var(--gap-lg); }
-    .admin-form { display: grid; gap: 15px; grid-template-columns: 1fr 1fr auto; align-items: end; }
-    .admin-form input { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
-    .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    .admin-table th, .admin-table td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
-    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
-    .status-confirmed { background: #e8f5e9; color: #2e7d32; }
-    .status-pending { background: #fff3e0; color: #ef6c00; }
-    .copy-link { cursor: pointer; color: var(--sage); text-decoration: underline; font-size: 0.9rem; }
+    
+    /* Login Screen */
+    #loginScreen { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+    .login-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+    
+    /* Stats Bar */
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: var(--gap-lg); }
+    .stat-box { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .stat-num { display: block; font-size: 2rem; font-weight: 700; color: var(--gold); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* Family Cards */
+    .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .family-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee; position: relative; transition: transform 0.2s; }
+    .family-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .family-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .family-card__title { margin: 0; font-size: 1.2rem; color: var(--text); }
+    
+    /* Indicators */
+    .completion-icon { font-size: 1.2rem; }
+    .icon-done { color: var(--sage); }
+    .icon-pending { color: #fbc02d; }
+
+    .member-list { list-style: none; padding: 0; margin: 0; }
+    .member-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f9f9f9; font-size: 0.9rem; }
+    .member-status { font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+    .status-confirmed { color: var(--sage); }
+    .status-declined { color: #e57373; }
+    .status-pending { color: #999; }
+
+    .card-actions { margin-top: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
+    .card-link { font-size: 0.8rem; color: var(--sage); cursor: pointer; text-decoration: underline; }
+
+    /* Modal */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; }
   </style>
 </head>
 <body class="bg-light">
-  <div class="admin-page">
+
+  <div id="loginScreen">
+    <div class="login-card">
+      <h2 style="font-family: 'Great Vibes'; font-size: 2.5rem; color: var(--gold);">Área Restrita</h2>
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
+      <button class="share-btn" style="width: 100%; margin-top: 10px;" onclick="handleLogin()">Entrar</button>
+    </div>
+  </div>
+
+  <div class="admin-page" id="adminContent" style="display: none;">
     <header class="section__head">
-      <h2 class="section__title">Gerenciar Convites</h2>
+      <h2 class="section__title">Painel de Convidados</h2>
     </header>
+
+    <div class="stats-bar">
+      <div class="stat-box">
+        <span class="stat-num" id="statTotal">0</span>
+        <span class="stat-label">Total Convidados</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="statConfirmed" style="color: var(--sage);">0</span>
+        <span class="stat-label">Confirmados</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="statDeclined" style="color: #e57373;">0</span>
+        <span class="stat-label">Não Vão</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="statPending" style="color: #fbc02d;">0</span>
+        <span class="stat-label">Pendentes</span>
+      </div>
+    </div>
 
     <div class="admin-card">
       <h3>Novo Convite</h3>
-      <form id="adminForm" class="admin-form">
+      <form id="adminForm" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: end;">
         <div>
-          <label>Nome da Família</label><br>
-          <input type="text" id="familyName" placeholder="Ex: Família Silva" required>
+          <label style="font-size: 0.8rem;">Nome da Família</label><br>
+          <input type="text" id="familyName" placeholder="Ex: Família Silva" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
         </div>
         <div>
-          <label>Membros (separados por vírgula)</label><br>
-          <input type="text" id="members" placeholder="João, Maria, Pedro" required>
+          <label style="font-size: 0.8rem;">Membros (separados por vírgula)</label><br>
+          <input type="text" id="members" placeholder="João, Maria, Pedro" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
         </div>
-        <button type="submit" class="share-btn">Criar Convite</button>
+        <button type="submit" class="share-btn">Criar Card</button>
       </form>
     </div>
 
-    <div class="admin-card">
-      <h3>Lista de Convites</h3>
-      <div style="overflow-x: auto;">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Família</th>
-              <th>Membros</th>
-              <th>Status</th>
-              <th>Link / QR Code</th>
-            </tr>
-          </thead>
-          <tbody id="adminTableBody">
-            <!-- Data will be loaded here -->
-          </tbody>
-        </table>
-      </div>
+    <div class="family-grid" id="familyGrid">
+      <!-- Cards will load here -->
     </div>
   </div>
 
-  <!-- Modal para QR Code -->
   <div id="qrModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3 id="modalTitle">Convite - Família</h3>
-      <div id="qrcode-container"></div>
-      <p id="modalUrl" style="font-size: 0.8rem; margin: 15px 0; word-break: break-all; color: var(--muted);"></p>
+      <span style="float: right; font-size: 28px; cursor: pointer;" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle">Convite</h3>
+      <div id="qrcode-container" style="display: flex; justify-content: center; margin: 20px 0;"></div>
+      <p id="modalUrl" style="font-size: 0.7rem; margin-bottom: 20px; word-break: break-all; color: #999;"></p>
       <button class="share-btn" onclick="downloadQR()">Baixar QR Code</button>
     </div>
   </div>
-
-  <style>
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
-    .modal-content { background: white; padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; }
-    .close { float: right; font-size: 28px; cursor: pointer; color: #aaa; }
-    #qrcode-container { display: flex; justify-content: center; margin: 20px 0; }
-    #qrcode-container canvas, #qrcode-container img { border: 10px solid white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-  </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/admin.js"></script>

@@ -23,12 +23,13 @@ export default async function handler(req, res) {
       const family = await kv.get(`family:${id}`);
       if (!family) return res.status(404).json({ error: 'Convite não encontrado' });
 
-      // Update members status
+      // members is now expected to be [{ name: string, status: 'confirmed' | 'declined' | 'pending' }]
       family.members = members;
       family.updatedAt = new Date().toISOString();
 
       await kv.set(`family:${id}`, family);
-      // Also update the index of all families for the admin
+      
+      // Update index
       const allFamilies = await kv.get('families_index') || [];
       const index = allFamilies.findIndex(f => f.id === id);
       if (index !== -1) {
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
         await kv.set('families_index', allFamilies);
       }
 
-      return res.status(200).json({ message: 'Presença confirmada com sucesso!' });
+      return res.status(200).json({ message: 'Presença atualizada com sucesso!' });
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao salvar confirmação' });
     }

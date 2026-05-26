@@ -1,37 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const adminForm = document.getElementById('adminForm');
-  const tableBody = document.getElementById('adminTableBody');
+/* ── Authentication ────────────────────────────────── */
+window.handleLogin = () => {
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
 
-  const loadFamilies = async () => {
+  if (user === 'GueLara' && pass === '1104') {
+    sessionStorage.setItem('adminAuth', 'GueLara:1104');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    loadFamilies();
+  } else {
+    alert('Usuário ou senha incorretos.');
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('adminAuth') === 'GueLara:1104') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    loadFamilies();
+  }
+
+  const adminForm = document.getElementById('adminForm');
+  const familyGrid = document.getElementById('familyGrid');
+
+  window.loadFamilies = async () => {
     try {
       const res = await fetch('/api/admin');
       const families = await res.json();
-      tableBody.innerHTML = '';
+      familyGrid.innerHTML = '';
+
+      let total = 0, confirmed = 0, declined = 0, pending = 0;
 
       families.forEach(f => {
-        const tr = document.createElement('tr');
-        const membersHtml = f.members.map(m => `
-          <span class="status-badge ${m.confirmed ? 'status-confirmed' : 'status-pending'}">
-            ${m.name} ${m.confirmed ? '✓' : '?'}
-          </span>
-        `).join(' ');
-
+        const familyCard = document.createElement('div');
+        familyCard.className = 'family-card';
+        
+        const isComplete = f.members.every(m => m.status !== 'pending');
         const rsvpUrl = `${window.location.origin}/rsvp.html?id=${f.id}`;
+        
+        let membersHtml = '';
+        f.members.forEach(m => {
+          total++;
+          if (m.status === 'confirmed') confirmed++;
+          else if (m.status === 'declined') declined++;
+          else pending++;
 
-        tr.innerHTML = `
-          <td><strong>${f.familyName}</strong></td>
-          <td>${membersHtml}</td>
-          <td>${f.lastUpdate ? 'Atualizado' : 'Pendente'}</td>
-          <td>
-            <span class="copy-link" onclick="copyToClipboard('${rsvpUrl}')">Copiar Link</span>
-            <br>
-            <span class="copy-link" onclick="showQRCode('${f.familyName}', '${rsvpUrl}')">Gerar QR Code</span>
-            <br>
-            <small><a href="${rsvpUrl}" target="_blank">Abrir</a></small>
-          </td>
+          const statusClass = `status-${m.status || 'pending'}`;
+          const statusText = m.status === 'confirmed' ? 'Vou' : (m.status === 'declined' ? 'Não vou' : 'Pendente');
+          
+          membersHtml += `
+            <li class="member-row">
+              <span>${m.name}</span>
+              <span class="member-status ${statusClass}">${statusText}</span>
+            </li>
+          `;
+        });
+
+        familyCard.innerHTML = `
+          <div class="family-card__header">
+            <h4 class="family-card__title">${f.familyName}</h4>
+            <span class="completion-icon ${isComplete ? 'icon-done' : 'icon-pending'}">
+              ${isComplete ? '✓' : '○'}
+            </span>
+          </div>
+          <ul class="member-list">${membersHtml}</ul>
+          <div class="card-actions">
+            <span class="card-link" onclick="copyToClipboard('${rsvpUrl}')">Copiar Link</span>
+            <span class="card-link" onclick="showQRCode('${f.familyName}', '${rsvpUrl}')">QR Code</span>
+          </div>
         `;
-        tableBody.appendChild(tr);
+        familyGrid.appendChild(familyCard);
       });
+
+      // Update Stats
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statConfirmed').textContent = confirmed;
+      document.getElementById('statDeclined').textContent = declined;
+      document.getElementById('statPending').textContent = pending;
+
     } catch (err) {
       console.error('Erro ao carregar:', err);
     }
@@ -41,20 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const familyName = document.getElementById('familyName').value;
     const members = document.getElementById('members').value.split(',').map(m => m.trim()).filter(m => m !== '');
+    const auth = sessionStorage.getItem('adminAuth');
 
     try {
       const res = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ familyName, members })
+        body: JSON.stringify({ familyName, members, auth })
       });
 
       if (res.ok) {
         adminForm.reset();
         loadFamilies();
+      } else {
+        alert('Erro ao criar convite. Verifique sua sessão.');
       }
     } catch (err) {
-      alert('Erro ao criar convite.');
+      alert('Erro de conexão.');
     }
   });
 
@@ -63,8 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   /* ── QR Code Logic ────────────────────────────────── */
-  let currentQRCode = null;
-
   window.showQRCode = (name, url) => {
     const modal = document.getElementById('qrModal');
     const container = document.getElementById('qrcode-container');
@@ -75,13 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
     urlDisplay.textContent = url;
     container.innerHTML = '';
     
-    currentQRCode = new QRCode(container, {
+    new QRCode(container, {
       text: url,
       width: 256,
       height: 256,
       colorDark : "#5C3D2E",
       colorLight : "#ffffff",
-      correctLevel : QRCode.CorrectLevel.H
+      correctLevel : QRCode.Level.H
     });
 
     modal.style.display = 'flex';
@@ -101,11 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Fechar modal ao clicar fora
-  window.onclick = (event) => {
-    const modal = document.getElementById('qrModal');
-    if (event.target == modal) closeModal();
+  window.onclick = (e) => {
+    if (e.target.id === 'qrModal') closeModal();
   };
-
-  loadFamilies();
 });

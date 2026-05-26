@@ -12,15 +12,21 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { familyName, members } = req.body;
+    const { familyName, members, auth } = req.body;
+    
+    // Simple auth check
+    if (auth !== 'GueLara:1104') {
+      return res.status(401).json({ error: 'Não autorizado' });
+    }
+
     if (!familyName || !members) return res.status(400).json({ error: 'Data incomplete' });
 
     try {
-      const id = randomUUID().split('-')[0]; // Simple short ID
+      const id = randomUUID().split('-')[0];
       const newFamily = {
         id,
         familyName,
-        members: members.map(name => ({ name: name.trim(), confirmed: false })),
+        members: members.map(name => ({ name: name.trim(), status: 'pending' })),
         createdAt: new Date().toISOString()
       };
 
