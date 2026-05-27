@@ -54,22 +54,116 @@ const loadFamilies = async () => {
         <div class="card-actions">
           <span class="card-link" onclick="copyToClipboard('${rsvpUrl}')">Copiar Link</span>
           <span class="card-link" onclick="showQRCode('${f.familyName}', '${rsvpUrl}')">QR Code</span>
+          <span class="card-link" onclick="openEditModal('${f.id}')">Editar</span>
+          <span class="card-link" onclick="deleteFamily('${f.id}')" style="color: #e57373;">Excluir</span>
         </div>
       `;
       familyGrid.appendChild(familyCard);
-    });
+      });
 
-    // Update Stats
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statConfirmed').textContent = confirmed;
-    document.getElementById('statDeclined').textContent = declined;
-    document.getElementById('statPending').textContent = pending;
+      // Update Stats
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statConfirmed').textContent = confirmed;
+      document.getElementById('statDeclined').textContent = declined;
+      document.getElementById('statPending').textContent = pending;
 
-  } catch (err) {
-    console.error('Erro ao carregar:', err);
-  }
-};
+      } catch (err) {
+      console.error('Erro ao carregar:', err);
+      }
+      };
 
+      /* ── Delete/Edit Logic ────────────────────────────── */
+      window.deleteFamily = async (id) => {
+      if (!confirm('Tem certeza que deseja excluir este convite inteiro?')) return;
+
+      const auth = sessionStorage.getItem('adminAuth');
+      try {
+      const res = await fetch('/api/admin', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, auth })
+      });
+      if (res.ok) loadFamilies();
+      } catch (err) {
+      alert('Erro ao excluir.');
+      }
+      };
+
+      let editingFamilyId = null;
+      let editingMembers = [];
+
+      window.openEditModal = async (id) => {
+      editingFamilyId = id;
+      const auth = sessionStorage.getItem('adminAuth');
+      try {
+      // Find the family in the local list or fetch (for simplicity we use index)
+      const res = await fetch('/api/admin');
+      const families = await res.json();
+      const family = families.find(f => f.id === id);
+
+      if (family) {
+      document.getElementById('editFamilyName').value = family.familyName;
+      editingMembers = [...family.members];
+      renderEditMembers();
+      document.getElementById('editModal').style.display = 'flex';
+      }
+      } catch (err) {
+      alert('Erro ao abrir edição.');
+      }
+      };
+
+      const renderEditMembers = () => {
+      const list = document.getElementById('editMembersList');
+      list.innerHTML = '';
+      editingMembers.forEach((m, index) => {
+      const div = document.createElement('div');
+      div.style.display = 'flex';
+      div.style.gap = '10px';
+      div.style.marginBottom = '10px';
+      div.innerHTML = `
+      <input type="text" value="${m.name}" onchange="updateMemberName(${index}, this.value)" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+      <button onclick="removeMemberFromEdit(${index})" style="background: none; border: none; color: #e57373; cursor: pointer;">✕</button>
+      `;
+      list.appendChild(div);
+      });
+      };
+
+      window.updateMemberName = (index, newName) => {
+      editingMembers[index].name = newName;
+      };
+
+      window.removeMemberFromEdit = (index) => {
+      editingMembers.splice(index, 1);
+      renderEditMembers();
+      };
+
+      window.addMemberToEdit = () => {
+      editingMembers.push({ name: '', status: 'pending' });
+      renderEditMembers();
+      };
+
+      window.closeEditModal = () => {
+      document.getElementById('editModal').style.display = 'none';
+      };
+
+      window.saveFamilyEdit = async () => {
+      const familyName = document.getElementById('editFamilyName').value;
+      const auth = sessionStorage.getItem('adminAuth');
+
+      try {
+      const res = await fetch('/api/admin', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: editingFamilyId, familyName, members: editingMembers, auth })
+      });
+      if (res.ok) {
+      closeEditModal();
+      loadFamilies();
+      }
+      } catch (err) {
+      alert('Erro ao salvar.');
+      }
+      };
 /* ── Authentication ────────────────────────────────── */
 window.handleLogin = () => {
   const user = document.getElementById('username').value;

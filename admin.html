@@ -112,6 +112,29 @@
     </div>
   </div>
 
+  <!-- Modal para Editar Família -->
+  <div id="editModal" class="modal">
+    <div class="modal-content" style="max-width: 500px; text-align: left;">
+      <span style="float: right; font-size: 28px; cursor: pointer;" onclick="closeEditModal()">&times;</span>
+      <h3 style="font-family: 'Great Vibes'; font-size: 2rem; color: var(--gold); text-align: center;">Editar Família</h3>
+      
+      <div style="margin-bottom: 20px;">
+        <label style="font-size: 0.8rem; font-weight: 600;">Nome da Família</label>
+        <input type="text" id="editFamilyName" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-top: 5px;">
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 0.8rem; font-weight: 600;">Integrantes</label>
+        <div id="editMembersList" style="margin-top: 10px; max-height: 250px; overflow-y: auto;">
+          <!-- Members list with inputs and delete buttons -->
+        </div>
+        <button class="card-link" onclick="addMemberToEdit()" style="margin-top: 10px; border: none; background: none;">+ Adicionar Integrante</button>
+      </div>
+
+      <button class="share-btn" style="width: 100%;" onclick="saveFamilyEdit()">Salvar Alterações</button>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/admin.js"></script>
 </body>
