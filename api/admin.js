@@ -30,16 +30,26 @@ export default async function handler(req, res) {
         createdAt: new Date().toISOString()
       };
 
+      // Set the family data
       await kv.set(`family:${id}`, newFamily);
 
-      // Add to index
-      const allFamilies = await kv.get('families_index') || [];
+      // Update the index
+      let allFamilies = [];
+      try {
+        const existingIndex = await kv.get('families_index');
+        allFamilies = Array.isArray(existingIndex) ? existingIndex : [];
+      } catch (e) {
+        console.error('Error fetching index:', e);
+        allFamilies = [];
+      }
+      
       allFamilies.push(newFamily);
       await kv.set('families_index', allFamilies);
 
       return res.status(201).json(newFamily);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao criar convite' });
+      console.error('KV Error:', error);
+      return res.status(500).json({ error: 'Erro no banco de dados', details: error.message });
     }
   }
 
