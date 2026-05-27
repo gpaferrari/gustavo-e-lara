@@ -11,3 +11,4 @@ WhatsApp*
 .idea/
 
 .vercel
+.env*.local
