@@ -2,24 +2,36 @@ import { kv } from '@vercel/kv';
 import { randomUUID } from 'crypto';
 
 export default async function handler(req, res) {
+  // Check if KV is configured
+  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+    console.error('KV Environment variables are missing!');
+    return res.status(500).json({ 
+      error: 'Configuração do banco de dados pendente.',
+      details: 'As chaves KV_REST_API_URL ou TOKEN não foram encontradas.' 
+    });
+  }
+
   if (req.method === 'GET') {
     try {
-      const allFamilies = await kv.get('families_index') || [];
-      return res.status(200).json(allFamilies);
+      const allFamilies = await kv.get('families_index');
+      // Ensure we return an array even if the index is empty or null
+      return res.status(200).json(Array.isArray(allFamilies) ? allFamilies : []);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar convites' });
+      console.error('KV GET Error:', error);
+      return res.status(500).json({ error: 'Erro ao buscar convites', details: error.message });
     }
   }
 
   if (req.method === 'POST') {
     const { familyName, members, auth } = req.body;
     
-    // Simple auth check
     if (auth !== 'GueLara:1104') {
       return res.status(401).json({ error: 'Não autorizado' });
     }
 
-    if (!familyName || !members) return res.status(400).json({ error: 'Data incomplete' });
+    if (!familyName || !members || !Array.isArray(members)) {
+      return res.status(400).json({ error: 'Dados incompletos ou formato inválido' });
+    }
 
     try {
       const id = randomUUID().split('-')[0];
@@ -30,16 +42,15 @@ export default async function handler(req, res) {
         createdAt: new Date().toISOString()
       };
 
-      // Set the family data
+      // Set family data
       await kv.set(`family:${id}`, newFamily);
 
-      // Update the index
+      // Update index
       let allFamilies = [];
       try {
         const existingIndex = await kv.get('families_index');
         allFamilies = Array.isArray(existingIndex) ? existingIndex : [];
       } catch (e) {
-        console.error('Error fetching index:', e);
         allFamilies = [];
       }
       
@@ -48,8 +59,8 @@ export default async function handler(req, res) {
 
       return res.status(201).json(newFamily);
     } catch (error) {
-      console.error('KV Error:', error);
-      return res.status(500).json({ error: 'Erro no banco de dados', details: error.message });
+      console.error('KV POST Error:', error);
+      return res.status(500).json({ error: 'Erro ao salvar no banco', details: error.message });
     }
   }
 

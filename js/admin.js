@@ -6,6 +6,14 @@ const loadFamilies = async () => {
   try {
     const res = await fetch('/api/admin');
     const families = await res.json();
+    
+    // Safety check: if families is not an array (e.g., it's an error object), log it and stop.
+    if (!Array.isArray(families)) {
+      console.error('API did not return an array:', families);
+      familyGrid.innerHTML = `<p style="color: red; padding: 20px;">Erro: ${families.error || 'Resposta inválida do servidor'}</p>`;
+      return;
+    }
+
     familyGrid.innerHTML = '';
 
     let total = 0, confirmed = 0, declined = 0, pending = 0;
