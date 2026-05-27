@@ -2,22 +2,24 @@ import { kv } from '@vercel/kv';
 import { randomUUID } from 'crypto';
 
 export default async function handler(req, res) {
-  // Check if KV is configured
-  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-    console.error('KV Environment variables are missing!');
+  // Enhanced check: support both Vercel KV (REST) and standard Redis (URL)
+  const isKVConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+  const isRedisConfigured = process.env.REDIS_URL;
+
+  if (!isKVConfigured && !isRedisConfigured) {
+    console.error('Database configuration missing!');
     return res.status(500).json({ 
       error: 'Configuração do banco de dados pendente.',
-      details: 'As chaves KV_REST_API_URL ou TOKEN não foram encontradas.' 
+      details: 'Não encontramos KV_REST_API_URL nem REDIS_URL nas variáveis de ambiente.' 
     });
   }
 
   if (req.method === 'GET') {
     try {
       const allFamilies = await kv.get('families_index');
-      // Ensure we return an array even if the index is empty or null
       return res.status(200).json(Array.isArray(allFamilies) ? allFamilies : []);
     } catch (error) {
-      console.error('KV GET Error:', error);
+      console.error('Database GET Error:', error);
       return res.status(500).json({ error: 'Erro ao buscar convites', details: error.message });
     }
   }
@@ -42,10 +44,8 @@ export default async function handler(req, res) {
         createdAt: new Date().toISOString()
       };
 
-      // Set family data
       await kv.set(`family:${id}`, newFamily);
 
-      // Update index
       let allFamilies = [];
       try {
         const existingIndex = await kv.get('families_index');
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 
       return res.status(201).json(newFamily);
     } catch (error) {
-      console.error('KV POST Error:', error);
+      console.error('Database POST Error:', error);
       return res.status(500).json({ error: 'Erro ao salvar no banco', details: error.message });
     }
   }
