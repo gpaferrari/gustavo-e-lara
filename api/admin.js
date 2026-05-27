@@ -1,39 +1,43 @@
-import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
 import { randomUUID } from 'crypto';
 
-export default async function handler(req, res) {
-  // Enhanced check: support both Vercel KV (REST) and standard Redis (URL)
-  const isKVConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
-  const isRedisConfigured = process.env.REDIS_URL;
+// Reusable client singleton
+let redisClient;
 
-  if (!isKVConfigured && !isRedisConfigured) {
-    console.error('Database configuration missing!');
-    return res.status(500).json({ 
-      error: 'Configuração do banco de dados pendente.',
-      details: 'Não encontramos KV_REST_API_URL nem REDIS_URL nas variáveis de ambiente.' 
-    });
+const getRedisClient = async () => {
+  if (redisClient) return redisClient;
+  
+  const url = process.env.REDIS_URL || process.env.KV_URL;
+  if (!url) throw new Error('REDIS_URL or KV_URL missing');
+
+  redisClient = createClient({ url });
+  redisClient.on('error', (err) => console.error('Redis Client Error', err));
+  await redisClient.connect();
+  return redisClient;
+};
+
+export default async function handler(req, res) {
+  let client;
+  try {
+    client = await getRedisClient();
+  } catch (error) {
+    console.error('Connection Error:', error);
+    return res.status(500).json({ error: 'Erro de conexão com o banco', details: error.message });
   }
 
   if (req.method === 'GET') {
     try {
-      const allFamilies = await kv.get('families_index');
-      return res.status(200).json(Array.isArray(allFamilies) ? allFamilies : []);
+      const data = await client.get('families_index');
+      return res.status(200).json(data ? JSON.parse(data) : []);
     } catch (error) {
-      console.error('Database GET Error:', error);
-      return res.status(500).json({ error: 'Erro ao buscar convites', details: error.message });
+      return res.status(500).json({ error: 'Erro ao buscar dados' });
     }
   }
 
   if (req.method === 'POST') {
     const { familyName, members, auth } = req.body;
-    
-    if (auth !== 'GueLara:1104') {
-      return res.status(401).json({ error: 'Não autorizado' });
-    }
-
-    if (!familyName || !members || !Array.isArray(members)) {
-      return res.status(400).json({ error: 'Dados incompletos ou formato inválido' });
-    }
+    if (auth !== 'GueLara:1104') return res.status(401).json({ error: 'Não autorizado' });
+    if (!familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
 
     try {
       const id = randomUUID().split('-')[0];
@@ -44,23 +48,16 @@ export default async function handler(req, res) {
         createdAt: new Date().toISOString()
       };
 
-      await kv.set(`family:${id}`, newFamily);
+      await client.set(`family:${id}`, JSON.stringify(newFamily));
 
-      let allFamilies = [];
-      try {
-        const existingIndex = await kv.get('families_index');
-        allFamilies = Array.isArray(existingIndex) ? existingIndex : [];
-      } catch (e) {
-        allFamilies = [];
-      }
-      
+      const rawIndex = await client.get('families_index');
+      const allFamilies = rawIndex ? JSON.parse(rawIndex) : [];
       allFamilies.push(newFamily);
-      await kv.set('families_index', allFamilies);
+      await client.set('families_index', JSON.stringify(allFamilies));
 
       return res.status(201).json(newFamily);
     } catch (error) {
-      console.error('Database POST Error:', error);
-      return res.status(500).json({ error: 'Erro ao salvar no banco', details: error.message });
+      return res.status(500).json({ error: 'Erro ao salvar' });
     }
   }
 
