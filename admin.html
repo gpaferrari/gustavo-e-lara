@@ -69,16 +69,16 @@
         <span class="stat-label">Total Convidados</span>
       </div>
       <div class="stat-box">
+        <span class="stat-num" id="statPaying" style="color: var(--gold);">0</span>
+        <span class="stat-label">Pagantes</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="statChildren" style="color: #64b5f6;">0</span>
+        <span class="stat-label">Crianças (-5 anos)</span>
+      </div>
+      <div class="stat-box">
         <span class="stat-num" id="statConfirmed" style="color: var(--sage);">0</span>
         <span class="stat-label">Confirmados</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-num" id="statDeclined" style="color: #e57373;">0</span>
-        <span class="stat-label">Não Vão</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-num" id="statPending" style="color: #fbc02d;">0</span>
-        <span class="stat-label">Pendentes</span>
       </div>
     </div>
 
@@ -90,11 +90,12 @@
           <input type="text" id="familyName" placeholder="Ex: Família Silva" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
         </div>
         <div>
-          <label style="font-size: 0.8rem;">Membros (separados por vírgula)</label><br>
-          <input type="text" id="members" placeholder="João, Maria, Pedro" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+          <label style="font-size: 0.8rem;">Membros (nome:c para criança, ex: Pedro:c, Maria)</label><br>
+          <input type="text" id="members" placeholder="João, Maria, Pedro:c" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
         </div>
         <button type="submit" class="share-btn">Criar Card</button>
       </form>
+      <p style="font-size: 0.7rem; color: var(--muted); margin-top: 10px;">* Use <b>:c</b> após o nome para marcar como criança (ex: <b>Enzo:c</b>).</p>
     </div>
 
     <div class="family-grid" id="familyGrid">

@@ -44,7 +44,11 @@ export default async function handler(req, res) {
       const newFamily = {
         id,
         familyName,
-        members: members.map(name => ({ name: name.trim(), status: 'pending' })),
+        members: members.map(m => ({ 
+          name: (typeof m === 'string' ? m : m.name).trim(), 
+          status: 'pending',
+          isChild: typeof m === 'object' ? !!m.isChild : false
+        })),
         createdAt: new Date().toISOString()
       };
 

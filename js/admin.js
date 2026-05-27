@@ -16,7 +16,7 @@ const loadFamilies = async () => {
 
     familyGrid.innerHTML = '';
 
-    let total = 0, confirmed = 0, declined = 0, pending = 0;
+    let total = 0, confirmed = 0, childrenTotal = 0, payingTotal = 0;
 
     families.forEach(f => {
       const familyCard = document.createElement('div');
@@ -28,16 +28,18 @@ const loadFamilies = async () => {
       let membersHtml = '';
       f.members.forEach(m => {
         total++;
+        if (m.isChild) childrenTotal++;
+        else payingTotal++;
+
         if (m.status === 'confirmed') confirmed++;
-        else if (m.status === 'declined') declined++;
-        else pending++;
 
         const statusClass = `status-${m.status || 'pending'}`;
         const statusText = m.status === 'confirmed' ? 'Vou' : (m.status === 'declined' ? 'Não vou' : 'Pendente');
+        const childTag = m.isChild ? '<small style="background:#e3f2fd;color:#1976d2;padding:2px 6px;border-radius:4px;font-size:10px;margin-left:5px;">CRIANÇA</small>' : '';
         
         membersHtml += `
           <li class="member-row">
-            <span>${m.name}</span>
+            <span>${m.name}${childTag}</span>
             <span class="member-status ${statusClass}">${statusText}</span>
           </li>
         `;
@@ -52,8 +54,8 @@ const loadFamilies = async () => {
         </div>
         <ul class="member-list">${membersHtml}</ul>
         <div class="card-actions">
-          <span class="card-link" onclick="copyToClipboard('${rsvpUrl}')">Copiar Link</span>
-          <span class="card-link" onclick="showQRCode('${f.familyName}', '${rsvpUrl}')">QR Code</span>
+          <span class="card-link" onclick="copyToClipboard('${rsvpUrl}')">Link</span>
+          <span class="card-link" onclick="showQRCode('${f.familyName}', '${rsvpUrl}')">QR</span>
           <span class="card-link" onclick="openEditModal('${f.id}')">Editar</span>
           <span class="card-link" onclick="deleteFamily('${f.id}')" style="color: #e57373;">Excluir</span>
         </div>
@@ -63,9 +65,9 @@ const loadFamilies = async () => {
 
       // Update Stats
       document.getElementById('statTotal').textContent = total;
+      document.getElementById('statPaying').textContent = payingTotal;
+      document.getElementById('statChildren').textContent = childrenTotal;
       document.getElementById('statConfirmed').textContent = confirmed;
-      document.getElementById('statDeclined').textContent = declined;
-      document.getElementById('statPending').textContent = pending;
 
       } catch (err) {
       console.error('Erro ao carregar:', err);
@@ -118,10 +120,14 @@ const loadFamilies = async () => {
       editingMembers.forEach((m, index) => {
       const div = document.createElement('div');
       div.style.display = 'flex';
+      div.style.alignItems = 'center';
       div.style.gap = '10px';
       div.style.marginBottom = '10px';
       div.innerHTML = `
       <input type="text" value="${m.name}" onchange="updateMemberName(${index}, this.value)" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+      <label style="font-size: 10px; display: flex; align-items: center; gap: 4px;">
+        <input type="checkbox" ${m.isChild ? 'checked' : ''} onchange="toggleMemberChild(${index}, this.checked)"> Criança
+      </label>
       <button onclick="removeMemberFromEdit(${index})" style="background: none; border: none; color: #e57373; cursor: pointer;">✕</button>
       `;
       list.appendChild(div);
@@ -132,13 +138,17 @@ const loadFamilies = async () => {
       editingMembers[index].name = newName;
       };
 
+      window.toggleMemberChild = (index, isChild) => {
+        editingMembers[index].isChild = isChild;
+      };
+
       window.removeMemberFromEdit = (index) => {
       editingMembers.splice(index, 1);
       renderEditMembers();
       };
 
       window.addMemberToEdit = () => {
-      editingMembers.push({ name: '', status: 'pending' });
+      editingMembers.push({ name: '', status: 'pending', isChild: false });
       renderEditMembers();
       };
 
@@ -193,7 +203,17 @@ document.addEventListener('DOMContentLoaded', () => {
     adminForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const familyName = document.getElementById('familyName').value;
-      const members = document.getElementById('members').value.split(',').map(m => m.trim()).filter(m => m !== '');
+      const membersRaw = document.getElementById('members').value.split(',');
+      
+      const members = membersRaw.map(m => {
+        const clean = m.trim();
+        const isChild = clean.toLowerCase().endsWith(':c');
+        return {
+          name: isChild ? clean.slice(0, -2).trim() : clean,
+          isChild: isChild
+        };
+      }).filter(m => m.name !== '');
+
       const auth = sessionStorage.getItem('adminAuth');
 
       try {
