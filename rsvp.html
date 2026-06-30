@@ -100,12 +100,31 @@
 
       <div id="content" style="display: none;">
         <h1 class="rsvp-card__title">Olá, <span id="familyName">Família</span></h1>
+        
+        <!-- Alerta de Prazo -->
+        <div id="deadlineNotice" style="margin-bottom: 25px; padding: 15px; background: #fff8e1; border-radius: 12px; border: 1px solid #ffe082;">
+          <p style="font-size: 0.85rem; color: #856404; font-weight: 500; margin-bottom: 5px;">Prazo máximo para confirmação:</p>
+          <p style="font-size: 1rem; color: var(--dark); font-weight: 600;">30 de Novembro de 2026</p>
+          <div id="countdown" style="font-family: var(--sans); font-size: 0.8rem; color: var(--gold); margin-top: 8px; letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;"></div>
+        </div>
+
         <p class="rsvp-card__subtitle">Confirme quem poderá celebrar conosco:</p>
         
         <form id="rsvpForm" class="rsvp-form">
           <div id="membersList"></div>
           <button type="submit" class="rsvp-submit" id="submitBtn">Confirmar Presença</button>
         </form>
+      </div>
+
+      <!-- Estado de Prazo Encerrado -->
+      <div id="deadlineExpired" class="error-state">
+        <h2 class="rsvp-card__title">Prazo Encerrado</h2>
+        <p>Infelizmente o prazo para confirmação automática pelo QR Code encerrou no dia 30/11/2026.</p>
+        <p style="margin: 15px 0; font-size: 0.9rem;">Por favor, entre em contato diretamente com o Gustavo para verificar a disponibilidade e realizar sua confirmação manualmente:</p>
+        <a href="https://wa.me/5514991478807?text=Oi%20Gustavo!%20Perdi%20o%20prazo%20do%20site%2C%20mas%20gostaria%20de%20confirmar%20minha%20presen%C3%A7a..." 
+           class="rsvp__btn" style="width: 100%; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; gap: 10px;">
+           Falar com Gustavo via WhatsApp
+        </a>
       </div>
 
       <div id="success" class="success-state">

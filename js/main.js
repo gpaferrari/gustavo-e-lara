@@ -110,3 +110,40 @@ if (typeof console !== 'undefined' && console.log) {
   );
 }
 /* eslint-enable no-console */
+
+/* ── RSVP Popup ────────────────────────────────────── */
+function setupRSVPPopup() {
+  const popupHtml = `
+    <div class="rsvp-popup" id="rsvpPopup">
+      <button class="rsvp-popup__close" id="closePopup" aria-label="Fechar">&times;</button>
+      <h3 class="rsvp-popup__title">Falta pouco! 💍</h3>
+      <p class="rsvp-popup__text">
+        Estamos muito felizes em celebrar este momento com você! <br><br>
+        A confirmação de presença deve ser feita através do <strong>QR Code do seu convite</strong> até o dia 30 de novembro de 2026.
+      </p>
+      <div class="rsvp-popup__actions">
+        <a href="https://wa.me/5514991478807?text=Oi%20Gustavo!%20Tive%20problemas%20com%20meu%20QR%20Code%2C%20poderia%20me%20ajudar%3F" 
+           class="rsvp-popup__btn" target="_blank">Dúvidas? Fale com o noivo</a>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', popupHtml);
+
+  const popup = document.getElementById('rsvpPopup');
+  const closeBtn = document.getElementById('closePopup');
+
+  // Não mostrar se já foi fechado nesta sessão
+  if (sessionStorage.getItem('rsvp_popup_closed')) return;
+
+  setTimeout(() => {
+    popup.classList.add('show');
+  }, 3000);
+
+  closeBtn.addEventListener('click', () => {
+    popup.classList.remove('show');
+    sessionStorage.setItem('rsvp_popup_closed', 'true');
+  });
+}
+
+window.addEventListener('load', setupRSVPPopup);
