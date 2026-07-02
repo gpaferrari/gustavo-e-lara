@@ -8,80 +8,354 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     .rsvp-page {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: var(--gap-lg) var(--gap-md);
-      background: var(--bg);
+      padding: 18px 14px 36px;
+      background:
+        radial-gradient(circle at top left, rgba(196, 147, 74, 0.18), transparent 34%),
+        linear-gradient(160deg, var(--ivory) 0%, var(--cream) 54%, #f7efe4 100%);
     }
+
     .rsvp-card {
-      background: white;
-      padding: var(--gap-lg);
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.05);
       width: 100%;
-      max-width: 500px;
+      max-width: 640px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(196, 147, 74, 0.22);
+      border-radius: 24px;
+      box-shadow: 0 24px 70px rgba(28, 18, 10, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .rsvp-shell {
+      padding: 26px 18px 20px;
+    }
+
+    .rsvp-hero {
+      padding: 30px 22px 28px;
+      color: var(--ivory);
+      background:
+        linear-gradient(145deg, rgba(28, 18, 10, 0.94), rgba(92, 61, 46, 0.9)),
+        var(--dark);
       text-align: center;
     }
+
+    .rsvp-kicker {
+      display: block;
+      color: var(--gold-light);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
     .rsvp-card__title {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3rem;
-      color: var(--gold);
-      margin-bottom: var(--gap-sm);
+      color: inherit;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 12px;
     }
+
+    .rsvp-card__title span {
+      display: block;
+      color: var(--gold-light);
+      font-family: var(--script);
+      font-size: clamp(2.8rem, 12vw, 4.4rem);
+      line-height: 0.95;
+      margin-top: 6px;
+    }
+
+    .rsvp-hero__text {
+      max-width: 430px;
+      margin: 0 auto;
+      color: rgba(253, 250, 245, 0.78);
+      font-size: 0.98rem;
+      line-height: 1.75;
+    }
+
+    .rsvp-message {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 18px;
+      background: var(--ivory);
+      border: 1px solid rgba(122, 158, 126, 0.18);
+      border-radius: 18px;
+    }
+
+    .rsvp-message__eyebrow {
+      color: var(--sage-dark);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
     .rsvp-card__subtitle {
-      font-size: 1.1rem;
-      margin-bottom: var(--gap-lg);
+      color: var(--brown);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .deadline-notice {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .deadline-card {
+      padding: 16px;
+      background: #fff8e1;
+      border: 1px solid #f3d892;
+      border-radius: 18px;
+    }
+
+    .deadline-card--event {
+      background: rgba(122, 158, 126, 0.12);
+      border-color: rgba(122, 158, 126, 0.22);
+    }
+
+    .deadline-card__label {
+      display: block;
       color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
     }
+
+    .deadline-card__value {
+      display: block;
+      color: var(--dark);
+      font-size: 1.03rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    #countdown {
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
     .rsvp-form {
-      text-align: left;
+      display: grid;
+      gap: 16px;
     }
+
+    .members-list {
+      display: grid;
+      gap: 14px;
+    }
+
     .member-item {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--ivory);
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      background: var(--white);
+      border: 1px solid rgba(92, 61, 46, 0.08);
+      border-radius: 18px;
+      box-shadow: 0 10px 26px rgba(28, 18, 10, 0.05);
     }
+
+    .member-header {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .member-number {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      color: var(--sage-dark);
+      background: rgba(122, 158, 126, 0.12);
+      border-radius: 50%;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .member-name {
+      display: block;
+      color: var(--dark);
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .member-role {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+      margin-top: 3px;
+    }
+
+    .child-pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-top: 7px;
+      padding: 3px 8px;
+      color: var(--sage-dark);
+      background: rgba(122, 158, 126, 0.14);
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .member-controls {
-      display: flex;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
     }
+
     .status-btn {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      min-height: 64px;
+      padding: 10px 8px;
+      color: var(--brown);
       background: white;
-      font-size: 0.85rem;
+      border: 1px solid rgba(92, 61, 46, 0.12);
+      border-radius: 14px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
     }
+
+    .status-btn:active {
+      transform: scale(0.98);
+    }
+
+    .status-btn__label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .status-btn__hint {
+      display: block;
+      font-size: 0.68rem;
+      line-height: 1.2;
+      opacity: 0.78;
+      margin-top: 4px;
+    }
+
+    .status-btn.active {
+      box-shadow: 0 9px 22px rgba(28, 18, 10, 0.12);
+    }
+
     .status-btn.active[data-status="confirmed"] { background: var(--sage); color: white; border-color: var(--sage); }
     .status-btn.active[data-status="declined"] { background: #e57373; color: white; border-color: #e57373; }
-    .status-btn.active[data-status="pending"] { background: #eee; color: #666; }
+    .status-btn.active[data-status="pending"] { background: var(--cream); color: var(--brown); border-color: var(--cream-mid); }
+
     .rsvp-submit {
       width: 100%;
-      margin-top: var(--gap-lg);
-      padding: 16px;
-      background: var(--sage);
+      min-height: 56px;
+      margin-top: 4px;
+      padding: 16px 18px;
       color: white;
+      background: var(--sage);
       border: none;
-      border-radius: 50px;
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
+      border-radius: 999px;
+      box-shadow: 0 12px 28px rgba(74, 112, 80, 0.22);
       cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
       transition: all 0.3s ease;
     }
+
+    .rsvp-submit:hover {
+      background: var(--sage-dark);
+    }
+
     .rsvp-submit:disabled {
+      color: var(--muted);
       background: var(--ivory);
+      box-shadow: none;
       cursor: not-allowed;
     }
+
     .loading-state, .error-state, .success-state {
       display: none;
+      padding: 34px 22px;
+      text-align: center;
+    }
+
+    .state-title {
+      color: var(--gold);
+      font-family: var(--script);
+      font-size: clamp(3rem, 15vw, 4.6rem);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .state-copy {
+      max-width: 420px;
+      margin: 0 auto;
+      color: var(--brown);
+      line-height: 1.7;
+    }
+
+    .state-actions {
+      margin-top: 22px;
+    }
+
+    .loading-dot {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 18px;
+      border: 4px solid rgba(196, 147, 74, 0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: rsvp-spin 0.9s linear infinite;
+    }
+
+    @keyframes rsvp-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (min-width: 580px) {
+      .rsvp-page {
+        align-items: center;
+        padding: 38px 24px;
+      }
+
+      .rsvp-shell {
+        padding: 30px;
+      }
+
+      .deadline-notice {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .member-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .status-btn {
+        min-height: 52px;
+        padding: 12px 14px;
+        text-align: left;
+      }
     }
   </style>
 </head>
@@ -89,48 +363,66 @@
   <div class="rsvp-page">
     <div class="rsvp-card">
       <div id="loading" class="loading-state" style="display: block;">
-        <p>Buscando seu convite...</p>
+        <div class="loading-dot" aria-hidden="true"></div>
+        <p class="state-copy">Buscando seu convite...</p>
       </div>
 
       <div id="error" class="error-state">
-        <h2 class="rsvp-card__title">Ops!</h2>
-        <p>Não conseguimos encontrar seu convite. Verifique o link ou entre em contato conosco.</p>
-        <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none; margin-top: 20px;">Voltar ao site</a>
+        <h2 class="state-title">Ops!</h2>
+        <p class="state-copy">Não conseguimos encontrar seu convite. Verifique o link do QR Code ou entre em contato conosco.</p>
+        <div class="state-actions">
+          <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none;">Voltar ao site</a>
+        </div>
       </div>
 
       <div id="content" style="display: none;">
-        <h1 class="rsvp-card__title">Olá, <span id="familyName">Família</span></h1>
-        
-        <!-- Alerta de Prazo -->
-        <div id="deadlineNotice" style="margin-bottom: 25px; padding: 15px; background: #fff8e1; border-radius: 12px; border: 1px solid #ffe082;">
-          <p style="font-size: 0.85rem; color: #856404; font-weight: 500; margin-bottom: 5px;">Prazo máximo para confirmação:</p>
-          <p style="font-size: 1rem; color: var(--dark); font-weight: 600;">30 de Novembro de 2026</p>
-          <div id="countdown" style="font-family: var(--sans); font-size: 0.8rem; color: var(--gold); margin-top: 8px; letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;"></div>
-        </div>
+        <header class="rsvp-hero">
+          <span class="rsvp-kicker">Gustavo & Lara</span>
+          <h1 class="rsvp-card__title">Confirmação de presença <span id="familyName">Família</span></h1>
+          <p class="rsvp-hero__text">Marque a resposta de cada pessoa do convite. Isso nos ajuda a cuidar dos lugares, do buffet e de cada detalhe com carinho.</p>
+        </header>
 
-        <p class="rsvp-card__subtitle">Confirme quem poderá celebrar conosco:</p>
-        
-        <form id="rsvpForm" class="rsvp-form">
-          <div id="membersList"></div>
-          <button type="submit" class="rsvp-submit" id="submitBtn">Confirmar Presença</button>
-        </form>
+        <div class="rsvp-shell">
+          <section class="rsvp-message" aria-label="Orientação para confirmação">
+            <span class="rsvp-message__eyebrow">Como confirmar</span>
+            <p class="rsvp-card__subtitle">Escolha uma opção para cada convidado abaixo. Se ainda não souber, deixe como pendente e volte neste mesmo link quando decidir.</p>
+          </section>
+
+          <div id="deadlineNotice" class="deadline-notice">
+            <div class="deadline-card deadline-card--event">
+              <span class="deadline-card__label">Casamento</span>
+              <span class="deadline-card__value">09 de janeiro de 2027</span>
+            </div>
+            <div class="deadline-card">
+              <span class="deadline-card__label">Prazo para responder</span>
+              <span class="deadline-card__value">30 de novembro de 2026</span>
+              <div id="countdown"></div>
+            </div>
+          </div>
+
+          <form id="rsvpForm" class="rsvp-form">
+            <div id="membersList" class="members-list"></div>
+            <button type="submit" class="rsvp-submit" id="submitBtn">Salvar confirmação</button>
+          </form>
+        </div>
       </div>
 
-      <!-- Estado de Prazo Encerrado -->
       <div id="deadlineExpired" class="error-state">
-        <h2 class="rsvp-card__title">Prazo Encerrado</h2>
-        <p>Infelizmente o prazo para confirmação automática pelo QR Code encerrou no dia 30/11/2026.</p>
-        <p style="margin: 15px 0; font-size: 0.9rem;">Por favor, entre em contato diretamente com o Gustavo para verificar a disponibilidade e realizar sua confirmação manualmente:</p>
-        <a href="https://wa.me/5514991478807?text=Oi%20Gustavo!%20Perdi%20o%20prazo%20do%20site%2C%20mas%20gostaria%20de%20confirmar%20minha%20presen%C3%A7a..." 
-           class="rsvp__btn" style="width: 100%; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; gap: 10px;">
+        <h2 class="state-title">Prazo encerrado</h2>
+        <p class="state-copy">O prazo para confirmação automática pelo QR Code encerrou no dia 30/11/2026.</p>
+        <p class="state-copy" style="margin-top: 12px;">Fale diretamente com o Gustavo para verificar disponibilidade e confirmar manualmente.</p>
+        <a href="https://wa.me/5514991478807?text=Oi%20Gustavo!%20Perdi%20o%20prazo%20do%20site%2C%20mas%20gostaria%20de%20confirmar%20minha%20presen%C3%A7a..."
+           class="rsvp-submit" style="display: block; text-decoration: none; margin-top: 22px;">
            Falar com Gustavo via WhatsApp
         </a>
       </div>
 
       <div id="success" class="success-state">
-        <h2 class="rsvp-card__title">Obrigado!</h2>
-        <p>Sua confirmação foi registrada com sucesso. Esperamos por você!</p>
-        <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none; margin-top: 20px;">Ver site do casamento</a>
+        <h2 class="state-title">Obrigado!</h2>
+        <p class="state-copy">Sua confirmação foi registrada com sucesso. Esperamos por você!</p>
+        <div class="state-actions">
+          <a href="index.html" class="rsvp-submit" style="display: block; text-decoration: none;">Ver site do casamento</a>
+        </div>
       </div>
     </div>
   </div>
