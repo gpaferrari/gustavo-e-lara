@@ -88,17 +88,5 @@
     "familyName": "Padrinhos do Noivo - Rubia",
     "members": [],
     "recovered": true
-  },
-  {
-    "id": "4071efc0",
-    "familyName": "__TESTE_ESCRITA__",
-    "members": [
-      {
-        "name": "Teste",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-07-24T14:48:13.499Z"
   }
 ]
