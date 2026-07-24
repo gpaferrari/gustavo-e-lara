@@ -5,7 +5,9 @@ Este documento detalha as funcionalidades e a arquitetura do sistema personaliza
 ---
 
 ## 🚀 Visão Geral
-O projeto é uma aplicação web mobile-first construída com HTML/CSS/JS vanilla, integrada a uma API Serverless (Node.js) e um banco de dados Redis (Vercel KV/Upstash) para gerenciar convites e confirmações de presença de forma personalizada por família.
+O projeto é uma aplicação web mobile-first construída com HTML/CSS/JS vanilla, integrada a uma API Serverless (Node.js) que persiste os dados em `data/families.json` **no próprio repositório do GitHub** (via API de Contents) para gerenciar convites e confirmações de presença de forma personalizada por família.
+
+> **Histórico**: o sistema usava Redis (Vercel Marketplace) até 07/2026, mas o banco free-tier foi apagado por inatividade. Migramos para armazenamento em JSON no GitHub — imune a exclusão por inatividade e com backup automático via histórico de commits.
 
 ---
 
@@ -43,15 +45,18 @@ Página que o convidado acessa via QR Code ou Link único.
 ## 🏗️ Arquitetura Técnica
 
 - **Frontend**: HTML5, CSS3 (Variáveis, Flexbox, Grid), JavaScript (Vanilla, Intersection Observer API, Web Share API).
-- **Backend**: Vercel Serverless Functions (Node.js).
-- **Banco de Dados**: Redis (via driver `redis` TCP), utilizando a variável de ambiente `REDIS_URL`.
+- **Backend**: Vercel Serverless Functions (Node.js), sem dependências externas (usa `fetch` nativo).
+- **Banco de Dados**: `data/families.json` no repositório GitHub, acessado pela API de Contents. Leitura-modificação-escrita com retry para concorrência (ver `api/_store.js`).
 - **Bibliotecas Externas**: `qrcode.js` (geração de QR Codes no admin).
 
 ---
 
 ## ⚙️ Variáveis de Ambiente Necessárias
-Para o funcionamento do sistema, as seguintes variáveis devem estar configuradas na Vercel:
-- `REDIS_URL`: Link de conexão com o banco de dados Redis.
+Configurar na Vercel (Production + Preview):
+- `GITHUB_TOKEN`: Personal Access Token (fine-grained) com permissão **Contents: Read and write** apenas no repo `gustavo-e-lara`.
+- `GITHUB_REPO`: `gpaferrari/gustavo-e-lara`.
+- `GITHUB_BRANCH`: `master` (opcional; padrão `master`).
+- `DATA_FILE`: `data/families.json` (opcional; padrão).
 
 ---
 

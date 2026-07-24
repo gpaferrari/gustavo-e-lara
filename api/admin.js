@@ -1,117 +1,83 @@
-import { createClient } from 'redis';
-import { randomUUID } from 'crypto';
+import { randomUUID, timingSafeEqual } from 'crypto';
+import { getFamilies, mutateFamilies } from './_store.js';
 
-// Reusable client singleton
-let redisClient;
+// Credencial do admin lida de variável de ambiente (defina ADMIN_AUTH na Vercel).
+// Nunca cai num valor padrão: se não estiver configurada, toda escrita é negada.
+const ADMIN_AUTH = process.env.ADMIN_AUTH;
 
-const getRedisClient = async () => {
-  if (redisClient) return redisClient;
-  
-  const url = process.env.REDIS_URL || process.env.KV_URL;
-  if (!url) throw new Error('REDIS_URL or KV_URL missing');
-
-  redisClient = createClient({ url });
-  redisClient.on('error', (err) => console.error('Redis Client Error', err));
-  await redisClient.connect();
-  return redisClient;
+const isAuthorized = (provided) => {
+  if (!ADMIN_AUTH || typeof provided !== 'string') return false;
+  const a = Buffer.from(provided);
+  const b = Buffer.from(ADMIN_AUTH);
+  return a.length === b.length && timingSafeEqual(a, b);
 };
 
 export default async function handler(req, res) {
-  let client;
   try {
-    client = await getRedisClient();
-  } catch (error) {
-    console.error('Connection Error:', error);
-    return res.status(500).json({ error: 'Erro de conexão com o banco', details: error.message });
-  }
-
-  if (req.method === 'GET') {
-    try {
-      const data = await client.get('families_index');
-      return res.status(200).json(data ? JSON.parse(data) : []);
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar dados' });
+    if (req.method === 'GET') {
+      const families = await getFamilies();
+      return res.status(200).json(families);
     }
-  }
 
-  if (req.method === 'POST') {
-    const { familyName, members, auth } = req.body;
-    if (auth !== 'GueLara:1104') return res.status(401).json({ error: 'Não autorizado' });
-    if (!familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
+    if (req.method === 'POST') {
+      const { familyName, members, auth } = req.body;
+      if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
+      if (!familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
 
-    try {
-      const id = randomUUID().split('-')[0];
       const newFamily = {
-        id,
+        id: randomUUID().split('-')[0],
         familyName,
-        members: members.map(m => ({ 
-          name: (typeof m === 'string' ? m : m.name).trim(), 
+        members: members.map((m) => ({
+          name: (typeof m === 'string' ? m : m.name).trim(),
           status: 'pending',
-          isChild: typeof m === 'object' ? !!m.isChild : false
+          isChild: typeof m === 'object' ? !!m.isChild : false,
         })),
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
 
-      await client.set(`family:${id}`, JSON.stringify(newFamily));
-
-      const rawIndex = await client.get('families_index');
-      const allFamilies = rawIndex ? JSON.parse(rawIndex) : [];
-      allFamilies.push(newFamily);
-      await client.set('families_index', JSON.stringify(allFamilies));
+      await mutateFamilies(`convite: novo — ${familyName}`, (families) => {
+        families.push(newFamily);
+        return { write: true };
+      });
 
       return res.status(201).json(newFamily);
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro ao salvar' });
     }
-  }
 
-  if (req.method === 'DELETE') {
-    const { id, auth } = req.body;
-    if (auth !== 'GueLara:1104') return res.status(401).json({ error: 'Não autorizado' });
-    if (!id) return res.status(400).json({ error: 'ID ausente' });
+    if (req.method === 'PUT') {
+      const { id, familyName, members, auth } = req.body;
+      if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
+      if (!id || !familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
 
-    try {
-      await client.del(`family:${id}`);
-      
-      const rawIndex = await client.get('families_index');
-      let allFamilies = rawIndex ? JSON.parse(rawIndex) : [];
-      allFamilies = allFamilies.filter(f => f.id !== id);
-      await client.set('families_index', JSON.stringify(allFamilies));
+      const result = await mutateFamilies(`convite: editar — ${familyName}`, (families) => {
+        const idx = families.findIndex((f) => f.id === id);
+        if (idx === -1) return { write: false, notFound: true };
+        families[idx] = { ...families[idx], id, familyName, members, updatedAt: new Date().toISOString() };
+        return { write: true, family: families[idx] };
+      });
 
+      if (result.notFound) return res.status(404).json({ error: 'Convite não encontrado' });
+      return res.status(200).json(result.family);
+    }
+
+    if (req.method === 'DELETE') {
+      const { id, auth } = req.body;
+      if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
+      if (!id) return res.status(400).json({ error: 'ID ausente' });
+
+      const result = await mutateFamilies(`convite: excluir — ${id}`, (families) => {
+        const idx = families.findIndex((f) => f.id === id);
+        if (idx === -1) return { write: false, notFound: true };
+        families.splice(idx, 1);
+        return { write: true };
+      });
+
+      if (result.notFound) return res.status(404).json({ error: 'Convite não encontrado' });
       return res.status(200).json({ message: 'Excluído com sucesso' });
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro ao excluir' });
     }
+
+    return res.status(405).json({ error: 'Method not allowed' });
+  } catch (error) {
+    console.error('Admin API error:', error);
+    return res.status(500).json({ error: 'Erro no banco de dados', details: error.message });
   }
-
-  if (req.method === 'PUT') {
-    const { id, familyName, members, auth } = req.body;
-    if (auth !== 'GueLara:1104') return res.status(401).json({ error: 'Não autorizado' });
-    if (!id || !familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
-
-    try {
-      const updatedFamily = {
-        id,
-        familyName,
-        members, // Use the members array exactly as provided (handles edits/deletes from UI)
-        updatedAt: new Date().toISOString()
-      };
-
-      await client.set(`family:${id}`, JSON.stringify(updatedFamily));
-
-      const rawIndex = await client.get('families_index');
-      let allFamilies = rawIndex ? JSON.parse(rawIndex) : [];
-      const index = allFamilies.findIndex(f => f.id === id);
-      if (index !== -1) {
-        allFamilies[index] = updatedFamily;
-        await client.set('families_index', JSON.stringify(allFamilies));
-      }
-
-      return res.status(200).json(updatedFamily);
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro ao editar' });
-    }
-  }
-
-  return res.status(405).json({ error: 'Method not allowed' });
 }
