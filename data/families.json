@@ -74,8 +74,20 @@
   {
     "id": "e91e48fb",
     "familyName": "Padrinhos do Noivo - Isadora",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Isadora Avila",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Yannick Greive",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-07-24T16:45:46.555Z"
   },
   {
     "id": "b29f06c7",
