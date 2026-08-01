@@ -142,15 +142,16 @@
     "members": [
       {
         "name": "Fulano Teste",
-        "status": "pending",
+        "status": "yes",
         "isChild": false
       },
       {
         "name": "Cricri Teste",
-        "status": "pending",
+        "status": "no",
         "isChild": true
       }
     ],
-    "createdAt": "2026-08-01T22:12:58.038Z"
+    "createdAt": "2026-08-01T22:12:58.038Z",
+    "updatedAt": "2026-08-01T22:13:38.435Z"
   }
 ]
