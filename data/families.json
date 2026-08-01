@@ -135,23 +135,5 @@
     ],
     "recovered": true,
     "updatedAt": "2026-08-01T21:57:43.544Z"
-  },
-  {
-    "id": "2c482c09",
-    "familyName": "ZZ Teste - APAGAR",
-    "members": [
-      {
-        "name": "Fulano Teste",
-        "status": "yes",
-        "isChild": false
-      },
-      {
-        "name": "Cricri Teste",
-        "status": "no",
-        "isChild": true
-      }
-    ],
-    "createdAt": "2026-08-01T22:12:58.038Z",
-    "updatedAt": "2026-08-01T22:13:38.435Z"
   }
 ]
