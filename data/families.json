@@ -118,7 +118,7 @@
         "isChild": false
       },
       {
-        "name": "João",
+        "name": "João Paulo",
         "status": "pending",
         "isChild": false
       },
@@ -131,9 +131,14 @@
         "name": "José",
         "status": "pending",
         "isChild": true
+      },
+      {
+        "name": "Maria Evaristo",
+        "status": "pending",
+        "isChild": false
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-08-01T21:57:43.544Z"
+    "updatedAt": "2026-08-01T22:20:11.222Z"
   }
 ]
