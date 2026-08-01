@@ -121,8 +121,19 @@
         "name": "João",
         "status": "pending",
         "isChild": false
+      },
+      {
+        "name": "Enrico",
+        "status": "pending",
+        "isChild": true
+      },
+      {
+        "name": "José",
+        "status": "pending",
+        "isChild": true
       }
     ],
-    "recovered": true
+    "recovered": true,
+    "updatedAt": "2026-08-01T21:57:43.544Z"
   }
 ]
