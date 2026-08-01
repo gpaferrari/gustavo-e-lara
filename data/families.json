@@ -107,5 +107,22 @@
     "familyName": "Padrinhos do Noivo - Rubia",
     "members": [],
     "recovered": true
+  },
+  {
+    "id": "081d3b22",
+    "familyName": "Padrinhos - Natália e João",
+    "members": [
+      {
+        "name": "Natália",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "João",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true
   }
 ]
