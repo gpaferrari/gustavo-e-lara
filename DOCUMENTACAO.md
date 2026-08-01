@@ -74,13 +74,27 @@ O admin e o RSVP escrevem **direto no GitHub**, então o clone local fica desatu
 
 **Quando o QR code já foi entregue**, o convite *precisa* ser recriado com o **mesmo `id` do QR**, editando o JSON à mão. O admin (`POST /api/admin`) sempre gera um `id` novo aleatório, o que invalidaria o QR impresso.
 
-Adicionar um convite novo via linha de comando (o `id` é sorteado, igual ao admin):
+### 🔧 `scripts/novo-convite.js`
+Script para criar ou corrigir convite pela linha de comando. Ele sincroniza com o GitHub sozinho antes de gravar.
 
 ```powershell
-git pull --ff-only
-node -e "const fs=require('fs'),{randomUUID}=require('crypto');const p='data/families.json';const nome=process.argv[1];const membros=process.argv.slice(2);const f=JSON.parse(fs.readFileSync(p,'utf8'));const nova={id:randomUUID().split('-')[0],familyName:nome,members:membros.map(m=>({name:m,status:'pending',isChild:false})),createdAt:new Date().toISOString()};f.push(nova);fs.writeFileSync(p,JSON.stringify(f,null,2)+'\n');console.log('ID:',nova.id);console.log('Link: https://gustavo-e-lara.vercel.app/rsvp.html?id='+nova.id)" "Família Silva" "João Silva" "Maria Silva"
-git add data/families.json; git commit -m "convite: Familia Silva"; git push
+# convite novo (id sorteado, igual ao admin)
+node scripts/novo-convite.js "Família Silva" "João Silva" "Enzo:c"
+
+# corrigir convite cujo QR JÁ foi entregue — mantém o id do QR
+node scripts/novo-convite.js --id 081d3b22 "Padrinhos - Natália e João" "Natália" "João" --push
 ```
+
+O sufixo `:c` marca criança (-5 anos, não pagante), igual ao admin. Ao final o script imprime o **ID e o link** prontos.
+
+| Flag | O que faz |
+|---|---|
+| `--id <id>` | Usa este `id` em vez de sortear. Se o convite já existir, atualiza — é o caso do QR já entregue. |
+| `--push` | Commita e dá push automaticamente. Sem ela, o script mostra os comandos. |
+| `--force` | Autoriza sobrescrever membros que **já responderam**. Sem ela, o script bloqueia para não apagar confirmação. |
+| `--dry-run` | Mostra o que faria, sem gravar. |
+
+**Caso de uso principal**: convidado avisa que abriu o QR e "não aparece o nome dele". Pegue o `id` da URL que ele mandou e rode com `--id`, preenchendo os nomes da família.
 
 ---
 
