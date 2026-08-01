@@ -61,6 +61,9 @@ Configurar na Vercel (Production + Preview):
 ---
 
 ## 📝 Instruções de Manutenção
+
+> 📗 **Para o dia a dia** (criar convite, corrigir QR já entregue, apagar, testar), use o [GUIA-CONVITES.md](GUIA-CONVITES.md) — passo a passo com os comandos prontos. Esta seção cobre o essencial.
+
 1. **Adicionar Novos Convidados**: Acesse `/admin.html`, faça login e use o formulário "Novo Convite".
 2. **Gerar Convites Físicos**: No painel admin, use o botão "QR" em cada card, baixe a imagem e anexe ao convite impresso.
 3. **Deploy de Mudanças**: Sempre que houver alteração no código ou dependências (`package.json`), rode `vercel --prod`.
