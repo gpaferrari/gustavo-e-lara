@@ -2,8 +2,15 @@
   {
     "id": "6a73ca98",
     "familyName": "Família do Noivo - Tia Dalva",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Dalva Ávila",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-09-11T18:40:22.564Z"
   },
   {
     "id": "1e662122",
