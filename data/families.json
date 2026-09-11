@@ -32,10 +32,35 @@
         "name": "Edvaldo José Henn Manea",
         "status": "pending",
         "isChild": false
+      },
+      {
+        "name": "Daniela",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Amanda",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Marido da Amanda",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Ana",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Marido da Ana",
+        "status": "pending",
+        "isChild": false
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-09-11T17:37:38.319Z"
+    "updatedAt": "2026-09-11T18:03:22.698Z"
   },
   {
     "id": "9a1613ce",
