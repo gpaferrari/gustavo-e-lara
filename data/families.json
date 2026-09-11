@@ -15,8 +15,25 @@
   {
     "id": "1e662122",
     "familyName": "Família Ávila - Luis Fernando",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Luis Fernando",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Tangelina",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Carol ",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-09-11T18:41:27.695Z"
   },
   {
     "id": "eec8deba",
