@@ -119,8 +119,15 @@
   {
     "id": "452dc231",
     "familyName": "Vó Lucia",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Lucia Ávila",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-09-11T18:42:02.078Z"
   },
   {
     "id": "3e4170ba",
