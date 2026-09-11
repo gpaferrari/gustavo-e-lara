@@ -26,9 +26,16 @@
   },
   {
     "id": "6d115efa",
-    "familyName": "Família Noivo - Marea",
-    "members": [],
-    "recovered": true
+    "familyName": "Família Noivo - Manea",
+    "members": [
+      {
+        "name": "Edvaldo José Henn Manea",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-09-11T17:37:38.319Z"
   },
   {
     "id": "9a1613ce",
