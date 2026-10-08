@@ -216,8 +216,20 @@
   {
     "id": "b29f06c7",
     "familyName": "Padrinhos do Noivo - Rafael",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Rafael",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Amanda",
+        "isChild": false,
+        "status": "pending"
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-10-08T17:42:05.326Z"
   },
   {
     "id": "07babf05",
