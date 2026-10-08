@@ -324,7 +324,9 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-08T17:42:42.312Z"
+    "updatedAt": "2026-10-08T17:42:42.312Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:45:36.913Z"
   },
   {
     "id": "081d3b22",
