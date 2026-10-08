@@ -50,7 +50,9 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-07-25T01:29:27.502Z"
+    "updatedAt": "2026-07-25T01:29:27.502Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:45:24.753Z"
   },
   {
     "id": "6d115efa",
