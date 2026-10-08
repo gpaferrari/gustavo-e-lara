@@ -480,5 +480,17 @@
       }
     ],
     "createdAt": "2026-10-08T18:01:28.887Z"
+  },
+  {
+    "id": "e7be443c",
+    "familyName": "Amiga Noivo - Sandra Marconato",
+    "members": [
+      {
+        "name": "Sandra Marconato",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-08T18:07:49.049Z"
   }
 ]
