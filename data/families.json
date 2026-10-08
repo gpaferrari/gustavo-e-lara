@@ -119,8 +119,8 @@
     "familyName": "Família Ronca - Rosana",
     "members": [],
     "recovered": true,
-    "delivered": true,
-    "deliveredAt": "2026-10-08T17:37:07.618Z"
+    "delivered": false,
+    "deliveredAt": null
   },
   {
     "id": "78b3b676",
