@@ -210,6 +210,7 @@ const createCard = (f) => {
       <div>
         <h3 class="fam__title">${name}</h3>
         <p class="fam__meta">${meta}</p>
+        ${f.displayName ? `<p class="fam__display">Convidado vê: <b>${escapeHtml(f.displayName)}</b></p>` : ''}
       </div>
       ${BADGE[s.status](s)}
     </header>
@@ -241,7 +242,7 @@ const renderList = () => {
 
   const visible = state.families
     .filter((f) => flt.test(f, summarize(f)))
-    .filter((f) => !q || normalize(f.familyName).includes(q) || (f.members || []).some((m) => normalize(m.name).includes(q)))
+    .filter((f) => !q || normalize(`${f.familyName} ${f.displayName || ''}`).includes(q) || (f.members || []).some((m) => normalize(m.name).includes(q)))
     .sort((a, b) => a.familyName.localeCompare(b.familyName, 'pt-BR', { sensitivity: 'base' }));
 
   grid.setAttribute('aria-busy', 'false');
@@ -375,6 +376,7 @@ const openFamilyDialog = (id = null) => {
   $('#familyDialogTitle').textContent = fam ? 'Editar convite' : 'Novo convite';
   $('#familySubmit').textContent = fam ? 'Salvar alterações' : 'Criar convite';
   $('#familyName').value = fam ? fam.familyName : '';
+  $('#displayName').value = fam?.displayName || '';
   showFormError('');
   renderMemberEditor();
 
@@ -390,6 +392,7 @@ const addMember = (members = [blankMember()], afterIndex = state.draftMembers.le
 const submitFamily = async (event) => {
   event.preventDefault();
   const familyName = $('#familyName').value.trim();
+  const displayName = $('#displayName').value.trim();
   const members = state.draftMembers
     .map((m) => ({ ...m, name: m.name.trim() }))
     .filter((m) => m.name);
@@ -406,8 +409,8 @@ const submitFamily = async (event) => {
   try {
     const editing = state.editingId;
     const saved = editing
-      ? await api('PUT', { id: editing, familyName, members })
-      : await api('POST', { familyName, members: members.map(({ name, isChild }) => ({ name, isChild })) });
+      ? await api('PUT', { id: editing, familyName, displayName, members })
+      : await api('POST', { familyName, displayName, members: members.map(({ name, isChild }) => ({ name, isChild })) });
 
     $('#familyDialog').close();
     await loadFamilies({ silent: true });
@@ -660,6 +663,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addMember(current.name.trim() ? parsed : rest, i);
   });
   $('#familyName').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    $('#displayName').focus();
+  });
+  $('#displayName').addEventListener('keydown', (e) => {
     if (e.key !== 'Enter') return;
     e.preventDefault();
     $('#memberEditor .input')?.focus();

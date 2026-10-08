@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Gustavo & Lara//Convite//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:casamento-gustavo-lara-20270109@gustavo-e-lara.vercel.app
+DTSTAMP:20261008T120000Z
+DTSTART:20270109T223000Z
+DTEND:20270110T040000Z
+SUMMARY:Casamento Gustavo & Lara
+LOCATION:Churrascaria Kieza\, Av. Tiradentes\, 1480 - Fragata\, Marília - SP
+DESCRIPTION:Cerimônia e recepção às 19h30. https://gustavo-e-lara.vercel.app
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã é o casamento de Gustavo & Lara!
+END:VALARM
+END:VEVENT
+END:VCALENDAR

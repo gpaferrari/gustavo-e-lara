@@ -5,6 +5,10 @@ import { getFamilies, mutateFamilies } from './_store.js';
 // Nunca cai num valor padrão: se não estiver configurada, toda escrita é negada.
 const ADMIN_AUTH = process.env.ADMIN_AUTH;
 
+// Nome opcional mostrado ao convidado no RSVP (ex.: "Tia Dalva" em vez de
+// "Família do Noivo - Tia Dalva"). Vazio = usa o familyName.
+const cleanDisplayName = (value) => (typeof value === 'string' && value.trim() ? value.trim() : undefined);
+
 const isAuthorized = (provided) => {
   if (!ADMIN_AUTH || typeof provided !== 'string') return false;
   const a = Buffer.from(provided);
@@ -20,7 +24,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { familyName, members, auth, action } = req.body;
+      const { familyName, displayName, members, auth, action } = req.body;
       if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
 
       // Login: o cliente só confirma a credencial aqui — ela nunca fica no JS público.
@@ -31,6 +35,7 @@ export default async function handler(req, res) {
       const newFamily = {
         id: randomUUID().split('-')[0],
         familyName,
+        displayName: cleanDisplayName(displayName),
         members: members.map((m) => ({
           name: (typeof m === 'string' ? m : m.name).trim(),
           status: 'pending',
@@ -48,7 +53,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PUT') {
-      const { id, familyName, members, auth } = req.body;
+      const { id, familyName, displayName, members, auth } = req.body;
       if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
       if (!id || !familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
 
@@ -62,7 +67,9 @@ export default async function handler(req, res) {
           const live = current.find((c) => c.name === m.name);
           return { name: m.name, isChild: !!m.isChild, status: live?.status || m.status || 'pending' };
         });
-        families[idx] = { ...families[idx], id, familyName, members: merged, updatedAt: new Date().toISOString() };
+        families[idx] = {
+          ...families[idx], id, familyName, displayName: cleanDisplayName(displayName), members: merged, updatedAt: new Date().toISOString(),
+        };
         return { write: true, family: families[idx] };
       });
 

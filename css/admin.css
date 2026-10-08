@@ -116,6 +116,7 @@
 }
 
 .field__hint { color: var(--a-text-3); font-size: 0.78rem; }
+.field__optional { color: var(--a-text-3); font-weight: 400; }
 
 .input {
   width: 100%;
@@ -392,6 +393,8 @@
 }
 .fam__title { font: italic 500 1.3rem/1.2 var(--serif); overflow-wrap: anywhere; }
 .fam__meta { margin-top: 2px; color: var(--a-text-3); font-size: 0.78rem; }
+.fam__display { margin-top: 4px; color: var(--a-text-2); font-size: 0.78rem; }
+.fam__display b { color: var(--gold); font-weight: 500; }
 
 .badge {
   flex-shrink: 0;

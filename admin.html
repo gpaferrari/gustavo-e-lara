@@ -7,6 +7,8 @@
   <meta name="theme-color" content="#FAF7F2">
   <title>Convidados | Gustavo & Lara</title>
 
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23FDFAF5'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-size='26' text-anchor='middle' fill='%23C4934A'%3EG%26amp;L%3C/text%3E%3C/svg%3E">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
@@ -140,7 +142,13 @@
 
       <label class="field">
         <span class="field__label">Nome do convite</span>
-        <input class="input" type="text" id="familyName" placeholder="Ex.: Família Silva" required>
+        <input class="input" type="text" id="familyName" placeholder="Ex.: Família do Noivo - Tia Dalva" required>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Nome que o convidado vê <span class="field__optional">(opcional)</span></span>
+        <input class="input" type="text" id="displayName" placeholder="Ex.: Tia Dalva e família" autocomplete="off">
+        <span class="field__hint">Aparece em destaque na página de confirmação. Em branco, usa o nome acima.</span>
       </label>
 
       <fieldset class="field">

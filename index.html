@@ -6,13 +6,20 @@
   <meta name="description" content="Gustavo & Lara — Convite de Casamento">
   <meta name="theme-color" content="#FDFAF5">
 
-  <!-- Open Graph (preview bonito no WhatsApp/iMessage quando compartilhar o link) -->
+  <!-- Open Graph (preview bonito no WhatsApp/iMessage quando compartilhar o link).
+       A imagem precisa de URL absoluta, senão o WhatsApp não mostra a foto. -->
   <meta property="og:title" content="Gustavo & Lara ♥">
-  <meta property="og:description" content="Vós sois convidados para celebrar o nosso sim.">
-  <meta property="og:image" content="foto-casal.jpg">
+  <meta property="og:description" content="Vós sois convidados para celebrar o nosso sim · 09 de janeiro de 2027">
+  <meta property="og:image" content="https://gustavo-e-lara.vercel.app/foto-casal.jpg">
+  <meta property="og:url" content="https://gustavo-e-lara.vercel.app/">
   <meta property="og:type" content="website">
 
   <title>Gustavo & Lara</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23FDFAF5'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-size='26' text-anchor='middle' fill='%23C4934A'%3EG%26amp;L%3C/text%3E%3C/svg%3E">
+
+  <!-- Com JS ativo, os blocos .reveal começam ocultos e aparecem ao rolar.
+       Sem JS, tudo fica visível (nada de página em branco). -->
+  <script>document.documentElement.classList.add('js');</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,11 +81,12 @@
     <div class="hero__inner">
       <p class="hero__eyebrow reveal">Vós sois convidados para celebrar</p>
 
-      <div class="hero__names reveal">
-        <h1 class="hero__name">Gustavo</h1>
+      <h1 class="hero__names reveal">
+        <span class="hero__name">Gustavo</span>
         <span class="hero__amp" aria-hidden="true">&</span>
-        <h1 class="hero__name">Lara</h1>
-      </div>
+        <span class="visually-hidden">e</span>
+        <span class="hero__name">Lara</span>
+      </h1>
 
       <div class="hero__photo-wrap reveal">
         <div class="hero__photo-main">
@@ -104,6 +112,9 @@
         <span class="hero__badge-dot" aria-hidden="true">·</span>
         <span class="hero__badge-year">2027</span>
       </div>
+
+      <!-- Preenchido pelo js/main.js -->
+      <p class="hero__countdown reveal" id="countdown" aria-live="off"></p>
 
       <a href="#evento" class="hero__down" aria-label="Ver detalhes">
         <span class="hero__scroll-line"></span>
@@ -236,11 +247,11 @@
       </p>
 
       <div class="gifts__grid">
-        <!-- Magalu -->
-        <a href="https://www.finalfeliz.de/gustavo-ferrari-lara-lis" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
+        <!-- Magalu (plataforma oficial "Quero de Casamento") -->
+        <a href="https://www.querodecasamento.com.br/lista-de-casamento/gustavo-ferrari-lara-lis" class="gift-card reveal" target="_blank" rel="noopener noreferrer">
           <div class="gift-card__info">
             <span class="gift-card__brand">Magalu</span>
-            <span class="gift-card__sub">Lista de presentes Magalu</span>
+            <span class="gift-card__sub">Lista oficial · Quero de Casamento</span>
           </div>
           <span class="gift-card__arrow" aria-hidden="true">→</span>
         </a>
@@ -253,23 +264,6 @@
           </div>
           <span class="gift-card__arrow" aria-hidden="true">→</span>
         </a>
-      </div>
-
-      <div class="gifts__qr-section reveal">
-        <p class="gifts__qr-label">Compartilhe nosso convite</p>
-        <div class="gifts__qr-container">
-          <!-- O QR Code será gerado via JS apontando para a URL do site -->
-          <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://gustavo-e-lara.vercel.app" alt="QR Code do Convite">
-          <p class="gifts__qr-hint">Aponte a câmera para compartilhar</p>
-          <button class="share-btn" onclick="shareSite()" aria-label="Compartilhar link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-              <polyline points="16 6 12 2 8 6"/>
-              <line x1="12" y1="2" x2="12" y2="15"/>
-            </svg>
-            Compartilhar Link
-          </button>
-        </div>
       </div>
     </div>
   </section>
@@ -285,12 +279,30 @@
       </header>
 
       <div class="rsvp__inner reveal">
-        <p class="rsvp__text">
-          A confirmação de presença deve ser feita exclusivamente através do <strong>QR Code do seu convite</strong> até <strong>30 de Novembro de 2026</strong>.
-          <br><br>
-          Sua confirmação nos ajuda a preparar tudo com carinho para você.
-        </p>
-      </div>
+        <ol class="rsvp__steps">
+          <li><span class="rsvp__step-num">1</span><span>Aponte a câmera para o <strong>QR Code do seu convite</strong></span></li>
+          <li><span class="rsvp__step-num">2</span><span>Marque quem vai da sua família</span></li>
+          <li><span class="rsvp__step-num">3</span><span>Envie até <strong>30 de novembro de 2026</strong></span></li>
+        </ol>
+
+        <p class="rsvp__text">Sua confirmação nos ajuda a preparar tudo com carinho para você.</p>
+
+        <div class="rsvp__actions">
+          <a class="rsvp__action" target="_blank" rel="noopener"
+             href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Casamento%20Gustavo%20%26%20Lara&amp;dates=20270109T223000Z/20270110T040000Z&amp;location=Churrascaria%20Kieza%2C%20Av.%20Tiradentes%2C%201480%20-%20Fragata%2C%20Mar%C3%ADlia%20-%20SP&amp;details=Cerim%C3%B4nia%20e%20recep%C3%A7%C3%A3o%20%C3%A0s%2019h30.">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+            Google Agenda
+          </a>
+          <a class="rsvp__action" href="casamento.ics" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+            iPhone
+          </a>
+        </div>
+
+        <a class="rsvp__help" target="_blank" rel="noopener"
+           href="https://wa.me/5514991478807?text=Oi%20Gustavo!%20Tive%20problemas%20com%20meu%20QR%20Code%2C%20poderia%20me%20ajudar%3F">
+          Perdeu o QR ou não está funcionando? Fale com o Gustavo
+        </a>
       </div>
     </div>
   </section>
@@ -313,6 +325,10 @@
     </div>
     <p class="footer__names">G & L</p>
     <p class="footer__year">2027</p>
+    <button type="button" class="footer__share" id="shareBtn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>
+      <span>Compartilhar convite</span>
+    </button>
     <p class="footer__credit" title="feito com amor, fé e muito código">
       made with <span aria-hidden="true">♥</span> &amp; <code>&lt;/code&gt;</code>
     </p>

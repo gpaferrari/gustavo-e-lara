@@ -16,8 +16,11 @@ O projeto é uma aplicação web mobile-first construída com HTML/CSS/JS vanill
 ### 1. Website do Convite (`index.html`)
 - **Design Personalizado**: Tema baseado em bioinformática (hélice de DNA) e fé (Eclesiastes 4:12).
 - **Seções**: Hero, Nossa História, Detalhes do Evento, Lista de Presentes e RSVP.
-- **Lista de Presentes**: Links integrados para Magalu e Havan.
-- **Compartilhamento**: Botão dinâmico que abre o menu nativo do celular ou copia o link no desktop.
+- **Lista de Presentes**: Magalu (lista oficial no *Quero de Casamento* — os presentes viram crédito no Cartão Listas Magalu, válido por 1 ano) e Havan.
+- **Contagem regressiva** no topo e **passo a passo da confirmação** com botões de agenda (Google / `casamento.ics`) e ajuda por WhatsApp.
+- **Lembrete de confirmação**: barra discreta no rodapé, mostrada uma vez por aparelho (até o prazo).
+- **Compartilhamento**: botão no rodapé que abre o menu nativo do celular ou copia o link no desktop.
+- Funciona sem JavaScript (o conteúdo só começa oculto para a animação quando o JS está ativo).
 
 ### 2. Painel Administrativo (`admin.html`)
 Área restrita para os noivos gerenciarem a lista de convidados.
@@ -27,6 +30,7 @@ O projeto é uma aplicação web mobile-first construída com HTML/CSS/JS vanill
 - **Gestão de Convites (Cards)**:
     - **Entregue ✓**: toque no botão "Entregue" do card para marcar que o convite físico/QR já foi entregue (grava `delivered` + `deliveredAt`). Desmarcar desfaz.
     - **Criação**: formulário com uma linha por integrante e caixa "Criança". Colar `João, Maria, Enzo:c` num campo cria várias linhas de uma vez (o sufixo `:c` continua valendo). Ao criar, o QR abre na hora.
+    - **Nome que o convidado vê** (opcional, campo `displayName`): texto mostrado em destaque no RSVP no lugar do nome interno (ex.: "Tia Dalva e família" em vez de "Família do Noivo - Tia Dalva").
     - **Edição**: Alterar nome, adicionar/remover integrantes ou marcar criança. **Mantém o `id`** (o QR continua valendo) e **nunca sobrescreve uma resposta** que o convidado tenha dado enquanto o formulário estava aberto.
     - **Exclusão**: Remover um convite inteiro (avisa se ele já foi entregue).
     - **QR Code**: Baixa PNG em alta resolução com margem branca (melhor leitura impressa) ou envia o link (menu de compartilhar do celular / WhatsApp).

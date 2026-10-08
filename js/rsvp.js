@@ -274,9 +274,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const family = await res.json();
-    $('#familyName').textContent = family.familyName;
-    $('#familyName').classList.toggle('rv-family--long', family.familyName.length > 18);
-    document.title = `${family.familyName} · Confirmar presença | Gustavo & Lara`;
+    const shownName = family.displayName || family.familyName;
+    $('#familyName').textContent = shownName;
+    $('#familyName').classList.toggle('rv-family--long', shownName.length > 18);
+    document.title = `${shownName} · Confirmar presença | Gustavo & Lara`;
 
     if (!family.members?.length) {
       $('#emptyWhats').href = whatsLink(`Oi Gustavo! Abri o convite (código ${id}) e os nomes ainda não aparecem.`);
