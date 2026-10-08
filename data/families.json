@@ -382,7 +382,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-08T17:46:34.867Z"
+    "createdAt": "2026-10-08T17:46:34.867Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:50:15.650Z"
   },
   {
     "id": "3263007e",
