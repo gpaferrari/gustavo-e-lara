@@ -252,12 +252,12 @@
       },
       {
         "name": "Maria",
-        "isChild": false,
+        "isChild": true,
         "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-08T17:42:37.320Z"
+    "updatedAt": "2026-10-08T17:42:42.312Z"
   },
   {
     "id": "081d3b22",
