@@ -353,6 +353,8 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-08-01T22:20:11.222Z"
+    "updatedAt": "2026-08-01T22:20:11.222Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:45:29.216Z"
   }
 ]
