@@ -213,8 +213,8 @@
       }
     ],
     "recovered": true,
-    "delivered": false,
-    "deliveredAt": null,
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:44:55.969Z",
     "updatedAt": "2026-10-08T17:43:25.238Z"
   },
   {
