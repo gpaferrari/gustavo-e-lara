@@ -456,5 +456,17 @@
       }
     ],
     "createdAt": "2026-10-08T17:58:12.411Z"
+  },
+  {
+    "id": "9ed11df8",
+    "familyName": "Amiga Noivo",
+    "members": [
+      {
+        "name": "Lupércio",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-08T18:00:55.612Z"
   }
 ]
