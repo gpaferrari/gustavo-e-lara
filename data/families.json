@@ -401,7 +401,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-08T17:47:22.083Z"
+    "createdAt": "2026-10-08T17:47:22.083Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:50:57.201Z"
   },
   {
     "id": "367f2ef1",
