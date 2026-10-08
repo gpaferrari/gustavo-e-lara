@@ -494,5 +494,32 @@
       }
     ],
     "createdAt": "2026-10-08T18:07:49.049Z"
+  },
+  {
+    "id": "9a4b1b62",
+    "familyName": "Amigo do Noivo - Jader",
+    "members": [
+      {
+        "name": "Jader",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Esposa do Jader",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Filha do Jader",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Filha do Jader",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-08T18:09:11.253Z"
   }
 ]
