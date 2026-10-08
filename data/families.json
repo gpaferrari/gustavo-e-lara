@@ -403,19 +403,20 @@
   },
   {
     "id": "367f2ef1",
-    "familyName": "Padrinhos Noiva - João",
+    "familyName": "Padrinhos Noiva - João Victor",
     "members": [
       {
         "name": "João",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Possivel acompanhante (mistério)",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       }
     ],
-    "createdAt": "2026-10-08T17:47:59.247Z"
+    "createdAt": "2026-10-08T17:47:59.247Z",
+    "updatedAt": "2026-10-08T17:49:56.963Z"
   }
 ]
