@@ -114,7 +114,9 @@
     "id": "09bd685e",
     "familyName": "Avó Paterna do Noivo - Vó Nair",
     "members": [],
-    "recovered": true
+    "recovered": true,
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:36:00.068Z"
   },
   {
     "id": "452dc231",
