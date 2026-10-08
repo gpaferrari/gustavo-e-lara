@@ -89,8 +89,30 @@
   {
     "id": "9a1613ce",
     "familyName": "Família Ronca - Robson",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Tio Robson",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Tia Tuca",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Lucas",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Davi",
+        "isChild": false,
+        "status": "pending"
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-10-08T17:37:02.455Z"
   },
   {
     "id": "98976fe1",
