@@ -299,7 +299,9 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-08T17:42:17.592Z"
+    "updatedAt": "2026-10-08T17:42:17.592Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:45:34.724Z"
   },
   {
     "id": "07babf05",
