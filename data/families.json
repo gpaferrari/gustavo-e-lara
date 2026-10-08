@@ -192,8 +192,20 @@
   {
     "id": "0f0e40f6",
     "familyName": "Pais do noivo",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Rosival",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Ana Lucia",
+        "isChild": false,
+        "status": "pending"
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-10-08T17:43:01.712Z"
   },
   {
     "id": "e91e48fb",
