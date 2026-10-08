@@ -137,8 +137,30 @@
   {
     "id": "78b3b676",
     "familyName": "Família Ronca - Rose",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Tio Luiz",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Tia Rose",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Luiza",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Lucas",
+        "isChild": false,
+        "status": "pending"
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-10-08T17:40:55.464Z"
   },
   {
     "id": "517c5575",
