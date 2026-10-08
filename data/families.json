@@ -165,8 +165,40 @@
   {
     "id": "517c5575",
     "familyName": "Avó Paterna do Noivo",
-    "members": [],
-    "recovered": true
+    "members": [
+      {
+        "name": "Vó Ophelia",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Eloi",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Eloa",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Ana",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Ana acompanhante",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Tia Neza",
+        "isChild": false,
+        "status": "pending"
+      }
+    ],
+    "recovered": true,
+    "updatedAt": "2026-10-08T17:44:41.277Z"
   },
   {
     "id": "09bd685e",
