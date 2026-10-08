@@ -22,7 +22,8 @@ Isso não é hipotético: durante a criação deste guia, um único RSVP de test
 | Situação | Use |
 |---|---|
 | Convite novo, ninguém recebeu QR ainda | **`/admin.html`** — mais prático |
-| Convidado diz "abri o QR e não aparece meu nome" | **`scripts/novo-convite.js --id`** |
+| Card aparece como **"Sem integrantes"** no admin | **`/admin.html` → Editar** — mantém o `id`, o QR continua valendo |
+| Convidado diz "abri o QR e não aparece meu nome" e o `id` **não existe** no admin | **`scripts/novo-convite.js --id`** |
 | Precisa de um `id` específico por qualquer motivo | **`scripts/novo-convite.js --id`** |
 | Editar nomes, marcar criança, ver estatísticas | **`/admin.html`** |
 | Ajuste pontual, você já está no editor | **Editar o JSON na mão** |

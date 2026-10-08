@@ -21,24 +21,24 @@ O projeto é uma aplicação web mobile-first construída com HTML/CSS/JS vanill
 
 ### 2. Painel Administrativo (`admin.html`)
 Área restrita para os noivos gerenciarem a lista de convidados.
-- **Acesso Seguro**: Login protegido. A credencial fica na variável de ambiente `ADMIN_AUTH` na Vercel — **nunca escrever a senha neste arquivo** (o repositório é público).
-- **Dashboard de Estatísticas**:
-    - **Total de Convidados**: Soma geral de todas as pessoas cadastradas.
-    - **Pagantes**: Convidados que entram no cálculo do buffet.
-    - **Crianças (-5 anos)**: Convidados marcados como não pagantes.
-    - **Confirmados**: Total de pessoas que já marcaram "Vou" no RSVP.
+- **Acesso Seguro**: Login validado **no servidor** (`POST /api/admin` com `action: 'login'`). A credencial fica só na variável de ambiente `ADMIN_AUTH` na Vercel — **nunca escrever a senha neste arquivo nem no JS** (o repositório é público).
+- **Resumo**: barra de progresso de **convites entregues** (x de y), barra de **respostas** (vão / não vão / pendentes) e números de pessoas, pagantes, crianças e **pagantes confirmados** (base do buffet).
+- **Busca e filtros**: busca por família ou convidado (ignora acentos) e filtros Todos · A entregar · Entregues · Aguardando · Responderam · Sem integrantes.
 - **Gestão de Convites (Cards)**:
-    - **Criação**: Permite criar convites por família. Suporta o sufixo `:c` (ex: `Enzo:c`) para marcar crianças rapidamente.
-    - **Edição**: Alterar nome da família, adicionar/remover membros ou alternar status de criança.
-    - **Exclusão**: Remover um convite inteiro do sistema.
-    - **QR Code**: Gera e permite baixar o QR Code exclusivo para cada família imprimir ou enviar.
-    - **Status Visual**: Círculo amarelo (○) para convites pendentes e Check verde (✓) para famílias que já responderam totalmente.
+    - **Entregue ✓**: toque no botão "Entregue" do card para marcar que o convite físico/QR já foi entregue (grava `delivered` + `deliveredAt`). Desmarcar desfaz.
+    - **Criação**: formulário com uma linha por integrante e caixa "Criança". Colar `João, Maria, Enzo:c` num campo cria várias linhas de uma vez (o sufixo `:c` continua valendo). Ao criar, o QR abre na hora.
+    - **Edição**: Alterar nome, adicionar/remover integrantes ou marcar criança. **Mantém o `id`** (o QR continua valendo) e **nunca sobrescreve uma resposta** que o convidado tenha dado enquanto o formulário estava aberto.
+    - **Exclusão**: Remover um convite inteiro (avisa se ele já foi entregue).
+    - **QR Code**: Baixa PNG em alta resolução com margem branca (melhor leitura impressa) ou envia o link (menu de compartilhar do celular / WhatsApp).
 
 ### 3. Sistema de RSVP Personalizado (`rsvp.html`)
 Página que o convidado acessa via QR Code ou Link único.
 - **Reconhecimento de Família**: O sistema identifica a família pelo ID na URL (`?id=xyz`) e exibe apenas os nomes daquela família.
-- **Confirmação Individual**: Cada membro da família pode marcar seu status: **Vou**, **Não vou** ou **Pendente**.
-- **Sincronização em Tempo Real**: Assim que o convidado clica em "Confirmar", os dados são atualizados no Banco de Dados e refletem no Painel Admin.
+- **Confirmação Individual**: Cada membro marca **Vou**, **Não vou** ou **Ainda não sei** (= `pending`). Atalho "Todos vão" para famílias.
+- **Retorno**: quem volta ao link vê as respostas anteriores e a data em que respondeu.
+- **Sucesso**: resumo de quem vai, botões para salvar na agenda (Google / .ics para iPhone) e "Como chegar".
+- **Convite sem integrantes**: em vez de uma tela vazia, mostra "Quase lá!" com botão de WhatsApp já contendo o código do convite.
+- **Sincronização em Tempo Real**: Assim que o convidado envia, os dados são atualizados no Banco de Dados e refletem no Painel Admin.
 
 ---
 
@@ -48,6 +48,8 @@ Página que o convidado acessa via QR Code ou Link único.
 - **Backend**: Vercel Serverless Functions (Node.js), sem dependências externas (usa `fetch` nativo).
 - **Banco de Dados**: `data/families.json` no repositório GitHub, acessado pela API de Contents. Leitura-modificação-escrita com retry para concorrência (ver `api/_store.js`).
 - **Bibliotecas Externas**: `qrcode.js` (geração de QR Codes no admin).
+- **Estilos**: `css/style.css` (site + variáveis), `css/admin.css` (painel) e `css/rsvp.css` (confirmação). Admin e RSVP reaproveitam as variáveis de cor/fonte do `style.css`.
+- **API do admin** (`api/admin.js`): `GET` lista · `POST` cria (ou `action: 'login'`) · `PUT` edita · `PATCH { id, delivered }` marca entrega · `DELETE` exclui. Todas as escritas exigem `auth`.
 
 ---
 
@@ -105,12 +107,10 @@ O sufixo `:c` marca criança (-5 anos, não pagante), igual ao admin. Ao final o
 
 Nenhuma delas quebra o sistema hoje; são riscos conhecidos, registrados para tratar com calma.
 
-### 1. Senha do admin está exposta publicamente — **prioridade alta**
-A credencial aparece em texto puro em **`js/admin.js:182-183`**, arquivo servido no site e visível no repositório público. Estava também neste documento (removida em 01/08/2026), mas **permanece no histórico de commits**. Com ela, qualquer pessoa entra no `/admin.html` e apaga ou edita todos os convites.
+### 1. Senha antiga do admin vazou no histórico — **trocar a senha**
+A comparação hardcoded saiu de `js/admin.js` (10/2026, item 4 resolvido), mas a senha antiga **continua no histórico de commits** do repositório público.
 
-*Correção — os dois passos são necessários juntos*:
-1. Trocar `ADMIN_AUTH` na Vercel (Production + Preview) por uma senha nova.
-2. Remover a comparação hardcoded de `js/admin.js` (item 4). **Trocar só a env var quebra o login**, porque o cliente valida contra a string fixa e é ela que vai no campo `auth` das requisições.
+*Falta só um passo*: trocar `ADMIN_AUTH` na Vercel (Production + Preview) por uma senha nova (formato `usuario:senha`) e fazer redeploy. Agora isso **não quebra o login**, porque o navegador não guarda mais a senha — ele só pergunta ao servidor.
 
 Reescrever o histórico do git não é necessário: assim que a senha antiga deixa de ser válida, o que vazou não serve para nada.
 
@@ -124,10 +124,8 @@ Reescrever o histórico do git não é necessário: assim que a senha antiga dei
 
 *Correção completa (se valer o esforço)*: adicionar um token por família na URL do QR — mas isso **invalida todos os QR codes já entregues**, então provavelmente não compensa a esta altura.
 
-### 4. Login do admin é validado no cliente
-`js/admin.js` compara usuário/senha no navegador, então a credencial fica visível para quem abrir o DevTools. O servidor já valida de verdade (`ADMIN_AUTH` + `timingSafeEqual`), então a proteção real existe — o problema é a exposição.
-
-*Correção*: mover a verificação do login para o servidor.
+### 4. ~~Login do admin é validado no cliente~~ — resolvido
+O login agora chama `POST /api/admin` com `action: 'login'`, validado por `ADMIN_AUTH` + `timingSafeEqual`. Nenhuma credencial fica no JS público.
 
 ---
 *Feito com amor, fé e muito código.* <code>&lt;/code&gt;</code>

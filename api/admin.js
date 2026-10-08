@@ -20,8 +20,12 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { familyName, members, auth } = req.body;
+      const { familyName, members, auth, action } = req.body;
       if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
+
+      // Login: o cliente só confirma a credencial aqui — ela nunca fica no JS público.
+      if (action === 'login') return res.status(200).json({ ok: true });
+
       if (!familyName || !members) return res.status(400).json({ error: 'Dados incompletos' });
 
       const newFamily = {
@@ -51,8 +55,34 @@ export default async function handler(req, res) {
       const result = await mutateFamilies(`convite: editar — ${familyName}`, (families) => {
         const idx = families.findIndex((f) => f.id === id);
         if (idx === -1) return { write: false, notFound: true };
-        families[idx] = { ...families[idx], id, familyName, members, updatedAt: new Date().toISOString() };
+        // O admin não altera respostas: se o convidado respondeu enquanto o formulário
+        // estava aberto, a resposta atual (do GitHub) vale sobre a cópia do navegador.
+        const current = families[idx].members || [];
+        const merged = members.map((m) => {
+          const live = current.find((c) => c.name === m.name);
+          return { name: m.name, isChild: !!m.isChild, status: live?.status || m.status || 'pending' };
+        });
+        families[idx] = { ...families[idx], id, familyName, members: merged, updatedAt: new Date().toISOString() };
         return { write: true, family: families[idx] };
+      });
+
+      if (result.notFound) return res.status(404).json({ error: 'Convite não encontrado' });
+      return res.status(200).json(result.family);
+    }
+
+    // Marca/desmarca o convite como entregue. Só mexe nesses dois campos, para
+    // não sobrescrever uma confirmação que o convidado tenha feito no meio-tempo.
+    if (req.method === 'PATCH') {
+      const { id, delivered, auth } = req.body;
+      if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
+      if (!id || typeof delivered !== 'boolean') return res.status(400).json({ error: 'Dados incompletos' });
+
+      const result = await mutateFamilies(`convite: ${delivered ? 'entregue' : 'entrega desfeita'} — ${id}`, (families) => {
+        const family = families.find((f) => f.id === id);
+        if (!family) return { write: false, notFound: true };
+        family.delivered = delivered;
+        family.deliveredAt = delivered ? new Date().toISOString() : null;
+        return { write: true, family };
       });
 
       if (result.notFound) return res.status(404).json({ error: 'Convite não encontrado' });
