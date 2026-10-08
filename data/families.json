@@ -238,7 +238,9 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-09-11T18:42:02.078Z"
+    "updatedAt": "2026-09-11T18:42:02.078Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-08T17:45:40.428Z"
   },
   {
     "id": "0f0e40f6",
