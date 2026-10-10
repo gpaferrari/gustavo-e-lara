@@ -1,16 +1,21 @@
 [
   {
     "id": "6a73ca98",
-    "familyName": "Família do Noivo - Tia Dalva",
+    "familyName": "Padrinhos Noiva - Camila",
     "members": [
       {
-        "name": "Dalva Ávila",
-        "status": "pending",
-        "isChild": false
+        "name": "Camila",
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Marquinhos",
+        "isChild": false,
+        "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-09-11T18:40:22.564Z",
+    "updatedAt": "2026-10-10T22:25:05.292Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:00.254Z"
   },
