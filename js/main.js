@@ -3,7 +3,7 @@
    Main Script
    ═══════════════════════════════════════════════════════ */
 
-const WEDDING_DATE = new Date(2027, 0, 9, 19, 30);   // 09/01/2027 19h30
+const WEDDING_DATE = new Date(2027, 0, 9, 19, 0);    // 09/01/2027 19h
 const RSVP_DEADLINE = new Date(2026, 10, 30, 23, 59, 59);
 const SITE_URL = 'https://gustavo-e-lara.vercel.app/';
 

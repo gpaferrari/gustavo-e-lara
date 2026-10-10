@@ -6,13 +6,13 @@
 const DEADLINE = new Date(2026, 10, 30, 23, 59, 59); // 30/11/2026
 const WHATSAPP = '5514991478807';
 
-// Evento para "Salvar na agenda" — 19h30 em Marília (UTC-3)
+// Evento para "Salvar na agenda" — 19h em Marília (UTC-3)
 const EVENT = {
   title: 'Casamento Gustavo & Lara',
-  start: '20270109T223000Z',
+  start: '20270109T220000Z',
   end: '20270110T040000Z',
   location: 'Churrascaria Kieza, Av. Tiradentes, 1480 - Fragata, Marília - SP',
-  details: 'Cerimônia e recepção às 19h30. https://gustavo-e-lara.vercel.app',
+  details: 'Cerimônia e recepção às 19h. https://gustavo-e-lara.vercel.app',
 };
 
 const OPTIONS = [
