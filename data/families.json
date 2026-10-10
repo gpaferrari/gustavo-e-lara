@@ -540,21 +540,17 @@
     "members": [
       {
         "name": "Tio Jair",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
-        "name": "Tia ...",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Prima",
-        "status": "pending",
-        "isChild": false
+        "name": "Tia Eliane",
+        "isChild": false,
+        "status": "pending"
       }
     ],
-    "createdAt": "2026-10-08T18:11:31.918Z"
+    "createdAt": "2026-10-08T18:11:31.918Z",
+    "updatedAt": "2026-10-10T22:16:00.485Z"
   },
   {
     "id": "f75f6461",
