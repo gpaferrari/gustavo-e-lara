@@ -249,21 +249,16 @@
   },
   {
     "id": "0f0e40f6",
-    "familyName": "Pais do noivo",
+    "familyName": "Família da Noiva",
     "members": [
       {
-        "name": "Rosival",
-        "isChild": false,
-        "status": "pending"
-      },
-      {
-        "name": "Ana Lucia",
+        "name": "Juliana Carvalho",
         "isChild": false,
         "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-08T17:43:01.712Z",
+    "updatedAt": "2026-10-10T22:28:01.188Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:38.326Z"
   },
