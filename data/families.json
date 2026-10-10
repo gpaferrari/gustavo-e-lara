@@ -4,18 +4,18 @@
     "familyName": "Padrinhos Noiva - Camila",
     "members": [
       {
-        "name": "Camila",
+        "name": "Camila Abdalla",
         "isChild": false,
         "status": "pending"
       },
       {
-        "name": "Marquinhos",
+        "name": "Marquinhos Abdalla",
         "isChild": false,
         "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-10T22:25:05.292Z",
+    "updatedAt": "2026-10-10T22:29:28.028Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:00.254Z"
   },
