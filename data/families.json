@@ -602,5 +602,18 @@
     "createdAt": "2026-10-10T22:26:55.919Z",
     "delivered": true,
     "deliveredAt": "2026-10-10T22:28:05.759Z"
+  },
+  {
+    "id": "bacaec33",
+    "familyName": "Amiga Noivo",
+    "displayName": "Rosa e Familia",
+    "members": [
+      {
+        "name": "Rosa",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-13T13:57:00.585Z"
   }
 ]
