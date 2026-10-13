@@ -582,7 +582,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-10T22:24:26.345Z"
+    "createdAt": "2026-10-10T22:24:26.345Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-13T13:57:11.576Z"
   },
   {
     "id": "e3eb42cb",
