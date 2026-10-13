@@ -481,7 +481,9 @@
       }
     ],
     "createdAt": "2026-10-08T18:01:28.887Z",
-    "updatedAt": "2026-10-08T18:08:18.212Z"
+    "updatedAt": "2026-10-08T18:08:18.212Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-13T13:56:30.924Z"
   },
   {
     "id": "e7be443c",
