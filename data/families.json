@@ -614,6 +614,8 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-13T13:57:00.585Z"
+    "createdAt": "2026-10-13T13:57:00.585Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-13T13:57:06.472Z"
   }
 ]
