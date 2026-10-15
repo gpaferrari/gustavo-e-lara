@@ -619,5 +619,22 @@
     "createdAt": "2026-10-13T13:57:00.585Z",
     "delivered": true,
     "deliveredAt": "2026-10-13T13:57:06.472Z"
+  },
+  {
+    "id": "57d562db",
+    "familyName": "Familia do Noivo - Tio Severino",
+    "members": [
+      {
+        "name": "Tio Severino",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Tia Isabel",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-15T15:56:06.091Z"
   }
 ]
