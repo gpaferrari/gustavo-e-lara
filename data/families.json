@@ -789,5 +789,22 @@
       }
     ],
     "createdAt": "2026-10-20T17:03:17.558Z"
+  },
+  {
+    "id": "d3197913",
+    "familyName": "Amiga da Noiva",
+    "members": [
+      {
+        "name": "Rutineia",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Namorado Rute",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-20T17:03:51.697Z"
   }
 ]
