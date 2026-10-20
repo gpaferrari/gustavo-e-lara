@@ -728,5 +728,22 @@
       }
     ],
     "createdAt": "2026-10-20T17:00:10.401Z"
+  },
+  {
+    "id": "fee60c9b",
+    "familyName": "Amigos do Noivo",
+    "members": [
+      {
+        "name": "Kitty",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Filho kitty",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-20T17:01:28.422Z"
   }
 ]
