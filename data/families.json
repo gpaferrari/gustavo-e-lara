@@ -672,5 +672,27 @@
       }
     ],
     "createdAt": "2026-10-20T16:58:45.986Z"
+  },
+  {
+    "id": "ec2e44c2",
+    "familyName": "Amiga da Noiva",
+    "members": [
+      {
+        "name": "Thais Eugênio",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Esposo thais",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Lorena",
+        "status": "pending",
+        "isChild": true
+      }
+    ],
+    "createdAt": "2026-10-20T16:59:15.902Z"
   }
 ]
