@@ -716,5 +716,17 @@
       }
     ],
     "createdAt": "2026-10-20T16:59:49.912Z"
+  },
+  {
+    "id": "66674e95",
+    "familyName": "Amiga da Noiva",
+    "members": [
+      {
+        "name": "Sabrina Minatel",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-20T17:00:10.401Z"
   }
 ]
