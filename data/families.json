@@ -182,11 +182,6 @@
     "familyName": "Avó Paterna do Noivo",
     "members": [
       {
-        "name": "Vó Ophelia",
-        "isChild": false,
-        "status": "pending"
-      },
-      {
         "name": "Eloi",
         "isChild": false,
         "status": "pending"
@@ -213,7 +208,7 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-08T17:44:41.277Z",
+    "updatedAt": "2026-10-20T16:55:16.543Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:44:50.190Z"
   },
