@@ -694,5 +694,27 @@
       }
     ],
     "createdAt": "2026-10-20T16:59:15.902Z"
+  },
+  {
+    "id": "b7f70c2e",
+    "familyName": "Amiga da Noiva",
+    "members": [
+      {
+        "name": "Cleiciane",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Jardel esposo",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Álvaro filho",
+        "status": "pending",
+        "isChild": true
+      }
+    ],
+    "createdAt": "2026-10-20T16:59:49.912Z"
   }
 ]
