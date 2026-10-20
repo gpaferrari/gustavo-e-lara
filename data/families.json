@@ -274,8 +274,8 @@
     ],
     "recovered": true,
     "updatedAt": "2026-07-24T16:45:46.555Z",
-    "delivered": false,
-    "deliveredAt": null
+    "delivered": true,
+    "deliveredAt": "2026-10-20T17:04:38.197Z"
   },
   {
     "id": "b29f06c7",
