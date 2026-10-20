@@ -745,5 +745,27 @@
       }
     ],
     "createdAt": "2026-10-20T17:01:28.422Z"
+  },
+  {
+    "id": "d1d404e4",
+    "familyName": "Família da Noiva",
+    "members": [
+      {
+        "name": "Mariana Bersa",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Rafael Machado",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Shophia",
+        "status": "pending",
+        "isChild": true
+      }
+    ],
+    "createdAt": "2026-10-20T17:02:14.724Z"
   }
 ]
