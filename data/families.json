@@ -643,5 +643,22 @@
       }
     ],
     "createdAt": "2026-10-20T16:57:42.461Z"
+  },
+  {
+    "id": "1c3eb9ab",
+    "familyName": "Amiga da Noiva",
+    "members": [
+      {
+        "name": "Gabriela Freitas",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Joao noivo",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-20T16:58:18.035Z"
   }
 ]
