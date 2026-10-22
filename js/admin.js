@@ -231,6 +231,7 @@ const createCard = (f) => {
       </label>
       <div class="fam__actions">
         <button type="button" class="icon-btn" data-act="send" data-id="${id}" aria-label="Enviar convite online para ${name}" title="Enviar convite pelo WhatsApp">${ICONS.send}</button>
+        <button type="button" class="icon-btn" data-act="copyInvite" data-id="${id}" aria-label="Copiar link do convite online de ${name}" title="Copiar link do convite">${ICONS.link}</button>
         <button type="button" class="icon-btn" data-act="qr" data-id="${id}" aria-label="QR Code de ${name}" title="QR Code">${ICONS.qr}</button>
         <button type="button" class="icon-btn" data-act="edit" data-id="${id}" aria-label="Editar ${name}" title="Editar">${ICONS.edit}</button>
         <button type="button" class="icon-btn icon-btn--danger" data-act="delete" data-id="${id}" aria-label="Excluir ${name}" title="Excluir">${ICONS.trash}</button>
@@ -630,6 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!btn) return;
     const { act, id } = btn.dataset;
     if (act === 'send') sendInvite(id);
+    if (act === 'copyInvite') copyText(inviteUrl(id), 'Link do convite copiado');
     if (act === 'qr') openQR(id);
     if (act === 'edit') openFamilyDialog(id);
     if (act === 'delete') deleteFamily(id);

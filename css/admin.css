@@ -694,10 +694,12 @@
   .hide-mobile { display: none !important; }
 }
 
-/* Celulares bem estreitos (320–359px): rodapé do card numa linha só */
+/* Celulares: 5 ações + "Entregue" cabem numa linha só */
+@media (max-width: 420px) {
+  .fam__actions .icon-btn { width: 36px; height: 36px; }
+}
 @media (max-width: 359px) {
   .fam__foot { padding: 6px; }
-  .fam__actions .icon-btn { width: 36px; height: 36px; }
 }
 
 @media (min-width: 640px) {
