@@ -154,6 +154,7 @@ function closeEnvelope() {
     root.classList.remove('has-envelope');
     screen.setAttribute('aria-hidden', 'true');
     replayHeroReveal();
+    document.dispatchEvent(new Event('envelope:closed'));
   }, 800);
 }
 
@@ -180,6 +181,73 @@ function personalize(family) {
   document.documentElement.classList.add('is-personal');
 
   document.title = `${name} · Gustavo & Lara`;
+
+  setupConfirmFab(family, rsvpLink);
+}
+
+/*
+ * Botão flutuante "Confirmar presença" (só no convite online).
+ * - entra depois que o envelope abre, para não competir com a revelação
+ * - encolhe para o ícone enquanto a pessoa rola e volta quando ela para
+ * - some na seção de confirmação (que já tem o botão) e depois do prazo
+ * - o texto acompanha o estado: ninguém respondeu / faltam pessoas / já respondeu
+ */
+function setupConfirmFab(family, rsvpLink) {
+  if (new Date() > RSVP_DEADLINE || !('IntersectionObserver' in window)) return;
+
+  const members = family.members || [];
+  const many = members.length !== 1;
+  const missing = members.filter((m) => m.status !== 'confirmed' && m.status !== 'declined').length;
+  const daysLeft = Math.ceil((RSVP_DEADLINE - new Date()) / 86_400_000);
+  const deadline = daysLeft <= 7
+    ? `faltam ${daysLeft} ${daysLeft === 1 ? 'dia' : 'dias'}`
+    : 'até 30 de novembro';
+
+  let title = 'Confirmar presença';
+  let sub = deadline;
+  let done = false;
+  if (members.length && !missing) {
+    title = 'Alterar resposta';
+    sub = many ? 'Vocês já responderam ✓' : 'Você já respondeu ✓';
+    done = true;
+  } else if (missing < members.length) {
+    title = 'Completar confirmação';
+    sub = `${missing === 1 ? 'falta 1 pessoa' : `faltam ${missing} pessoas`} · ${deadline}`;
+  }
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <a class="confirm-fab${done ? ' confirm-fab--done' : ''}" id="confirmFab" href="${rsvpLink}" aria-label="${title}, ${sub}">
+      <span class="confirm-fab__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </span>
+      <span class="confirm-fab__text" aria-hidden="true">
+        <span class="confirm-fab__title">${title}</span>
+        <span class="confirm-fab__sub">${sub}</span>
+      </span>
+    </a>`);
+
+  const fab = document.getElementById('confirmFab');
+  let ready = false;
+  let rsvpVisible = false;
+  const sync = () => fab.classList.toggle('is-visible', ready && !rsvpVisible);
+
+  new IntersectionObserver(([entry]) => { rsvpVisible = entry.isIntersecting; sync(); }, { threshold: 0.15 })
+    .observe(document.getElementById('confirmacao'));
+
+  // Encolhe durante a rolagem, expande quando para
+  let scrollTimer;
+  window.addEventListener('scroll', () => {
+    fab.classList.add('is-compact');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => fab.classList.remove('is-compact'), 450);
+  }, { passive: true });
+
+  const reveal = () => setTimeout(() => { ready = true; sync(); }, 1500);
+  if (document.documentElement.classList.contains('has-envelope')) {
+    document.addEventListener('envelope:closed', reveal, { once: true });
+  } else {
+    reveal();
+  }
 }
 
 async function setupPersonalInvite() {

@@ -1070,6 +1070,75 @@ a   { color: inherit; text-decoration: none; }
   .envelope.is-open .envelope__letter { transform: translateY(-38%); }
 }
 
+/* Botão flutuante "Confirmar presença" (convite online) */
+.confirm-fab {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 32px);
+  min-height: 60px;
+  padding: 8px 20px 8px 8px;
+  border: 1px solid rgba(222, 184, 130, 0.35);
+  border-radius: 999px;
+  background: rgba(28, 18, 10, 0.94);
+  color: var(--cream);
+  box-shadow: 0 14px 36px rgba(28, 18, 10, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.55s var(--spring),
+    padding 0.3s var(--ease),
+    gap 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.confirm-fab.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.confirm-fab:hover { border-color: rgba(222, 184, 130, 0.7); }
+.confirm-fab:active { transform: scale(0.97); }
+.confirm-fab:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.confirm-fab__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark);
+}
+.confirm-fab--done .confirm-fab__icon { background: var(--sage); color: #fff; }
+.confirm-fab__icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.confirm-fab__text {
+  display: grid;
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.35s var(--ease), opacity 0.25s;
+}
+.confirm-fab__title { font-size: 0.95rem; font-weight: 500; line-height: 1.25; }
+.confirm-fab__sub { color: var(--gold-light); font-size: 0.74rem; line-height: 1.3; }
+
+/* Rolando: vira só o ícone, sem cobrir o conteúdo */
+.confirm-fab.is-compact { gap: 0; padding-right: 8px; }
+.confirm-fab.is-compact .confirm-fab__text { max-width: 0; opacity: 0; }
+
 /* Com convite personalizado, o passo a passo do QR não faz sentido */
 .is-personal .rsvp__steps,
 .is-personal .rsvp__help { display: none; }
