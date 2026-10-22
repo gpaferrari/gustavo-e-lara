@@ -1051,6 +1051,25 @@ a   { color: inherit; text-decoration: none; }
 .rsvp__cta:hover { background: var(--gold-light); transform: translateY(-2px); }
 .rsvp__cta:active { transform: scale(0.98); }
 
+/* Tablet e desktop: envelope maior, proporcional à tela */
+@media (min-width: 600px) {
+  .envelope { width: min(460px, 70vw); margin-top: 130px; }
+  .envelope__seal { width: 68px; height: 68px; font-size: 1.3rem; }
+  .envelope__name { font-size: 2.6rem; }
+  .envelope__to { font-size: 0.7rem; }
+  .envelope__letter-amp { font-size: 2.8rem; }
+  .envelope__letter-text { font-size: 0.75rem; }
+  .envelope-screen__kicker { font-size: 0.8rem; }
+  .envelope-screen__hint { font-size: 1.25rem; }
+}
+
+/* Telas baixas (celular deitado): envelope menor para caber sem rolar */
+@media (max-height: 600px) {
+  .has-envelope .envelope-screen { gap: 14px; overflow-y: auto; }
+  .envelope { width: min(300px, 70vw); margin-top: 56px; }
+  .envelope.is-open .envelope__letter { transform: translateY(-38%); }
+}
+
 /* Com convite personalizado, o passo a passo do QR não faz sentido */
 .is-personal .rsvp__steps,
 .is-personal .rsvp__help { display: none; }
