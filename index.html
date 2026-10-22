@@ -19,7 +19,17 @@
 
   <!-- Com JS ativo, os blocos .reveal começam ocultos e aparecem ao rolar.
        Sem JS, tudo fica visível (nada de página em branco). -->
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // Convite online personalizado (?id=...): mostra o envelope antes do site
+    // aparecer, para não piscar o conteúdo. Uma vez por sessão.
+    (function () {
+      var id = new URLSearchParams(location.search).get('id');
+      var seen = false;
+      try { seen = sessionStorage.getItem('envelope_' + id) === '1'; } catch (e) {}
+      if (id && !seen) document.documentElement.classList.add('has-envelope');
+    })();
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +38,30 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- ══════════════════════════════════════════
+       ENVELOPE — só no convite online (?id=...)
+  ══════════════════════════════════════════ -->
+  <div class="envelope-screen" id="envelopeScreen" aria-hidden="true">
+    <p class="envelope-screen__kicker">Gustavo &amp; Lara</p>
+
+    <button type="button" class="envelope" id="envelopeBtn" aria-label="Abrir o convite">
+      <span class="envelope__back"></span>
+      <span class="envelope__letter">
+        <span class="envelope__letter-amp">G&amp;L</span>
+        <span class="envelope__letter-text">Convite de casamento</span>
+      </span>
+      <span class="envelope__pocket"></span>
+      <span class="envelope__flap"></span>
+      <span class="envelope__seal">G&amp;L</span>
+      <span class="envelope__address">
+        <span class="envelope__to">Para</span>
+        <span class="envelope__name" id="envelopeName">você</span>
+      </span>
+    </button>
+
+    <p class="envelope-screen__hint">Toque para abrir</p>
+  </div>
 
   <!--
     ┌─────────────────────────────────────────────┐
@@ -79,6 +113,8 @@
     </div>
 
     <div class="hero__inner">
+      <!-- Saudação do convite online (preenchida pelo js/main.js) -->
+      <p class="hero__guest" id="heroGuest" hidden></p>
       <p class="hero__eyebrow reveal">Vós sois convidados para celebrar</p>
 
       <h1 class="hero__names reveal">
@@ -279,6 +315,15 @@
       </header>
 
       <div class="rsvp__inner reveal">
+        <!-- Convite online: botão direto para a confirmação da família -->
+        <div class="rsvp__personal" id="rsvpPersonal" hidden>
+          <p class="rsvp__personal-text">
+            <span id="rsvpPersonalName"></span>, sua presença é muito importante para nós.
+            Confirme até <strong>30 de novembro de 2026</strong>.
+          </p>
+          <a class="rsvp__cta" id="rsvpPersonalLink" href="rsvp.html">Confirmar presença</a>
+        </div>
+
         <ol class="rsvp__steps">
           <li><span class="rsvp__step-num">1</span><span>Aponte a câmera para o <strong>QR Code do seu convite</strong></span></li>
           <li><span class="rsvp__step-num">2</span><span>Marque quem vai da sua família</span></li>
@@ -334,6 +379,7 @@
     </p>
   </footer>
 
+  <script src="js/nome-convidado.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

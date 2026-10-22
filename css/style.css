@@ -840,6 +840,222 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
+   CONVITE ONLINE — envelope de abertura (?id=...)
+   ═══════════════════════════════════════════════════════ */
+.envelope-screen { display: none; }
+
+.has-envelope body { overflow: hidden; }
+
+.has-envelope .envelope-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(196, 147, 74, 0.16), transparent 60%),
+    radial-gradient(100% 50% at 100% 100%, rgba(122, 158, 126, 0.16), transparent 60%),
+    linear-gradient(165deg, var(--ivory), var(--cream));
+  transition: opacity 0.8s var(--ease), visibility 0.8s;
+}
+.envelope-screen.is-leaving { opacity: 0; visibility: hidden; }
+
+.envelope-screen__kicker {
+  color: var(--sage-dark);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.envelope-screen__hint {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  animation: env-hint 2.4s ease-in-out infinite;
+}
+.envelope.is-open ~ .envelope-screen__hint { opacity: 0; animation: none; transition: opacity 0.3s; }
+
+@keyframes env-hint { 50% { opacity: 0.45; } }
+@keyframes env-float { 50% { transform: translateY(-6px) rotate(-0.6deg); } }
+
+/* O envelope em si: fundo, carta, bolso, aba e selo em camadas */
+.envelope {
+  position: relative;
+  width: min(330px, 84vw);
+  aspect-ratio: 3 / 2;
+  margin-top: 96px; /* espaço para a carta subir */
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 900px;
+  filter: drop-shadow(0 22px 34px rgba(28, 18, 10, 0.18));
+  animation: env-float 4s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+.envelope:focus-visible { outline: 2px solid var(--gold); outline-offset: 10px; border-radius: 12px; }
+.envelope.is-open { animation: none; cursor: default; }
+
+.envelope > span { position: absolute; } /* absolute já vira bloco */
+
+.envelope__back {
+  inset: 0;
+  background: #E8D8BF;
+  border-radius: 10px;
+}
+
+.envelope__letter {
+  z-index: 1;
+  top: 7%;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding-top: 9%;
+  background: #FFFDF9;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(28, 18, 10, 0.08);
+  transition: transform 0.9s var(--ease) 0.6s;
+}
+.envelope__letter-amp { color: var(--gold); font-family: var(--script); font-size: 2rem; line-height: 1; }
+.envelope__letter-text {
+  color: var(--brown);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.envelope__pocket {
+  z-index: 2;
+  inset: 0;
+  border-radius: 10px;
+  background:
+    linear-gradient(to top right, transparent 49.6%, rgba(92, 61, 46, 0.06) 50%) left / 50% 100% no-repeat,
+    linear-gradient(to top left, transparent 49.6%, rgba(92, 61, 46, 0.06) 50%) right / 50% 100% no-repeat,
+    #FFFAF2;
+  clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope__flap {
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 52%;
+  background: linear-gradient(180deg, #F5E9D6, #EEDFC8);
+  border-radius: 10px 10px 0 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 0.65s var(--ease) 0.15s, z-index 0s linear 0.45s;
+}
+.envelope.is-open .envelope__flap { z-index: 0; transform: rotateX(180deg); }
+
+.envelope__seal {
+  z-index: 4;
+  top: 52%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #D9AE6B, var(--gold) 55%, #9E7130);
+  box-shadow: 0 3px 8px rgba(92, 61, 46, 0.35), inset 0 0 0 3px rgba(255, 255, 255, 0.15);
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s, transform 0.3s var(--ease);
+}
+.envelope.is-open .envelope__seal { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+
+.envelope__address {
+  z-index: 4;
+  right: 8%;
+  bottom: 7%;
+  left: 8%;
+  text-align: center;
+  transition: opacity 0.3s;
+}
+.envelope.is-open .envelope__address { opacity: 0; }
+.envelope__to {
+  display: block;
+  color: var(--muted);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.envelope__name {
+  display: block;
+  overflow: hidden;
+  color: var(--brown);
+  font-family: var(--script);
+  font-size: clamp(1.6rem, 7vw, 2rem);
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* A carta sobe para fora do envelope */
+.envelope.is-open .envelope__letter { transform: translateY(-52%); }
+
+/* Saudação no topo do site e botão direto de confirmação */
+.hero__guest {
+  margin-bottom: calc(var(--gap-md) * -0.6);
+  color: var(--gold);
+  font-family: var(--script);
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.rsvp__personal { margin-bottom: var(--gap-md); }
+.rsvp__personal-text {
+  margin-bottom: var(--gap-md);
+  color: var(--cream);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.rsvp__personal-text strong { color: var(--gold-light); font-weight: 500; }
+
+.rsvp__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+  min-height: 56px;
+  padding: 0 2rem;
+  border-radius: 100px;
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  box-shadow: 0 12px 30px rgba(196, 147, 74, 0.3);
+  transition: background 0.2s, transform 0.2s var(--spring);
+}
+.rsvp__cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+.rsvp__cta:active { transform: scale(0.98); }
+
+/* Com convite personalizado, o passo a passo do QR não faz sentido */
+.is-personal .rsvp__steps,
+.is-personal .rsvp__help { display: none; }
+
+/* ═══════════════════════════════════════════════════════
    RESPONSIVE — Tablet +
    ═══════════════════════════════════════════════════════ */
 @media (min-width: 560px) {

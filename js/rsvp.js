@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const family = await res.json();
-    const shownName = family.displayName || family.familyName;
+    const shownName = friendlyName(family);
     $('#familyName').textContent = shownName;
     $('#familyName').classList.toggle('rv-family--long', shownName.length > 18);
     document.title = `${shownName} · Confirmar presença | Gustavo & Lara`;

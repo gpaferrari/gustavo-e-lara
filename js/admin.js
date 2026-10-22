@@ -34,6 +34,9 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const percent = (part, total) => (total ? Math.round((part / total) * 100) : 0);
 const shortDate = (iso) => (iso ? new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) : '');
 const rsvpUrl = (id) => `${window.location.origin}/rsvp.html?id=${encodeURIComponent(id)}`;
+// Convite online: o próprio site, aberto com envelope personalizado (ver js/main.js).
+// Endereço fixo para o link enviado nunca sair com um domínio de teste.
+const inviteUrl = (id) => `https://gustavo-e-lara.vercel.app/?id=${encodeURIComponent(id)}`;
 const slugify = (text) => normalize(text).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'convite';
 const findFamily = (id) => state.families.find((f) => f.id === id);
 
@@ -41,6 +44,7 @@ const STATUS_LABEL = { confirmed: 'Vou', declined: 'Não vou', pending: 'Pendent
 
 const ICONS = {
   check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  send:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4 18-7z"/></svg>',
   link:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
   qr:    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg>',
   edit:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4zM13.5 6.5l4 4"/></svg>',
@@ -226,7 +230,7 @@ const createCard = (f) => {
         <span class="deliver__text">Entregue</span>
       </label>
       <div class="fam__actions">
-        <button type="button" class="icon-btn" data-act="copy" data-id="${id}" aria-label="Copiar link de ${name}" title="Copiar link">${ICONS.link}</button>
+        <button type="button" class="icon-btn" data-act="send" data-id="${id}" aria-label="Enviar convite online para ${name}" title="Enviar convite pelo WhatsApp">${ICONS.send}</button>
         <button type="button" class="icon-btn" data-act="qr" data-id="${id}" aria-label="QR Code de ${name}" title="QR Code">${ICONS.qr}</button>
         <button type="button" class="icon-btn" data-act="edit" data-id="${id}" aria-label="Editar ${name}" title="Editar">${ICONS.edit}</button>
         <button type="button" class="icon-btn icon-btn--danger" data-act="delete" data-id="${id}" aria-label="Excluir ${name}" title="Excluir">${ICONS.trash}</button>
@@ -521,17 +525,26 @@ const downloadQR = () => {
   link.click();
 };
 
-const shareInvite = async () => {
-  const fam = findFamily(state.qrFamilyId);
-  if (!fam) return;
-  const url = rsvpUrl(fam.id);
-  const text = `Olá! Com muita alegria convidamos vocês para o nosso casamento 💍\nConfirme a presença pelo link:`;
+const inviteMessage = (fam) => {
+  const many = (fam.members || []).length !== 1;
+  return [
+    `${friendlyName(fam)}, com muita alegria ${many ? 'convidamos vocês' : 'convidamos você'} para o nosso casamento! 💍`,
+    '',
+    '📅 09 de janeiro de 2027, às 19h',
+    '📍 Churrascaria Kieza · Marília — SP',
+    '',
+    'Abra seu convite e confirme sua presença:',
+    inviteUrl(fam.id),
+    '',
+    'Gustavo & Lara',
+  ].join('\n');
+};
 
-  if (navigator.share) {
-    try { await navigator.share({ title: 'Gustavo & Lara', text, url }); } catch { /* compartilhamento cancelado */ }
-    return;
-  }
-  window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, '_blank', 'noopener');
+// Abre o WhatsApp com a mensagem pronta; você só escolhe o contato
+const sendInvite = (id) => {
+  const fam = findFamily(id);
+  if (!fam) return;
+  window.open(`https://wa.me/?text=${encodeURIComponent(inviteMessage(fam))}`, '_blank', 'noopener');
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -616,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = e.target.closest('[data-act]');
     if (!btn) return;
     const { act, id } = btn.dataset;
-    if (act === 'copy') copyText(rsvpUrl(id));
+    if (act === 'send') sendInvite(id);
     if (act === 'qr') openQR(id);
     if (act === 'edit') openFamilyDialog(id);
     if (act === 'delete') deleteFamily(id);
@@ -677,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // QR
   $('#qrDownload').addEventListener('click', downloadQR);
-  $('#qrShare').addEventListener('click', shareInvite);
+  $('#qrShare').addEventListener('click', () => sendInvite(state.qrFamilyId));
   $('#qrUrl').addEventListener('click', () => copyText(rsvpUrl(state.qrFamilyId)));
 
   // Fechar dialogs: botão [data-close] ou clique no fundo escuro

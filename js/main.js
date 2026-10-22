@@ -129,6 +129,82 @@ if (typeof console !== 'undefined' && console.log) {
 }
 /* eslint-enable no-console */
 
+/* ── Convite online personalizado (?id=...) ─────────── */
+/*
+ * O link enviado pelo WhatsApp é o próprio site com o código da família.
+ * Mostra um envelope "Para <família>", personaliza o topo e troca o passo a
+ * passo do QR por um botão direto para a confirmação. Sem ?id, nada muda.
+ */
+const inviteId = new URLSearchParams(window.location.search).get('id');
+
+function replayHeroReveal() {
+  document.querySelectorAll('.hero .reveal').forEach((el) => {
+    el.classList.remove('in-view');
+    void el.offsetWidth; // reinicia a transição
+    el.classList.add('in-view');
+  });
+}
+
+function closeEnvelope() {
+  const root = document.documentElement;
+  const screen = document.getElementById('envelopeScreen');
+  if (!root.classList.contains('has-envelope')) return;
+  screen.classList.add('is-leaving');
+  setTimeout(() => {
+    root.classList.remove('has-envelope');
+    screen.setAttribute('aria-hidden', 'true');
+    replayHeroReveal();
+  }, 800);
+}
+
+function openEnvelope() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('envelopeBtn').classList.add('is-open');
+  try { sessionStorage.setItem(`envelope_${inviteId}`, '1'); } catch { /* modo privado */ }
+  setTimeout(closeEnvelope, reduceMotion ? 200 : 1800);
+}
+
+function personalize(family) {
+  const name = friendlyName(family);
+  const rsvpLink = `rsvp.html?id=${encodeURIComponent(family.id)}`;
+
+  document.getElementById('envelopeName').textContent = name;
+
+  const guest = document.getElementById('heroGuest');
+  guest.textContent = name;
+  guest.hidden = false;
+
+  document.getElementById('rsvpPersonalName').textContent = name;
+  document.getElementById('rsvpPersonalLink').href = rsvpLink;
+  document.getElementById('rsvpPersonal').hidden = false;
+  document.documentElement.classList.add('is-personal');
+
+  document.title = `${name} · Gustavo & Lara`;
+}
+
+async function setupPersonalInvite() {
+  if (!inviteId) return;
+
+  const hasEnvelope = document.documentElement.classList.contains('has-envelope');
+  if (hasEnvelope) {
+    const envelope = document.getElementById('envelopeBtn');
+    document.getElementById('envelopeScreen').setAttribute('aria-hidden', 'false');
+    envelope.addEventListener('click', openEnvelope, { once: true });
+    envelope.focus({ preventScroll: true });
+  }
+
+  try {
+    const res = await fetch(`/api/rsvp?id=${encodeURIComponent(inviteId)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    personalize(await res.json());
+  } catch {
+    // Código inválido ou sem conexão: segue como o site normal, sem envelope
+    closeEnvelope();
+  }
+}
+
+setupPersonalInvite();
+
 /* ── Lembrete de confirmação ────────────────────────── */
 /*
  * Barra discreta no rodapé, mostrada uma vez por aparelho, só depois que a
@@ -143,7 +219,8 @@ const storage = {
 };
 
 function setupRSVPPopup() {
-  if (storage.get(POPUP_KEY) || new Date() > RSVP_DEADLINE || !('IntersectionObserver' in window)) return;
+  // Convite online já tem o botão direto de confirmação — o lembrete sobra
+  if (inviteId || storage.get(POPUP_KEY) || new Date() > RSVP_DEADLINE || !('IntersectionObserver' in window)) return;
 
   document.body.insertAdjacentHTML('beforeend', `
     <div class="rsvp-popup" id="rsvpPopup" role="status">
