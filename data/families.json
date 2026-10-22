@@ -875,5 +875,22 @@
       }
     ],
     "createdAt": "2026-10-22T18:08:38.849Z"
+  },
+  {
+    "id": "6e9eea17",
+    "familyName": "Familia Noivo - Efrain",
+    "members": [
+      {
+        "name": "Efrain",
+        "status": "pending",
+        "isChild": false
+      },
+      {
+        "name": "Esposa Efrain",
+        "status": "pending",
+        "isChild": false
+      }
+    ],
+    "createdAt": "2026-10-22T18:09:19.147Z"
   }
 ]
