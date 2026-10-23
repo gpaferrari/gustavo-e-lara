@@ -473,13 +473,19 @@
     "members": [
       {
         "name": "Sandra Marconato",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
+      },
+      {
+        "name": "Lupércio esposo",
+        "isChild": false,
+        "status": "pending"
       }
     ],
     "createdAt": "2026-10-08T18:07:49.049Z",
     "delivered": true,
-    "deliveredAt": "2026-10-13T13:56:36.720Z"
+    "deliveredAt": "2026-10-13T13:56:36.720Z",
+    "updatedAt": "2026-10-23T00:08:18.143Z"
   },
   {
     "id": "9a4b1b62",
