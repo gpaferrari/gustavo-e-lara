@@ -65,7 +65,8 @@ export default async function handler(req, res) {
         const current = families[idx].members || [];
         const merged = members.map((m) => {
           const live = current.find((c) => c.name === m.name);
-          return { name: m.name, isChild: !!m.isChild, status: live?.status || m.status || 'pending' };
+          const status = live?.status || m.status || 'pending';
+          return { name: m.name, isChild: !!m.isChild, status, ...(live?.byAdmin && status !== 'pending' ? { byAdmin: true } : {}) };
         });
         families[idx] = {
           ...families[idx], id, familyName, displayName: cleanDisplayName(displayName), members: merged, updatedAt: new Date().toISOString(),
@@ -80,9 +81,35 @@ export default async function handler(req, res) {
     // Marca/desmarca o convite como entregue. Só mexe nesses dois campos, para
     // não sobrescrever uma confirmação que o convidado tenha feito no meio-tempo.
     if (req.method === 'PATCH') {
-      const { id, delivered, auth } = req.body;
+      const { id, delivered, member, status, auth } = req.body;
       if (!isAuthorized(auth)) return res.status(401).json({ error: 'Não autorizado' });
-      if (!id || typeof delivered !== 'boolean') return res.status(400).json({ error: 'Dados incompletos' });
+      if (!id) return res.status(400).json({ error: 'Dados incompletos' });
+
+      // Resposta marcada pelos noivos (convidado que não conseguiu usar o QR).
+      // `member` = { index, name }: o nome confere a posição, para não marcar a
+      // pessoa errada se a lista mudou desde que o painel carregou.
+      if (member) {
+        if (!['confirmed', 'declined', 'pending'].includes(status)) {
+          return res.status(400).json({ error: 'Resposta inválida' });
+        }
+        const result = await mutateFamilies(`rsvp (admin): ${status} — ${id}`, (families) => {
+          const family = families.find((f) => f.id === id);
+          if (!family) return { write: false, notFound: true };
+          const target = (family.members || [])[member.index];
+          if (!target || target.name !== member.name) return { write: false, conflict: true };
+          target.status = status;
+          if (status === 'pending') delete target.byAdmin;
+          else target.byAdmin = true;
+          family.updatedAt = new Date().toISOString();
+          return { write: true, family };
+        });
+
+        if (result.notFound) return res.status(404).json({ error: 'Convite não encontrado' });
+        if (result.conflict) return res.status(409).json({ error: 'A lista mudou. Atualize e tente de novo.' });
+        return res.status(200).json(result.family);
+      }
+
+      if (typeof delivered !== 'boolean') return res.status(400).json({ error: 'Dados incompletos' });
 
       const result = await mutateFamilies(`convite: ${delivered ? 'entregue' : 'entrega desfeita'} — ${id}`, (families) => {
         const family = families.find((f) => f.id === id);

@@ -45,6 +45,8 @@ const slugify = (text) => normalize(text).replace(/[^a-z0-9]+/g, '-').replace(/^
 const findFamily = (id) => state.families.find((f) => f.id === id);
 
 const STATUS_LABEL = { confirmed: 'Vou', declined: 'Não vou', pending: 'Pendente' };
+// Só os três valores conhecidos viram classe/texto no HTML (o RSVP é uma rota pública)
+const safeStatus = (status) => (['confirmed', 'declined', 'pending'].includes(status) ? status : 'pending');
 
 const ICONS = {
   check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
@@ -182,13 +184,24 @@ const renderFilters = () => {
     .join('');
 };
 
-const memberHtml = (m) => {
-  const status = m.status || 'pending';
+// Cada integrante tem um seletor de resposta: os noivos marcam por quem não
+// conseguiu confirmar pelo QR. "byAdmin" mostra que a resposta veio daqui.
+const memberHtml = (m, index, familyId) => {
+  const status = safeStatus(m.status);
+  const name = escapeHtml(m.name);
+  const options = ['pending', 'confirmed', 'declined']
+    .map((s) => `<option value="${s}"${s === status ? ' selected' : ''}>${STATUS_LABEL[s]}</option>`)
+    .join('');
   return `
     <li class="fam__member">
       <i class="dot dot--${status}" aria-hidden="true"></i>
-      <span class="fam__member-name">${escapeHtml(m.name)}${m.isChild ? '<span class="tag">criança</span>' : ''}</span>
-      <span class="fam__member-status fam__member-status--${status}">${STATUS_LABEL[status] || 'Pendente'}</span>
+      <span class="fam__member-name">
+        ${name}${m.isChild ? '<span class="tag">criança</span>' : ''}
+        ${m.byAdmin && status !== 'pending' ? '<span class="fam__by-admin" title="Resposta marcada por vocês no painel">marcado por vocês</span>' : ''}
+      </span>
+      <select class="status-select status-select--${status}" data-status-family="${escapeHtml(familyId)}" data-status-index="${index}" aria-label="Resposta de ${name}">
+        ${options}
+      </select>
     </li>`;
 };
 
@@ -224,7 +237,7 @@ const createCard = (f) => {
     </header>
 
     ${s.members.length
-      ? `<ul class="fam__members">${s.members.map(memberHtml).join('')}</ul>`
+      ? `<ul class="fam__members">${s.members.map((m, i) => memberHtml(m, i, f.id)).join('')}</ul>`
       : '<p class="fam__empty">Quem abrir este QR não verá nenhum nome. Toque em <b>Editar</b> para incluir os integrantes.</p>'}
 
     <footer class="fam__foot">
@@ -259,7 +272,7 @@ const visibleFamilies = () => {
 const guestRows = (families) => families.flatMap((f) => (f.members || []).map((m, i) => ({
   family: f,
   member: m,
-  status: m.status || 'pending',
+  status: safeStatus(m.status),
   price: m.isChild ? 0 : PRICE_ADULT,
   groupStart: i === 0,
 })));
@@ -355,36 +368,127 @@ const renderTable = (families) => {
 
     <div class="gt-bar">
       <p class="gt-bar__info">${plural(c.people, 'convidado', 'convidados')} · ${plural(c.children, 'criança', 'crianças')}${filtered ? ' · <b>valores do filtro atual</b>' : ''}</p>
-      <button type="button" class="btn btn--ghost btn--sm" id="exportCsv">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
-        Exportar planilha
-      </button>
+      <div class="gt-export" role="group" aria-label="Exportar lista">
+        <button type="button" class="btn btn--ghost btn--sm" id="exportXlsx">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 8l6 8M15 8l-6 8"/></svg>
+          Excel
+        </button>
+        <button type="button" class="btn btn--ghost btn--sm" id="exportPdf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+          PDF
+        </button>
+      </div>
     </div>
     ${table}`;
 
-  $('#exportCsv').addEventListener('click', () => exportCsv(rows));
+  $('#exportXlsx').addEventListener('click', (e) => exportExcel(rows, c, e.currentTarget));
+  $('#exportPdf').addEventListener('click', () => exportPdf(rows, c));
 };
 
-// Planilha (buffet, cerimonial): separador ";" e BOM para o Excel em português abrir certo
-const exportCsv = (rows) => {
-  const cell = (v) => `"${String(v).replace(/"/g, '""')}"`;
-  const lines = [
-    ['Convidado', 'Convite', 'Tipo', 'Resposta', 'Convite entregue', 'Valor (R$)'],
-    ...rows.map((r) => [
-      r.member.name,
-      r.family.familyName,
-      r.member.isChild ? 'Criança' : 'Adulto',
-      STATUS_LABEL[r.status] || 'Pendente',
-      r.family.delivered ? 'Sim' : 'Não',
-      r.price,
-    ]),
-  ];
-  const csv = '﻿' + lines.map((l) => l.map(cell).join(';')).join('\r\n');
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-  link.download = `convidados-${new Date().toISOString().slice(0, 10)}.csv`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+/* ── Exportar: Excel (.xlsx) e PDF ──────────────────── */
+const XLSX_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+
+// Carrega a biblioteca do Excel só quando alguém clica em exportar
+const loadScript = (src) => new Promise((resolve, reject) => {
+  if (document.querySelector(`script[src="${src}"]`)) return resolve();
+  const el = Object.assign(document.createElement('script'), { src, onload: resolve, onerror: reject });
+  document.head.appendChild(el);
+});
+
+const exportRows = (rows) => rows.map((r) => ({
+  convidado: r.member.name,
+  convite: friendlyName(r.family),
+  grupo: r.family.familyName,
+  tipo: r.member.isChild ? 'Criança' : 'Adulto',
+  resposta: STATUS_LABEL[r.status],
+  entregue: r.family.delivered ? 'Sim' : 'Não',
+  valor: r.price,
+}));
+
+const fileDate = () => new Date().toISOString().slice(0, 10);
+
+const exportExcel = async (rows, c, btn) => {
+  const label = btn.innerHTML;
+  btn.disabled = true;
+  btn.textContent = 'Gerando…';
+  try {
+    await loadScript(XLSX_SRC);
+    const data = exportRows(rows);
+    const header = ['Convidado', 'Convite', 'Grupo', 'Tipo', 'Resposta', 'Convite entregue', 'Valor (R$)'];
+    // Valores entram como texto/número (nunca fórmula), então nomes não viram comandos no Excel
+    const aoa = [header, ...data.map((d) => [d.convidado, d.convite, d.grupo, d.tipo, d.resposta, d.entregue, d.valor])];
+    const last = aoa.length; // linha do último convidado (1-based)
+    aoa.push([], ['Total previsto', '', '', '', '', `${c.paying} pagantes`, c.planned]);
+    aoa.push(['Estimado (sem quem recusou)', '', '', '', '', '', c.estimated]);
+    aoa.push(['Confirmado', '', '', '', '', `${c.confirmedCount} pagantes`, c.confirmed]);
+
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!cols'] = [{ wch: 26 }, { wch: 26 }, { wch: 30 }, { wch: 9 }, { wch: 10 }, { wch: 16 }, { wch: 12 }];
+    ws['!autofilter'] = { ref: `A1:G${last}` };
+    // Total previsto como SOMA: se editarem a planilha, o total acompanha
+    ws[XLSX.utils.encode_cell({ r: last + 1, c: 6 })] = { t: 'n', f: `SUM(G2:G${last})`, v: c.planned };
+    for (let r = 1; r < aoa.length; r++) {
+      const cell = ws[XLSX.utils.encode_cell({ r, c: 6 })];
+      if (cell && cell.t === 'n') cell.z = '"R$" #,##0';
+    }
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Convidados');
+    XLSX.writeFile(wb, `convidados-gustavo-lara-${fileDate()}.xlsx`);
+  } catch (err) {
+    console.error(err);
+    toast('Não foi possível gerar o Excel. Verifique a conexão.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = label;
+  }
+};
+
+// PDF: monta uma versão de impressão (título, totais e tabela completa) e abre
+// o "Imprimir" do navegador, onde dá para escolher "Salvar como PDF"
+const exportPdf = (rows, c) => {
+  const data = exportRows(rows);
+  const filtered = normalize(state.query) || state.filter !== 'all';
+  const flt = FILTERS.find((x) => x.id === state.filter);
+  const today = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  let area = $('#printArea');
+  if (!area) {
+    area = Object.assign(document.createElement('div'), { id: 'printArea', className: 'print-area' });
+    document.body.appendChild(area);
+  }
+  area.innerHTML = `
+    <header class="print-head">
+      <p class="print-kicker">Gustavo &amp; Lara · 09/01/2027</p>
+      <h1>Lista de convidados</h1>
+      <p class="print-meta">Gerado em ${today}${filtered ? ` · filtro: ${escapeHtml(flt ? flt.label : '')}${state.query ? ` · busca “${escapeHtml(state.query)}”` : ''}` : ''}</p>
+    </header>
+    <div class="print-cost">
+      <div><span>Previsto</span><strong>${brl(c.planned)}</strong><small>${c.paying} pagantes × ${brl(PRICE_ADULT)}</small></div>
+      <div><span>Estimado</span><strong>${brl(c.estimated)}</strong><small>sem quem recusou</small></div>
+      <div><span>Confirmado</span><strong>${brl(c.confirmed)}</strong><small>${c.confirmedCount} pagantes</small></div>
+      <div><span>Convidados</span><strong>${c.people}</strong><small>${c.children} crianças</small></div>
+    </div>
+    <table class="print-table">
+      <thead><tr><th>#</th><th>Convidado</th><th>Convite</th><th>Tipo</th><th>Resposta</th><th>Entregue</th><th class="num">Valor</th></tr></thead>
+      <tbody>${data.map((d, i) => `
+        <tr>
+          <td class="muted">${i + 1}</td>
+          <td>${escapeHtml(d.convidado)}</td>
+          <td>${escapeHtml(d.convite)}<br><small>${escapeHtml(d.grupo)}</small></td>
+          <td>${d.tipo}</td>
+          <td>${d.resposta}</td>
+          <td>${d.entregue}</td>
+          <td class="num">${d.valor ? brl(d.valor) : '—'}</td>
+        </tr>`).join('')}
+      </tbody>
+      <tfoot><tr><td colspan="6">Total previsto · ${c.paying} pagantes</td><td class="num">${brl(c.planned)}</td></tr></tfoot>
+    </table>`;
+
+  const title = document.title;
+  document.title = `convidados-gustavo-lara-${fileDate()}`; // vira o nome sugerido do PDF
+  window.print();
+  setTimeout(() => { document.title = title; }, 500);
 };
 
 const setView = (view) => {
@@ -466,6 +570,39 @@ const loadFamilies = async ({ silent = false } = {}) => {
 /* ═══════════════════════════════════════════════════════
    ENTREGA DO CONVITE
    ═══════════════════════════════════════════════════════ */
+const setMemberStatus = async (select) => {
+  const id = select.dataset.statusFamily;
+  const index = Number(select.dataset.statusIndex);
+  const fam = findFamily(id);
+  const member = fam?.members?.[index];
+  if (!member) return;
+
+  const status = select.value;
+  const previous = { status: member.status, byAdmin: member.byAdmin };
+
+  // Otimista: atualiza números e card na hora, o GitHub grava em segundo plano
+  Object.assign(member, { status, byAdmin: status !== 'pending' });
+  renderStats();
+  renderFilters();
+  select.className = `status-select status-select--${status} is-saving`;
+  select.disabled = true;
+
+  try {
+    const saved = await api('PATCH', { id, member: { index, name: member.name }, status });
+    Object.assign(fam, saved);
+    toast(`${member.name}: ${STATUS_LABEL[status]}`);
+  } catch (err) {
+    Object.assign(member, previous);
+    if (err.status !== 401) toast(`Não foi possível salvar. ${err.message}`, 'error');
+    if (err.status === 409) loadFamilies({ silent: true });
+  } finally {
+    renderStats();
+    renderFilters();
+    refreshCard(id);
+    if (state.view === 'table') renderList();
+  }
+};
+
 const toggleDelivered = async (input) => {
   const id = input.dataset.deliver;
   const fam = findFamily(id);
@@ -785,6 +922,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = $('#familyGrid');
   grid.addEventListener('change', (e) => {
     if (e.target.matches('[data-deliver]')) toggleDelivered(e.target);
+    if (e.target.matches('[data-status-family]')) setMemberStatus(e.target);
   });
   grid.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-act]');

@@ -419,6 +419,41 @@
 .gt-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; }
 .gt-bar__info { color: var(--a-text-3); font-size: 0.8rem; }
 .gt-bar__info b { color: #8E6224; font-weight: 500; }
+.gt-export { display: flex; gap: 8px; }
+
+/* ═══════════════════════════════════════════════════════
+   IMPRESSÃO / PDF — só a lista gerada em #printArea
+   ═══════════════════════════════════════════════════════ */
+.print-area { display: none; }
+
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+
+  body.adm { background: #fff; min-height: 0; }
+  body.adm > *:not(.print-area) { display: none !important; }
+  .print-area { display: block; color: #1C120A; font-family: var(--sans); font-size: 10pt; }
+
+  .print-head { margin-bottom: 10pt; padding-bottom: 8pt; border-bottom: 1.5pt solid #C4934A; }
+  .print-kicker { color: #4A7050; font-size: 8pt; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .print-head h1 { margin-top: 2pt; font: italic 500 22pt/1.1 var(--serif); }
+  .print-meta { margin-top: 3pt; color: #6B5D51; font-size: 8.5pt; }
+
+  .print-cost { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6pt; margin-bottom: 12pt; }
+  .print-cost > div { padding: 6pt 8pt; border: 0.75pt solid #DCD1C1; border-radius: 4pt; }
+  .print-cost span { display: block; color: #6B5D51; font-size: 7pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .print-cost strong { display: block; font-size: 13pt; font-weight: 600; }
+  .print-cost small { color: #8C7D70; font-size: 7.5pt; }
+
+  .print-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .print-table th { padding: 4pt 5pt; border-bottom: 1pt solid #1C120A; font-size: 7.5pt; letter-spacing: 0.06em; text-align: left; text-transform: uppercase; }
+  .print-table td { padding: 4pt 5pt; border-bottom: 0.5pt solid #E6DDD0; vertical-align: top; }
+  .print-table small { color: #8C7D70; font-size: 7.5pt; }
+  .print-table .num { text-align: right; white-space: nowrap; }
+  .print-table .muted { color: #8C7D70; }
+  .print-table thead { display: table-header-group; } /* repete o cabeçalho a cada página */
+  .print-table tr { break-inside: avoid; }
+  .print-table tfoot td { padding-top: 6pt; border-top: 1pt solid #1C120A; border-bottom: 0; font-weight: 600; }
+}
 
 /* Tabela */
 .gt-scroll {
@@ -564,7 +599,38 @@
   font-size: 0.92rem;
 }
 .fam__member-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fam__member { min-height: 44px; }
 .fam__member-status { color: var(--a-text-3); font-size: 0.76rem; font-weight: 500; }
+
+/* Seletor de resposta do integrante (pílula colorida, abre o seletor nativo) */
+.status-select {
+  flex-shrink: 0;
+  min-height: 32px;
+  padding: 0 26px 0 10px;
+  border: 1px solid var(--a-line);
+  border-radius: 999px;
+  background: #F6F2EC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C7D70' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 8px center / 12px;
+  color: var(--a-text-2);
+  font: 500 0.76rem/1 var(--sans);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.status-select:hover { border-color: var(--a-line-2); }
+.status-select:focus-visible { outline: none; box-shadow: var(--a-ring); }
+.status-select--confirmed { background-color: var(--a-sage-bg); border-color: #CFE0D0; color: var(--sage-dark); }
+.status-select--declined  { background-color: var(--a-rose-bg); border-color: #F0D6D3; color: var(--a-rose); }
+.status-select.is-saving  { opacity: 0.6; cursor: progress; }
+
+.fam__by-admin {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--a-text-3);
+  font-size: 0.66rem;
+  font-style: italic;
+  white-space: nowrap;
+}
 .fam__member-status--confirmed { color: var(--sage-dark); }
 .fam__member-status--declined  { color: var(--a-rose); }
 
