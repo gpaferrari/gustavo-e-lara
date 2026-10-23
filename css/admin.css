@@ -416,6 +416,24 @@
 .cost__hint { color: var(--a-text-3); font-size: 0.68rem; line-height: 1.3; }
 .cost__item--accent .cost__value { color: var(--sage-dark); }
 
+/* Pagamento do buffet */
+.pay {
+  padding: 14px 16px;
+  background: var(--a-surface);
+  border: 1px solid var(--a-line);
+  border-radius: var(--a-radius);
+  box-shadow: var(--a-shadow-sm);
+}
+.pay__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.pay__label { color: var(--a-text-2); font-size: 0.82rem; font-weight: 500; }
+.pay__pct { color: var(--sage-dark); font-size: 0.82rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pay__nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.pay__nums dt { color: var(--a-text-3); font-size: 0.7rem; }
+.pay__nums dd { color: var(--a-text); font-size: 0.98rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pay__nums .pay__paid { color: var(--sage-dark); }
+.pay__nums > div:last-child { text-align: right; }
+.pay__nums > div:nth-child(2) { text-align: center; }
+
 .gt-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; }
 .gt-bar__info { color: var(--a-text-3); font-size: 0.8rem; }
 .gt-bar__info b { color: #8E6224; font-weight: 500; }
@@ -438,7 +456,7 @@
   .print-head h1 { margin-top: 2pt; font: italic 500 22pt/1.1 var(--serif); }
   .print-meta { margin-top: 3pt; color: #6B5D51; font-size: 8.5pt; }
 
-  .print-cost { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6pt; margin-bottom: 12pt; }
+  .print-cost { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6pt; margin-bottom: 12pt; }
   .print-cost > div { padding: 6pt 8pt; border: 0.75pt solid #DCD1C1; border-radius: 4pt; }
   .print-cost span { display: block; color: #6B5D51; font-size: 7pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .print-cost strong { display: block; font-size: 13pt; font-weight: 600; }

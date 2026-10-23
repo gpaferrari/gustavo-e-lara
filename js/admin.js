@@ -7,6 +7,7 @@ const API = '/api/admin';
 const AUTH_KEY = 'adminAuth';
 const QR_COLOR = '#5C3D2E'; // mesma cor dos QR codes já impressos
 const PRICE_ADULT = 150;     // valor por convidado pagante (criança -5 anos não paga)
+const PAID_SO_FAR = 3000;    // já pago ao buffet — atualizar aqui a cada novo pagamento
 const VIEW_KEY = 'adminView'; // última visualização escolhida (cards ou tabela)
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -314,9 +315,17 @@ const tableRowHtml = (r) => {
     </tr>`;
 };
 
+// Pagamento: sempre sobre a lista inteira, com base no Estimado (sem quem recusou)
+const paymentSummary = () => {
+  const total = costSummary(guestRows(state.families)).estimated;
+  const remaining = Math.max(total - PAID_SO_FAR, 0);
+  return { total, paid: PAID_SO_FAR, remaining, pct: percent(PAID_SO_FAR, total) };
+};
+
 const renderTable = (families) => {
   const rows = guestRows(families);
   const c = costSummary(rows);
+  const pay = paymentSummary();
   const filtered = normalize(state.query) || state.filter !== 'all';
 
   const table = rows.length ? `
@@ -364,6 +373,21 @@ const renderTable = (families) => {
         <strong class="cost__value">${brl(c.confirmed)}</strong>
         <span class="cost__hint">${c.confirmedCount === 1 ? '1 pagante disse' : `${c.confirmedCount} pagantes disseram`} “vou”</span>
       </article>
+    </div>
+
+    <div class="pay">
+      <div class="pay__head">
+        <span class="pay__label">Pagamento do buffet</span>
+        <span class="pay__pct">${pay.pct}% pago</span>
+      </div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pay.pct}" aria-label="Pagamento do buffet">
+        <span class="bar__fill bar__fill--sage" style="width:${Math.min(pay.pct, 100)}%"></span>
+      </div>
+      <dl class="pay__nums">
+        <div><dt>Pago</dt><dd class="pay__paid">${brl(pay.paid)}</dd></div>
+        <div><dt>Falta pagar</dt><dd>${brl(pay.remaining)}</dd></div>
+        <div><dt>Total estimado</dt><dd>${brl(pay.total)}</dd></div>
+      </dl>
     </div>
 
     <div class="gt-bar">
@@ -421,6 +445,9 @@ const exportExcel = async (rows, c, btn) => {
     aoa.push([], ['Total previsto', '', '', '', '', `${c.paying} pagantes`, c.planned]);
     aoa.push(['Estimado (sem quem recusou)', '', '', '', '', '', c.estimated]);
     aoa.push(['Confirmado', '', '', '', '', `${c.confirmedCount} pagantes`, c.confirmed]);
+    const pay = paymentSummary();
+    aoa.push([], ['Já pago ao buffet', '', '', '', '', `${pay.pct}% do estimado`, pay.paid]);
+    aoa.push(['Falta pagar (estimado − pago)', '', '', '', '', '', pay.remaining]);
 
     const ws = XLSX.utils.aoa_to_sheet(aoa);
     ws['!cols'] = [{ wch: 26 }, { wch: 26 }, { wch: 30 }, { wch: 9 }, { wch: 10 }, { wch: 16 }, { wch: 12 }];
@@ -468,6 +495,8 @@ const exportPdf = (rows, c) => {
       <div><span>Estimado</span><strong>${brl(c.estimated)}</strong><small>sem quem recusou</small></div>
       <div><span>Confirmado</span><strong>${brl(c.confirmed)}</strong><small>${c.confirmedCount} pagantes</small></div>
       <div><span>Convidados</span><strong>${c.people}</strong><small>${c.children} crianças</small></div>
+      <div><span>Já pago</span><strong>${brl(paymentSummary().paid)}</strong><small>${paymentSummary().pct}% do estimado</small></div>
+      <div><span>Falta pagar</span><strong>${brl(paymentSummary().remaining)}</strong><small>de ${brl(paymentSummary().total)}</small></div>
     </div>
     <table class="print-table">
       <thead><tr><th>#</th><th>Convidado</th><th>Convite</th><th>Tipo</th><th>Resposta</th><th>Entregue</th><th class="num">Valor</th></tr></thead>
