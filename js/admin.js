@@ -6,6 +6,8 @@
 const API = '/api/admin';
 const AUTH_KEY = 'adminAuth';
 const QR_COLOR = '#5C3D2E'; // mesma cor dos QR codes já impressos
+const PRICE_ADULT = 150;     // valor por convidado pagante (criança -5 anos não paga)
+const VIEW_KEY = 'adminView'; // última visualização escolhida (cards ou tabela)
 
 const $ = (sel, root = document) => root.querySelector(sel);
 
@@ -17,6 +19,7 @@ const state = {
   editingId: null,
   draftMembers: [],
   qrFamilyId: null,
+  view: (() => { try { return localStorage.getItem(VIEW_KEY) === 'table' ? 'table' : 'cards'; } catch { return 'cards'; } })(),
 };
 
 /* ── Utilitários ────────────────────────────────────── */
@@ -37,6 +40,7 @@ const rsvpUrl = (id) => `${window.location.origin}/rsvp.html?id=${encodeURICompo
 // Convite online: o próprio site, aberto com envelope personalizado (ver js/main.js).
 // Endereço fixo para o link enviado nunca sair com um domínio de teste.
 const inviteUrl = (id) => `https://gustavo-e-lara.vercel.app/?id=${encodeURIComponent(id)}`;
+const brl = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 const slugify = (text) => normalize(text).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'convite';
 const findFamily = (id) => state.families.find((f) => f.id === id);
 
@@ -240,17 +244,173 @@ const createCard = (f) => {
   return card;
 };
 
-const renderList = () => {
-  const grid = $('#familyGrid');
+// Convites que passam pelo filtro e pela busca, em ordem alfabética (cards e tabela)
+const visibleFamilies = () => {
   const flt = FILTERS.find((x) => x.id === state.filter) || FILTERS[0];
   const q = normalize(state.query);
-
-  const visible = state.families
+  return state.families
     .filter((f) => flt.test(f, summarize(f)))
     .filter((f) => !q || normalize(`${f.familyName} ${f.displayName || ''}`).includes(q) || (f.members || []).some((m) => normalize(m.name).includes(q)))
     .sort((a, b) => a.familyName.localeCompare(b.familyName, 'pt-BR', { sensitivity: 'base' }));
+};
+
+/* ── Visão em tabela ────────────────────────────────── */
+// Uma linha por convidado. Valores: adulto R$ 150, criança não paga.
+const guestRows = (families) => families.flatMap((f) => (f.members || []).map((m, i) => ({
+  family: f,
+  member: m,
+  status: m.status || 'pending',
+  price: m.isChild ? 0 : PRICE_ADULT,
+  groupStart: i === 0,
+})));
+
+const costSummary = (rows) => {
+  const paying = rows.filter((r) => r.price);
+  const sum = (list) => list.reduce((acc, r) => acc + r.price, 0);
+  return {
+    people: rows.length,
+    children: rows.length - paying.length,
+    paying: paying.length,
+    planned: sum(paying),
+    estimated: sum(paying.filter((r) => r.status !== 'declined')),
+    confirmed: sum(paying.filter((r) => r.status === 'confirmed')),
+    confirmedCount: paying.filter((r) => r.status === 'confirmed').length,
+    declinedCount: paying.filter((r) => r.status === 'declined').length,
+  };
+};
+
+const tableRowHtml = (r) => {
+  const name = escapeHtml(r.member.name);
+  const fam = escapeHtml(r.family.familyName);
+  const invite = escapeHtml(friendlyName(r.family)); // vários convites têm o mesmo familyName ("Amiga da Noiva")
+  const classes = [r.groupStart && 'is-group-start', r.status === 'declined' && 'is-declined'].filter(Boolean).join(' ');
+  const familyCell = r.groupStart
+    ? `<span class="gt-invite">${invite}</span><span class="gt-invite__group">${fam}</span>`
+    : `<span class="gt-ditto" aria-hidden="true">″</span><span class="visually-hidden">${invite}</span>`;
+  return `
+    <tr class="${classes}">
+      <td class="gt-name">
+        <span class="gt-name__main">${name}${r.member.isChild ? '<span class="tag">criança</span>' : ''}</span>
+        ${invite !== name ? `<span class="gt-name__family">${invite}</span>` : ''}
+      </td>
+      <td class="gt-col-family">${familyCell}</td>
+      <td class="gt-col-type">${r.member.isChild ? 'Criança' : 'Adulto'}</td>
+      <td><span class="gt-status gt-status--${r.status}"><i class="dot dot--${r.status}" aria-hidden="true"></i>${STATUS_LABEL[r.status] || 'Pendente'}</span></td>
+      <td class="gt-col-delivered">${r.family.delivered ? '<span class="gt-yes">Entregue</span>' : '<span class="gt-no">—</span>'}</td>
+      <td class="gt-price">${r.price ? brl(r.price) : '<span class="gt-free">grátis</span>'}</td>
+    </tr>`;
+};
+
+const renderTable = (families) => {
+  const rows = guestRows(families);
+  const c = costSummary(rows);
+  const filtered = normalize(state.query) || state.filter !== 'all';
+
+  const table = rows.length ? `
+    <div class="gt-scroll">
+      <table class="gt">
+        <thead>
+          <tr>
+            <th scope="col">Convidado</th>
+            <th scope="col" class="gt-col-family">Convite</th>
+            <th scope="col" class="gt-col-type">Tipo</th>
+            <th scope="col">Resposta</th>
+            <th scope="col" class="gt-col-delivered">Convite entregue</th>
+            <th scope="col" class="gt-price">Valor</th>
+          </tr>
+        </thead>
+        <tbody>${rows.map(tableRowHtml).join('')}</tbody>
+        <tfoot>
+          <tr>
+            <th scope="row" class="gt-foot-label">Total previsto · ${plural(c.paying, 'pagante', 'pagantes')}</th>
+            <td class="gt-col-family"></td>
+            <td class="gt-col-type"></td>
+            <td></td>
+            <td class="gt-col-delivered"></td>
+            <td class="gt-price">${brl(c.planned)}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>`
+    : '<div class="empty-state"><strong>Nada por aqui</strong>Nenhum convidado corresponde à busca ou ao filtro.</div>';
+
+  $('#guestTable').innerHTML = `
+    <div class="cost">
+      <article class="cost__item">
+        <span class="cost__label">Previsto</span>
+        <strong class="cost__value">${brl(c.planned)}</strong>
+        <span class="cost__hint">${plural(c.paying, 'pagante', 'pagantes')} × ${brl(PRICE_ADULT)}</span>
+      </article>
+      <article class="cost__item">
+        <span class="cost__label">Estimado</span>
+        <strong class="cost__value">${brl(c.estimated)}</strong>
+        <span class="cost__hint">sem quem recusou (${c.declinedCount})</span>
+      </article>
+      <article class="cost__item cost__item--accent">
+        <span class="cost__label">Confirmado</span>
+        <strong class="cost__value">${brl(c.confirmed)}</strong>
+        <span class="cost__hint">${c.confirmedCount === 1 ? '1 pagante disse' : `${c.confirmedCount} pagantes disseram`} “vou”</span>
+      </article>
+    </div>
+
+    <div class="gt-bar">
+      <p class="gt-bar__info">${plural(c.people, 'convidado', 'convidados')} · ${plural(c.children, 'criança', 'crianças')}${filtered ? ' · <b>valores do filtro atual</b>' : ''}</p>
+      <button type="button" class="btn btn--ghost btn--sm" id="exportCsv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+        Exportar planilha
+      </button>
+    </div>
+    ${table}`;
+
+  $('#exportCsv').addEventListener('click', () => exportCsv(rows));
+};
+
+// Planilha (buffet, cerimonial): separador ";" e BOM para o Excel em português abrir certo
+const exportCsv = (rows) => {
+  const cell = (v) => `"${String(v).replace(/"/g, '""')}"`;
+  const lines = [
+    ['Convidado', 'Convite', 'Tipo', 'Resposta', 'Convite entregue', 'Valor (R$)'],
+    ...rows.map((r) => [
+      r.member.name,
+      r.family.familyName,
+      r.member.isChild ? 'Criança' : 'Adulto',
+      STATUS_LABEL[r.status] || 'Pendente',
+      r.family.delivered ? 'Sim' : 'Não',
+      r.price,
+    ]),
+  ];
+  const csv = '﻿' + lines.map((l) => l.map(cell).join(';')).join('\r\n');
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  link.download = `convidados-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+};
+
+const setView = (view) => {
+  state.view = view;
+  try { localStorage.setItem(VIEW_KEY, view); } catch { /* modo privado */ }
+  renderList();
+};
+
+const renderList = () => {
+  const grid = $('#familyGrid');
+  const visible = visibleFamilies();
+  const isTable = state.view === 'table';
 
   grid.setAttribute('aria-busy', 'false');
+  grid.hidden = isTable;
+  $('#guestTable').hidden = !isTable;
+  document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
+
+  const filtered = normalize(state.query) || state.filter !== 'all';
+  $('#resultInfo').textContent = filtered ? `Mostrando ${visible.length} de ${plural(state.families.length, 'convite', 'convites')}` : '';
+
+  if (isTable) {
+    renderTable(visible);
+    return;
+  }
+
   grid.replaceChildren(...visible.map(createCard));
 
   if (!visible.length) {
@@ -258,9 +418,6 @@ const renderList = () => {
       ? '<div class="empty-state"><strong>Nada por aqui</strong>Nenhum convite corresponde à busca ou ao filtro.</div>'
       : '<div class="empty-state"><strong>Nenhum convite ainda</strong>Toque em “Novo convite” para começar.</div>';
   }
-
-  const filtered = q || state.filter !== 'all';
-  $('#resultInfo').textContent = filtered ? `Mostrando ${visible.length} de ${plural(state.families.length, 'convite', 'convites')}` : '';
 };
 
 const renderAll = () => {
@@ -610,6 +767,9 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#refreshBtn').addEventListener('click', () => loadFamilies());
 
   document.querySelectorAll('[data-action="new"]').forEach((btn) => btn.addEventListener('click', () => openFamilyDialog()));
+
+  // Cards ↔ Tabela
+  document.querySelectorAll('[data-view]').forEach((btn) => btn.addEventListener('click', () => setView(btn.dataset.view)));
 
   // Busca e filtros
   $('#search').addEventListener('input', (e) => { state.query = e.target.value; renderList(); });
