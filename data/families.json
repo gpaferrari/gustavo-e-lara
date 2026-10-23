@@ -488,33 +488,6 @@
     "updatedAt": "2026-10-23T00:08:18.143Z"
   },
   {
-    "id": "9a4b1b62",
-    "familyName": "Amigo do Noivo - Jader",
-    "members": [
-      {
-        "name": "Jader",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa do Jader",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Filha do Jader",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Filha do Jader",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-08T18:09:11.253Z"
-  },
-  {
     "id": "765756ad",
     "familyName": "Amiga do Noivo - Terezinha maria de Jesus e familia",
     "members": [
