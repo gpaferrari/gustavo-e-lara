@@ -410,13 +410,13 @@
         "status": "pending"
       },
       {
-        "name": "Possivel acompanhante (mistério)",
+        "name": "acompanhante",
         "isChild": false,
         "status": "pending"
       }
     ],
     "createdAt": "2026-10-08T17:47:59.247Z",
-    "updatedAt": "2026-10-08T17:49:56.963Z",
+    "updatedAt": "2026-10-23T12:16:13.385Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:50:26.811Z"
   },
