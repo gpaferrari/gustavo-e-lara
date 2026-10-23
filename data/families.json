@@ -333,32 +333,32 @@
     "members": [
       {
         "name": "Natália",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "João Paulo",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Enrico",
-        "status": "pending",
-        "isChild": true
+        "isChild": true,
+        "status": "pending"
       },
       {
         "name": "José",
-        "status": "pending",
-        "isChild": true
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Maria Evaristo",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-08-01T22:20:11.222Z",
+    "updatedAt": "2026-10-23T00:13:58.023Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:29.216Z"
   },
