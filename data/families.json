@@ -263,17 +263,17 @@
     "members": [
       {
         "name": "Isadora Avila",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "declined"
       },
       {
         "name": "Yannick Greive",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "declined"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-07-24T16:45:46.555Z",
+    "updatedAt": "2026-10-23T12:16:37.249Z",
     "delivered": true,
     "deliveredAt": "2026-10-20T17:04:38.197Z"
   },
