@@ -893,29 +893,6 @@
     "displayName": "Reginaldo e família"
   },
   {
-    "id": "e6b64e7b",
-    "familyName": "Familia noivo - Orlando",
-    "members": [
-      {
-        "name": "Orlando",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa Orlando",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Filha Orlando",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:11:04.111Z",
-    "displayName": "Orlando e família"
-  },
-  {
     "id": "77593a33",
     "familyName": "Familia noivo - Dona Nice",
     "members": [
