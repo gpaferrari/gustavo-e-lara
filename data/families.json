@@ -955,6 +955,8 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-23T12:14:55.217Z"
+    "createdAt": "2026-10-23T12:14:55.217Z",
+    "delivered": true,
+    "deliveredAt": "2026-10-23T12:40:14.704Z"
   }
 ]
