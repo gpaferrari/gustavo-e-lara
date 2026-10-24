@@ -98,8 +98,8 @@
     ],
     "recovered": true,
     "updatedAt": "2026-09-11T18:03:22.698Z",
-    "delivered": false,
-    "deliveredAt": null
+    "delivered": true,
+    "deliveredAt": "2026-10-24T13:50:00.332Z"
   },
   {
     "id": "9a1613ce",
