@@ -298,11 +298,12 @@
       {
         "name": "Eliana",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-24T13:37:55.443Z",
+    "updatedAt": "2026-10-24T13:38:00.885Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:34.724Z"
   },
