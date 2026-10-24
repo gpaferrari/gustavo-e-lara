@@ -342,7 +342,8 @@
       {
         "name": "Natália",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "João Paulo",
@@ -366,7 +367,7 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-23T00:13:58.023Z",
+    "updatedAt": "2026-10-24T13:38:05.280Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:29.216Z"
   },
