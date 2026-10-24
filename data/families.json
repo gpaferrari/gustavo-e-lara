@@ -393,14 +393,15 @@
       },
       {
         "name": "Maria Julia",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-08T17:47:22.083Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:50:57.201Z",
-    "updatedAt": "2026-10-24T13:37:37.044Z"
+    "updatedAt": "2026-10-24T13:37:38.712Z"
   },
   {
     "id": "367f2ef1",
