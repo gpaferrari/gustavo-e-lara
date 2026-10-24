@@ -6,7 +6,8 @@
       {
         "name": "Camila Abdalla",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "Marquinhos Abdalla",
@@ -15,7 +16,7 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-10T22:29:28.028Z",
+    "updatedAt": "2026-10-24T13:37:44.037Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:00.254Z"
   },
