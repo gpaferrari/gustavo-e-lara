@@ -946,12 +946,13 @@
       },
       {
         "name": "Gustavo",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-23T00:16:26.561Z",
-    "updatedAt": "2026-10-24T13:38:19.669Z"
+    "updatedAt": "2026-10-24T13:38:22.291Z"
   },
   {
     "id": "0ae46080",
