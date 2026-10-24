@@ -12,11 +12,12 @@
       {
         "name": "Marquinhos Abdalla",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-24T13:37:44.037Z",
+    "updatedAt": "2026-10-24T13:37:45.282Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:00.254Z"
   },
