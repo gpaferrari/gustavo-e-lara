@@ -800,24 +800,6 @@
     "createdAt": "2026-10-20T17:03:51.697Z"
   },
   {
-    "id": "c4b510b8",
-    "familyName": "Familia Noivo",
-    "members": [
-      {
-        "name": "Reginaldo",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa Reginaldo",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:09:58.557Z",
-    "displayName": "Reginaldo e família"
-  },
-  {
     "id": "8084a8b7",
     "familyName": "Familia Noivo",
     "members": [
