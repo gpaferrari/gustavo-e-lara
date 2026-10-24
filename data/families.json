@@ -940,8 +940,9 @@
     "members": [
       {
         "name": "Lara",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Gustavo",
@@ -949,7 +950,8 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-23T00:16:26.561Z"
+    "createdAt": "2026-10-23T00:16:26.561Z",
+    "updatedAt": "2026-10-24T13:38:19.669Z"
   },
   {
     "id": "0ae46080",
