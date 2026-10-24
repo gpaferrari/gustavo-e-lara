@@ -410,7 +410,8 @@
       {
         "name": "João",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "acompanhante",
@@ -419,7 +420,7 @@
       }
     ],
     "createdAt": "2026-10-08T17:47:59.247Z",
-    "updatedAt": "2026-10-23T12:16:13.385Z",
+    "updatedAt": "2026-10-24T13:37:40.235Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:50:26.811Z"
   },
