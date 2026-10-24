@@ -387,8 +387,9 @@
     "members": [
       {
         "name": "Xitão",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Maria Julia",
@@ -398,7 +399,8 @@
     ],
     "createdAt": "2026-10-08T17:47:22.083Z",
     "delivered": true,
-    "deliveredAt": "2026-10-08T17:50:57.201Z"
+    "deliveredAt": "2026-10-08T17:50:57.201Z",
+    "updatedAt": "2026-10-24T13:37:37.044Z"
   },
   {
     "id": "367f2ef1",
