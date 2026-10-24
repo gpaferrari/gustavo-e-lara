@@ -550,14 +550,15 @@
       },
       {
         "name": "Rosival",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-10T22:26:55.919Z",
     "delivered": true,
     "deliveredAt": "2026-10-10T22:28:05.759Z",
-    "updatedAt": "2026-10-24T13:37:31.089Z"
+    "updatedAt": "2026-10-24T13:37:32.343Z"
   },
   {
     "id": "bacaec33",
