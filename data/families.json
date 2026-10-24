@@ -818,24 +818,6 @@
     "displayName": "Reginaldo e família"
   },
   {
-    "id": "77593a33",
-    "familyName": "Familia noivo - Dona Nice",
-    "members": [
-      {
-        "name": "Dona Nice",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Acompanhante",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:11:48.899Z",
-    "displayName": "Dona Nice"
-  },
-  {
     "id": "8084a8b7",
     "familyName": "Familia Noivo",
     "members": [
