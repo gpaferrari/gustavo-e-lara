@@ -800,24 +800,6 @@
     "createdAt": "2026-10-20T17:03:51.697Z"
   },
   {
-    "id": "6e9eea17",
-    "familyName": "Familia Noivo - Efrain",
-    "members": [
-      {
-        "name": "Efrain",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa Efrain",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:09:19.147Z",
-    "displayName": "Efrain e família"
-  },
-  {
     "id": "c4b510b8",
     "familyName": "Familia Noivo",
     "members": [
