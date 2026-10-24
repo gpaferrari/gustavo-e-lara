@@ -523,11 +523,12 @@
       {
         "name": "Tia Eliane",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-08T18:11:31.918Z",
-    "updatedAt": "2026-10-24T13:48:02.905Z",
+    "updatedAt": "2026-10-24T13:48:05.620Z",
     "delivered": true,
     "deliveredAt": "2026-10-10T22:28:17.228Z"
   },
