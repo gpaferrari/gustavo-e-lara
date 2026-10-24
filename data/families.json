@@ -798,24 +798,6 @@
     "createdAt": "2026-10-20T17:03:51.697Z"
   },
   {
-    "id": "324a5ec7",
-    "familyName": "Familia Noivo - Tio Enos",
-    "members": [
-      {
-        "name": "Tio Enos",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa Tio Enos",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:08:04.819Z",
-    "displayName": "Tio Enos e família"
-  },
-  {
     "id": "f2556067",
     "familyName": "Familia Noivo - Gilvan",
     "members": [
