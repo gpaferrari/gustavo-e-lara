@@ -366,11 +366,12 @@
       {
         "name": "Maria Evaristo",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-24T13:38:13.930Z",
+    "updatedAt": "2026-10-24T13:38:16.774Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:29.216Z"
   },
