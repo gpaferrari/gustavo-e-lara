@@ -800,24 +800,6 @@
     "createdAt": "2026-10-20T17:03:51.697Z"
   },
   {
-    "id": "f2556067",
-    "familyName": "Familia Noivo - Gilvan",
-    "members": [
-      {
-        "name": "Gilvan",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa Gilvan",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:08:38.849Z",
-    "displayName": "Gilvan e família"
-  },
-  {
     "id": "6e9eea17",
     "familyName": "Familia Noivo - Efrain",
     "members": [
