@@ -815,24 +815,6 @@
     "createdAt": "2026-10-22T18:05:02.213Z"
   },
   {
-    "id": "3e2825d7",
-    "familyName": "Família Noivo - Tio Tony",
-    "members": [
-      {
-        "name": "Tio Tony",
-        "status": "pending",
-        "isChild": false
-      },
-      {
-        "name": "Esposa tio Tony",
-        "status": "pending",
-        "isChild": false
-      }
-    ],
-    "createdAt": "2026-10-22T18:06:03.414Z",
-    "displayName": "Tio Tony e família"
-  },
-  {
     "id": "324a5ec7",
     "familyName": "Familia Noivo - Tio Enos",
     "members": [
