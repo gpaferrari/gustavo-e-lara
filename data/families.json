@@ -67,39 +67,40 @@
     "members": [
       {
         "name": "Edvaldo José Henn Manea",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Daniela",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Amanda",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Marido da Amanda",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Ana",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
         "name": "Marido da Ana",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-09-11T18:03:22.698Z",
+    "updatedAt": "2026-10-25T23:38:05.158Z",
     "delivered": true,
-    "deliveredAt": "2026-10-24T13:50:00.332Z"
+    "deliveredAt": "2026-10-24T13:50:00.332Z",
+    "displayName": "Daniela e família"
   },
   {
     "id": "9a1613ce",
