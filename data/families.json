@@ -769,7 +769,9 @@
         "isChild": true
       }
     ],
-    "createdAt": "2026-10-20T17:02:14.724Z"
+    "createdAt": "2026-10-20T17:02:14.724Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-01T19:34:47.693Z"
   },
   {
     "id": "3664f5b4",
