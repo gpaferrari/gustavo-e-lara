@@ -822,7 +822,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-22T18:12:21.871Z"
+    "createdAt": "2026-10-22T18:12:21.871Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-01T19:34:52.632Z"
   },
   {
     "id": "2e7bf344",
