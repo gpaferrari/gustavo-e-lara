@@ -473,7 +473,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-08T17:58:12.411Z"
+    "createdAt": "2026-10-08T17:58:12.411Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-01T19:34:57.335Z"
   },
   {
     "id": "844b6d65",
