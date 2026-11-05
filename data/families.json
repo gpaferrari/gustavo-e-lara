@@ -255,11 +255,11 @@
       {
         "name": "Juliana Carvalho",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-10T22:28:01.188Z",
+    "updatedAt": "2026-11-05T10:16:41.352Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:38.326Z"
   },
