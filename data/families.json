@@ -660,20 +660,10 @@
         "name": "Jamilly vitoria",
         "isChild": false,
         "status": "pending"
-      },
-      {
-        "name": "Roger pai",
-        "isChild": false,
-        "status": "pending"
-      },
-      {
-        "name": "Viviane mãe",
-        "isChild": false,
-        "status": "pending"
       }
     ],
     "createdAt": "2026-10-20T16:58:45.986Z",
-    "updatedAt": "2026-10-23T00:04:21.282Z"
+    "updatedAt": "2026-11-06T22:42:48.662Z"
   },
   {
     "id": "ec2e44c2",
