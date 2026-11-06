@@ -757,23 +757,24 @@
     "members": [
       {
         "name": "Mariana Bersa",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "confirmed"
       },
       {
         "name": "Rafael Machado",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "confirmed"
       },
       {
         "name": "Shophia",
-        "status": "pending",
-        "isChild": true
+        "isChild": true,
+        "status": "confirmed"
       }
     ],
     "createdAt": "2026-10-20T17:02:14.724Z",
     "delivered": true,
-    "deliveredAt": "2026-11-01T19:34:47.693Z"
+    "deliveredAt": "2026-11-01T19:34:47.693Z",
+    "updatedAt": "2026-11-06T13:14:14.559Z"
   },
   {
     "id": "3664f5b4",
