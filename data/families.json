@@ -439,14 +439,13 @@
         "byAdmin": true
       },
       {
-        "name": "acompanhante",
+        "name": "Namorada Juliana",
         "isChild": false,
-        "status": "confirmed",
-        "byAdmin": true
+        "status": "confirmed"
       }
     ],
     "createdAt": "2026-10-08T17:47:59.247Z",
-    "updatedAt": "2026-10-24T13:37:42.228Z",
+    "updatedAt": "2026-11-06T22:51:48.143Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:50:26.811Z"
   },
