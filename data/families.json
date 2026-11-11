@@ -6,18 +6,16 @@
       {
         "name": "Camila Abdalla",
         "isChild": false,
-        "status": "confirmed",
-        "byAdmin": true
+        "status": "confirmed"
       },
       {
         "name": "Marquinhos Abdalla",
         "isChild": false,
-        "status": "confirmed",
-        "byAdmin": true
+        "status": "confirmed"
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-24T13:37:45.282Z",
+    "updatedAt": "2026-11-11T18:02:46.416Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:00.254Z"
   },
