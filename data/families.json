@@ -673,21 +673,22 @@
     "members": [
       {
         "name": "Thais Eugênio",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
-        "name": "Esposo thais",
-        "status": "pending",
-        "isChild": false
+        "name": "Guilherme esposo",
+        "isChild": false,
+        "status": "pending"
       },
       {
-        "name": "Lorena",
-        "status": "pending",
-        "isChild": true
+        "name": "Baby Lorena",
+        "isChild": true,
+        "status": "pending"
       }
     ],
-    "createdAt": "2026-10-20T16:59:15.902Z"
+    "createdAt": "2026-10-20T16:59:15.902Z",
+    "updatedAt": "2026-11-13T11:56:38.424Z"
   },
   {
     "id": "66674e95",
