@@ -311,8 +311,8 @@
     ],
     "recovered": true,
     "updatedAt": "2026-10-24T13:38:00.885Z",
-    "delivered": false,
-    "deliveredAt": null
+    "delivered": true,
+    "deliveredAt": "2026-11-16T16:27:14.039Z"
   },
   {
     "id": "07babf05",
