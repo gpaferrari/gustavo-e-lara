@@ -653,7 +653,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-20T16:58:18.035Z"
+    "createdAt": "2026-10-20T16:58:18.035Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-17T22:19:53.924Z"
   },
   {
     "id": "afb219b8",
