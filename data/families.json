@@ -782,16 +782,17 @@
     "members": [
       {
         "name": "Rutineia",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "pending"
       },
       {
-        "name": "Namorado Rute",
-        "status": "pending",
-        "isChild": false
+        "name": "Leandro Namorado Rute",
+        "isChild": false,
+        "status": "pending"
       }
     ],
-    "createdAt": "2026-10-20T17:03:51.697Z"
+    "createdAt": "2026-10-20T17:03:51.697Z",
+    "updatedAt": "2026-11-17T22:23:48.831Z"
   },
   {
     "id": "8084a8b7",
