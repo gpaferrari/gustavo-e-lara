@@ -668,7 +668,9 @@
       }
     ],
     "createdAt": "2026-10-20T16:58:45.986Z",
-    "updatedAt": "2026-11-06T22:42:48.662Z"
+    "updatedAt": "2026-11-06T22:42:48.662Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-17T22:19:55.872Z"
   },
   {
     "id": "ec2e44c2",
