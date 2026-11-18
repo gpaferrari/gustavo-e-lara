@@ -783,16 +783,16 @@
       {
         "name": "Rutineia",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed"
       },
       {
         "name": "Leandro Namorado Rute",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed"
       }
     ],
     "createdAt": "2026-10-20T17:03:51.697Z",
-    "updatedAt": "2026-11-17T22:23:48.831Z"
+    "updatedAt": "2026-11-18T00:01:15.377Z"
   },
   {
     "id": "8084a8b7",
