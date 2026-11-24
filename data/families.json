@@ -884,7 +884,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-11-06T22:57:18.642Z"
+    "createdAt": "2026-11-06T22:57:18.642Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-24T14:06:15.987Z"
   },
   {
     "id": "2e63e1d8",
