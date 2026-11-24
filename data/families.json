@@ -227,14 +227,13 @@
       {
         "name": "Vó Nair",
         "isChild": false,
-        "status": "confirmed",
-        "byAdmin": true
+        "status": "confirmed"
       }
     ],
     "recovered": true,
     "delivered": true,
     "deliveredAt": "2026-10-08T17:44:55.969Z",
-    "updatedAt": "2026-10-24T13:48:42.602Z"
+    "updatedAt": "2026-11-24T13:56:08.442Z"
   },
   {
     "id": "452dc231",
