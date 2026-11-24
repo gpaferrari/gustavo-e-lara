@@ -706,7 +706,9 @@
         "isChild": false
       }
     ],
-    "createdAt": "2026-10-20T17:00:10.401Z"
+    "createdAt": "2026-10-20T17:00:10.401Z",
+    "delivered": true,
+    "deliveredAt": "2026-11-24T14:04:36.184Z"
   },
   {
     "id": "fee60c9b",
