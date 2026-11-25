@@ -134,11 +134,12 @@
       {
         "name": "Namorada do pedro Laura",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-11-25T17:59:01.843Z",
+    "updatedAt": "2026-11-25T17:59:04.744Z",
     "delivered": true,
     "deliveredAt": "2026-11-01T19:34:59.686Z"
   },
