@@ -156,13 +156,14 @@
       {
         "name": "Tia Rosana",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "recovered": true,
     "delivered": true,
     "deliveredAt": "2026-11-01T19:35:01.723Z",
-    "updatedAt": "2026-11-25T17:59:07.624Z"
+    "updatedAt": "2026-11-25T17:59:10.239Z"
   },
   {
     "id": "78b3b676",
