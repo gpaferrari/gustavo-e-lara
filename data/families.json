@@ -456,8 +456,9 @@
     "members": [
       {
         "name": "Tio Gilberto",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Tia Mau",
@@ -482,7 +483,8 @@
     ],
     "createdAt": "2026-10-08T17:58:12.411Z",
     "delivered": true,
-    "deliveredAt": "2026-11-01T19:34:57.335Z"
+    "deliveredAt": "2026-11-01T19:34:57.335Z",
+    "updatedAt": "2026-11-25T17:58:33.005Z"
   },
   {
     "id": "844b6d65",
