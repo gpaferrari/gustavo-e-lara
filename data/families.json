@@ -31,8 +31,9 @@
       },
       {
         "name": "Tangelina",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Carol ",
@@ -41,7 +42,7 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-11-25T17:58:16.024Z",
+    "updatedAt": "2026-11-25T17:58:17.898Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:44:57.619Z"
   },
