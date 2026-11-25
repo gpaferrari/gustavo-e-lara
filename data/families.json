@@ -172,7 +172,8 @@
       {
         "name": "Tio Luiz",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "Tia Rose",
@@ -191,7 +192,7 @@
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-10-24T13:46:51.591Z",
+    "updatedAt": "2026-11-25T17:59:17.475Z",
     "delivered": true,
     "deliveredAt": "2026-11-01T19:35:03.423Z"
   },
