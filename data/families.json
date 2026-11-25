@@ -462,8 +462,9 @@
       },
       {
         "name": "Tia Mau",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Neto",
@@ -484,7 +485,7 @@
     "createdAt": "2026-10-08T17:58:12.411Z",
     "delivered": true,
     "deliveredAt": "2026-11-01T19:34:57.335Z",
-    "updatedAt": "2026-11-25T17:58:33.005Z"
+    "updatedAt": "2026-11-25T17:58:35.745Z"
   },
   {
     "id": "844b6d65",
