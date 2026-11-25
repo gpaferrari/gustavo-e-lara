@@ -150,7 +150,8 @@
       {
         "name": "Tio DU",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "Tia Rosana",
@@ -161,7 +162,7 @@
     "recovered": true,
     "delivered": true,
     "deliveredAt": "2026-11-01T19:35:01.723Z",
-    "updatedAt": "2026-10-08T17:37:36.325Z"
+    "updatedAt": "2026-11-25T17:59:07.624Z"
   },
   {
     "id": "78b3b676",
