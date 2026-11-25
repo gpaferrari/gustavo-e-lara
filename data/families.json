@@ -509,7 +509,8 @@
       {
         "name": "Esposo da Tereza",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       },
       {
         "name": "Filho da Tereza",
@@ -520,7 +521,7 @@
     "createdAt": "2026-10-08T18:10:11.783Z",
     "delivered": true,
     "deliveredAt": "2026-11-25T17:54:38.182Z",
-    "updatedAt": "2026-11-25T17:54:42.100Z"
+    "updatedAt": "2026-11-25T17:54:44.557Z"
   },
   {
     "id": "3e4170ba",
