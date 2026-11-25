@@ -602,13 +602,15 @@
     "members": [
       {
         "name": "Rosa",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-13T13:57:00.585Z",
     "delivered": true,
-    "deliveredAt": "2026-10-13T13:57:06.472Z"
+    "deliveredAt": "2026-10-13T13:57:06.472Z",
+    "updatedAt": "2026-11-25T17:55:08.651Z"
   },
   {
     "id": "57d562db",
