@@ -515,13 +515,14 @@
       {
         "name": "Filho da Tereza",
         "isChild": false,
-        "status": "pending"
+        "status": "confirmed",
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-08T18:10:11.783Z",
     "delivered": true,
     "deliveredAt": "2026-11-25T17:54:38.182Z",
-    "updatedAt": "2026-11-25T17:54:44.557Z"
+    "updatedAt": "2026-11-25T17:54:47.821Z"
   },
   {
     "id": "3e4170ba",
