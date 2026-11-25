@@ -37,12 +37,13 @@
       },
       {
         "name": "Carol ",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-11-25T17:58:17.898Z",
+    "updatedAt": "2026-11-25T17:58:19.976Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:44:57.619Z"
   },
