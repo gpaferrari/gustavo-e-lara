@@ -880,13 +880,15 @@
     "members": [
       {
         "name": "Henrique Santos",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-11-06T22:57:18.642Z",
     "delivered": true,
-    "deliveredAt": "2026-11-24T14:06:15.987Z"
+    "deliveredAt": "2026-11-24T14:06:15.987Z",
+    "updatedAt": "2026-11-25T13:50:48.382Z"
   },
   {
     "id": "2e63e1d8",
