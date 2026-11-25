@@ -845,8 +845,9 @@
     "members": [
       {
         "name": "Jader",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       },
       {
         "name": "Esposa do Jade",
@@ -866,7 +867,8 @@
     ],
     "createdAt": "2026-10-23T12:14:55.217Z",
     "delivered": true,
-    "deliveredAt": "2026-10-23T12:40:14.704Z"
+    "deliveredAt": "2026-10-23T12:40:14.704Z",
+    "updatedAt": "2026-11-25T17:55:14.755Z"
   },
   {
     "id": "a2fcf24b",
