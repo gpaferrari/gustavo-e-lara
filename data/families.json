@@ -728,13 +728,14 @@
     "members": [
       {
         "name": "Sabrina Minatel",
-        "status": "pending",
-        "isChild": false
+        "isChild": false,
+        "status": "confirmed"
       }
     ],
     "createdAt": "2026-10-20T17:00:10.401Z",
     "delivered": true,
-    "deliveredAt": "2026-11-24T14:04:36.184Z"
+    "deliveredAt": "2026-11-24T14:04:36.184Z",
+    "updatedAt": "2026-11-27T00:41:58.368Z"
   },
   {
     "id": "fee60c9b",
