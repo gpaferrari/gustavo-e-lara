@@ -53,12 +53,13 @@
     "members": [
       {
         "name": "Noemi Batista",
-        "status": "pending",
-        "isChild": false
+        "status": "confirmed",
+        "isChild": false,
+        "byAdmin": true
       }
     ],
     "recovered": true,
-    "updatedAt": "2026-07-25T01:29:27.502Z",
+    "updatedAt": "2026-11-28T11:40:04.736Z",
     "delivered": true,
     "deliveredAt": "2026-10-08T17:45:24.753Z"
   },
