@@ -716,11 +716,12 @@
       {
         "name": "Baby Lorena",
         "isChild": true,
-        "status": "pending"
+        "status": "declined",
+        "byAdmin": true
       }
     ],
     "createdAt": "2026-10-20T16:59:15.902Z",
-    "updatedAt": "2026-11-28T11:38:15.812Z",
+    "updatedAt": "2026-11-28T11:38:19.338Z",
     "delivered": true,
     "deliveredAt": "2026-11-17T22:20:03.223Z"
   },
