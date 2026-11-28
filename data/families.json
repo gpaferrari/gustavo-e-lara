@@ -710,7 +710,8 @@
       {
         "name": "Guilherme esposo",
         "isChild": false,
-        "status": "pending"
+        "status": "declined",
+        "byAdmin": true
       },
       {
         "name": "Baby Lorena",
@@ -719,7 +720,7 @@
       }
     ],
     "createdAt": "2026-10-20T16:59:15.902Z",
-    "updatedAt": "2026-11-28T11:38:14.257Z",
+    "updatedAt": "2026-11-28T11:38:15.812Z",
     "delivered": true,
     "deliveredAt": "2026-11-17T22:20:03.223Z"
   },
